@@ -1,0 +1,13 @@
+# OS / editor junk
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+*.tmp
+
+# Editors
+.vscode/
+.idea/
+
+# OneDrive
+*.lnk
