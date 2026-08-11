@@ -62,7 +62,7 @@ Events are objects in the `events` array in `index.html`:
   title: 'European Blockchain Convention 2026 — Barcelona',
   type: 'possible',               // one of the five above
   notes: 'Sep 16–17, Fira Barcelona Gran Via. ... WHY STRIVE: ...',
-  rec: 'Ben Werkman (CIO) to lead on EU institutional capital; ...'   // OPTIONAL
+  rec: '…'                         // LEGACY — present on many events, rendered nowhere
 }
 ```
 
@@ -72,10 +72,22 @@ Events are objects in the `events` array in `index.html`:
   clause explaining the strategic value — especially for reaching advisors/allocators with **SATA**,
   Strive's preferred stock paying dividends every business day (13% annualized). Red events end with
   "POSSIBLE — confirm attendance to move to Attending."
-- `rec` is the **★ Suggested attendees** line: which executive should go and why.
 - Research conference dates and details before adding — don't guess. Verify against the official site.
+- **Don't add a `rec` to new events** — see below.
+
+## ⚠️ Suggested attendees were removed on purpose
+
+The **★ Suggested attendees** line is gone from every surface — month panel, agenda, search results,
+the .ics export, and the Add Event form. Search no longer matches on `rec` either, so a name search
+can't return hits the reader has no way to see.
+
+The `rec:` fields are still in the `events` array. They were left there deliberately so the research
+isn't lost and the change is one commit to reverse — **not** because anything is half-finished. Don't
+"helpfully" re-render them. If the owner asks to drop the data too, delete the fields.
 
 ## The executives
+
+Kept for judgement calls about who should attend what, even though the calendar no longer prints it.
 
 - **Matt Cole** — CEO. Flagship stages, keynotes, sovereign/large-allocator relationships, top-advisor credibility.
 - **Ben Werkman** — CIO. The SATA distribution workhorse: investment thesis, allocators, advisor and capital-markets audiences.

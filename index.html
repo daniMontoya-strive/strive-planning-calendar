@@ -71,8 +71,7 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 .src-date-lbl{font-size:0.67rem;color:var(--text-faint);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;}
 .src-title{font-weight:700;font-size:0.94rem;margin-bottom:5px;line-height:1.35;}
 .src-notes{font-size:0.81rem;color:var(--text-muted);line-height:1.55;}
-.src-notes mark,.src-title mark,.src-rec mark{background:rgba(247,147,26,0.22);color:var(--btc);border-radius:2px;padding:0 2px;}
-.src-rec{margin-top:9px;font-size:0.76rem;line-height:1.5;color:var(--text-muted);}
+.src-notes mark,.src-title mark{background:rgba(247,147,26,0.22);color:var(--btc);border-radius:2px;padding:0 2px;}
 .search-empty{grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--text-faint);}
 .search-empty h3{font-family:var(--font-display);font-size:1.4rem;color:var(--text-muted);margin-bottom:8px;}
 /* VIEW SWITCHER + TODAY */
@@ -103,7 +102,6 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 .ag-notes.clamp{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .ag-more{font-size:0.7rem;font-weight:700;color:var(--btc);margin-top:4px;letter-spacing:0.03em;}
 .ag-more:hover{text-decoration:underline;}
-.ag-rec{margin-top:9px;font-size:0.78rem;line-height:1.5;color:var(--text);background:var(--surface-2);border:1px solid var(--border);border-left:3px solid var(--btc);border-radius:var(--radius-sm);padding:8px 11px;}
 .ag-clash{display:inline-flex;align-items:center;gap:4px;font-size:0.6rem;font-weight:800;color:var(--red);letter-spacing:0.06em;text-transform:uppercase;background:rgba(241,86,95,.11);border:1px solid rgba(241,86,95,.3);padding:2px 7px;border-radius:3px;}
 .ag-today-line{display:flex;align-items:center;gap:10px;margin:4px 0 13px;}
 .ag-today-line span{font-size:0.62rem;font-weight:800;color:var(--btc);letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;}
@@ -223,9 +221,6 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 .ev-date{font-size:0.67rem;color:var(--text-faint);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;}
 .ev-title{font-weight:700;font-size:0.95rem;line-height:1.35;margin-bottom:6px;}
 .ev-notes{font-size:0.81rem;color:var(--text-muted);line-height:1.55;}
-.ev-rec{margin-top:10px;font-size:0.78rem;line-height:1.5;color:var(--text);background:var(--surface-2);border:1px solid var(--border);border-left:3px solid var(--btc);border-radius:var(--radius-sm);padding:8px 11px;}
-.rec-tag{display:block;font-size:0.58rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--btc);margin-bottom:4px;}
-.src-rec .rec-tag{display:inline-block;margin-bottom:0;margin-right:5px;}
 .z-empty{color:var(--text-faint);font-size:0.88rem;text-align:center;padding:34px 12px;line-height:1.6;}
 .type-tag{display:inline-block;padding:2px 8px;border-radius:3px;font-size:0.62rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;background:var(--cd);color:var(--c);}
 .span-tag{display:inline-block;font-size:0.6rem;font-weight:700;color:var(--text-faint);letter-spacing:0.05em;text-transform:uppercase;}
@@ -436,7 +431,6 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
       </select>
     </div>
     <div class="fg"><label>Notes / Agenda</label><textarea id="fNotes" placeholder="Details, owner, prep items, agenda..."></textarea></div>
-    <div class="fg"><label>Suggested attendees <span style="text-transform:none;font-weight:500">(optional)</span></label><textarea id="fRec" placeholder="Who should go, and why" style="min-height:60px"></textarea></div>
     <div class="form-actions">
       <button class="btn-ghost" id="addCancel">Cancel</button>
       <button class="btn-add" id="addSave">Save Event</button>
@@ -490,7 +484,10 @@ function fmtSpan(e){
 }
 
 /* ── DATA ──
-   Multi-day events use a single entry with `end`. `rec` = suggested attendees. */
+   Multi-day events use a single entry with `end`.
+   NOTE: `rec` (suggested attendees) is retained on many events but is no longer
+   rendered anywhere — the owner asked for it to come out of the UI. It is left in
+   the source so the research isn't lost; delete the fields if you want it gone. */
 let events=[
   // ── STRIVE EVENTS & CONFERENCES ──
   {id:1,date:'2026-06-26',title:'BFC Symposium — New York',type:'possible',rec:'Jeff Walton (CRO) and Ben Werkman (CIO) are already slated to speak — keep both; this is a Bitcoin-for-companies audience where the risk framework and the investment thesis both land.',notes:'Jeff Walton and Ben Werkman speaking. Bitcoin for Companies symposium in New York City. Prepare talking points, slides, and networking materials. Confirm travel logistics and attendee list in advance.'},
@@ -565,7 +562,7 @@ function saveState(){
   try{
     const overrides={};
     events.forEach(e=>{if(BASE_TYPE[e.id]!==undefined&&e.type!==BASE_TYPE[e.id])overrides[e.id]=e.type;});
-    const custom=events.filter(e=>e.custom).map(e=>({id:e.id,date:e.date,end:e.end,title:e.title,type:e.type,notes:e.notes,rec:e.rec,custom:true}));
+    const custom=events.filter(e=>e.custom).map(e=>({id:e.id,date:e.date,end:e.end,title:e.title,type:e.type,notes:e.notes,custom:true}));
     localStorage.setItem(LS_KEY,JSON.stringify({v:1,overrides,custom}));
   }catch(err){/* storage unavailable (private mode / file restrictions) — session-only */}
 }
@@ -653,7 +650,7 @@ function exportICS(){
       `DTSTART;VALUE=DATE:${e.date.replace(/-/g,'')}`,
       `DTEND;VALUE=DATE:${icsEnd(endOf(e))}`,
       icsFold(`SUMMARY:${icsEsc(e.title)}`),
-      icsFold(`DESCRIPTION:${icsEsc((e.notes||'')+(e.rec?`\n\n★ Suggested attendees: ${e.rec}`:''))}`),
+      icsFold(`DESCRIPTION:${icsEsc(e.notes||'')}`),
       icsFold(`CATEGORIES:${icsEsc(typeLabel(e.type))}`),
       'TRANSP:TRANSPARENT','END:VEVENT');
   });
@@ -768,7 +765,6 @@ function renderAgenda(){
         +`<div class="ag-title">${esc(e.title)}</div>`
         +(e.notes?`<div class="ag-notes${long&&!open?' clamp':''}">${esc(e.notes)}</div>`:'')
         +(long?`<button class="ag-more" data-x="${e.id}">${open?'Show less':'Show more'}</button>`:'')
-        +(e.rec?`<div class="ag-rec"><span class="rec-tag">★ Suggested attendees</span>${esc(open||e.rec.length<=110?e.rec:e.rec.slice(0,110)+'…')}</div>`:'')
         +toggleBtn(e)
         +`</div></div>`;
     });
@@ -950,7 +946,6 @@ function eventCard(e,ds){
     +`<div class="ev-date">${esc(fmtSpan(e))}${multi?` <span class="span-tag">· ${spans(e)} days</span>`:''}${dayNote}</div>`
     +`<div class="ev-title">${esc(e.title)}</div>`
     +(e.notes?`<div class="ev-notes">${esc(e.notes)}</div>`:'')
-    +(e.rec?`<div class="ev-rec"><span class="rec-tag">★ Suggested attendees</span>${esc(e.rec)}</div>`:'')
     +toggleBtn(e)
     +`</div>`;
 }
@@ -1039,7 +1034,6 @@ function openAdd(){
   document.getElementById('fEnd').value='';
   document.getElementById('fTitle').value='';
   document.getElementById('fNotes').value='';
-  document.getElementById('fRec').value='';
   document.getElementById('fType').value='possible';
   document.getElementById('addModal').classList.add('open');
   setTimeout(()=>document.getElementById('fTitle').focus(),80);
@@ -1059,8 +1053,6 @@ document.getElementById('addSave').onclick=()=>{
   const type=document.getElementById('fType').value;
   const ev={id:nextId++,date,title,type,notes:document.getElementById('fNotes').value.trim(),custom:true};
   if(end)ev.end=end;
-  const rec=document.getElementById('fRec').value.trim();
-  if(rec)ev.rec=rec;
   events.push(ev);
   BASE_TYPE[ev.id]=type;
   activeTypes.add(type);                             // don't add into a hidden filter
@@ -1116,7 +1108,6 @@ function runSearch(q){
   const results=shown().filter(e=>
     e.title.toLowerCase().includes(low)||
     (e.notes&&e.notes.toLowerCase().includes(low))||
-    (e.rec&&e.rec.toLowerCase().includes(low))||
     e.date.includes(low)||(e.end&&e.end.includes(low))||
     typeLabel(e.type).toLowerCase().includes(low)||
     fmtSpan(e).toLowerCase().includes(low)||
@@ -1133,7 +1124,6 @@ function runSearch(q){
         +`<div class="src-meta"><span class="type-tag ${e.type}">${esc(typeLabel(e.type))}</span><span class="src-date-lbl">${esc(fmtSpan(e))}</span>${spans(e)>1?`<span class="span-tag">${spans(e)} days</span>`:''}</div>`
         +`<div class="src-title">${hl(e.title,q)}</div>`
         +(notes?`<div class="src-notes">${hl(notes,q)}</div>`:'')
-        +(e.rec?`<div class="src-rec"><span class="rec-tag">★ Suggested</span>${hl(e.rec,q)}</div>`:'')
         +`</div>`;
     }).join('');
     document.querySelectorAll('.src-card').forEach(card=>{
