@@ -445,14 +445,15 @@ const MON_SHORT=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','No
 const WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const WD_FULL=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const TYPE_LABELS={bitcoin:'Bitcoin Date',milestone:'Strive Milestone',attending:'Attending',possible:'Possible',holiday:'Holiday / OOO'};
-const TYPE_ORDER=['bitcoin','milestone','attending','possible','holiday'];
+/* ── THE PRIORITY ORDER ──
+   ONE list drives every ordered surface, so the toolbar chips and the event panel can
+   never drift apart: legend/filter chips, the month "at a glance" chips, the side-panel
+   bands, the pills inside a day cell, and the tiebreak between same-date events.
+   Changing this line changes all of them. */
+const TYPE_ORDER=['attending','bitcoin','possible','milestone','holiday'];
 const TYPE_VAR={bitcoin:'--btc',milestone:'--yellow',attending:'--green',possible:'--red',holiday:'--blue'};
-/* Reading order for the event panel and the day cells: what the team must act on
-   first (confirmed travel), then the dates that matter, then open decisions, then closures.
-   TYPE_ORDER stays as-is — it drives the legend and filter chips. */
-const PRIORITY=['attending','milestone','bitcoin','possible','holiday'];
-const GROUP_LABELS={attending:'Attending',milestone:'Strive milestones',bitcoin:'Bitcoin dates',possible:'Under consideration',holiday:'Holidays &amp; closures'};
-const prio=t=>PRIORITY.indexOf(t);
+const GROUP_LABELS={attending:'Attending',bitcoin:'Bitcoin dates',possible:'Under consideration',milestone:'Strive milestones',holiday:'Holidays &amp; closures'};
+const prio=t=>TYPE_ORDER.indexOf(t);
 const byPriority=(a,b)=>prio(a.type)-prio(b.type)||a.date.localeCompare(b.date);
 const LS_KEY='strive-calendar-v1';
 const today=new Date();

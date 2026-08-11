@@ -40,15 +40,43 @@ This is the core of the design and the owner is specific about it. Each type map
 sets `--c` (accent) and `--cd` (dim tint); components read those variables, so adding a type means
 adding one class.
 
-| Colour | `type` value | Meaning |
-|---|---|---|
-| 🟠 Bitcoin orange | `bitcoin` | Significant Bitcoin dates — genesis block, halvings, whitepaper day, Pizza Day, ETF approval |
-| 🟡 Strive yellow | `milestone` | Strive corporate milestones — going public (ASST), SATA daily-dividend launch, product launches, major public announcements |
-| 🟢 Green | `attending` | Conferences/events Strive is **confirmed** for |
-| 🔴 Red | `possible` | Conferences/events **under consideration** |
-| 🔵 Blue | `holiday` | US federal holidays and Strive office closures |
+The table below is in the owner's **priority order** — see the next section; don't reorder it.
+
+| # | Colour | `type` value | Meaning |
+|---|---|---|---|
+| 1 | 🟢 Green | `attending` | Conferences/events Strive is **confirmed** for |
+| 2 | 🟠 Bitcoin orange | `bitcoin` | Significant Bitcoin dates — genesis block, halvings, whitepaper day, Pizza Day, ETF approval |
+| 3 | 🔴 Red | `possible` | Conferences/events **under consideration** |
+| 4 | 🟡 Strive yellow | `milestone` | Strive corporate milestones — going public (ASST), SATA daily-dividend launch, product launches, major public announcements |
+| 5 | 🔵 Blue | `holiday` | US federal holidays and Strive office closures |
 
 New conferences default to 🔴 `possible` until the owner confirms attendance.
+
+## ⚠️ The priority order — one list, five surfaces
+
+`TYPE_ORDER` in `index.html` is the **single source of truth** for ordering, and the owner sets it
+directly. It currently reads:
+
+```js
+const TYPE_ORDER=['attending','bitcoin','possible','milestone','holiday'];
+```
+
+It drives, all at once:
+
+1. The toolbar filter chips (the "main bar")
+2. The month header's "at a glance" count chips
+3. The side panel's bands, each with a `GROUP_LABELS` header and a count
+4. The order of pills inside a day cell — so when a day overflows past 3, the three that show are
+   the three that matter most
+5. The tiebreak between two events on the same date, in every view
+
+**Change the one line and all five follow.** There used to be a separate `PRIORITY` constant for the
+panel; it was collapsed into `TYPE_ORDER` once the two orders matched, precisely so nobody can change
+one and leave the other stale. If a future request needs the chips and the panel to differ, split it
+back out deliberately — don't let them drift.
+
+Within each band, events stay chronological. `GROUP_LABELS` carries the panel's friendlier wording
+("Under consideration" rather than "Possible") and must be kept in step with any new type.
 
 ## Event schema
 
