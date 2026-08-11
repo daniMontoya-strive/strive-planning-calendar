@@ -4,7 +4,13 @@ A self-contained, single-file web calendar for tracking Strive's key dates: Bitc
 
 ## How to open
 
-Open **`strive-calendar-final.html`** in any modern browser. No build step and no dependencies — everything (HTML, CSS, JS, data) is inline in the one file.
+**Live version:** https://danimontoya-strive.github.io/strive-planning-calendar/
+
+That link is served by GitHub Pages from `main` and rebuilds automatically on every push, so it always
+reflects the canonical version in this repo. Share it directly — no install or GitHub account needed.
+
+To run it locally instead, open **`index.html`** in any modern browser. No build step and no
+dependencies — everything (HTML, CSS, JS, data) is inline in the one file.
 
 ## Color key
 
