@@ -230,7 +230,7 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 .clash-panel ul{list-style:none;display:flex;flex-direction:column;gap:6px;}
 .clash-panel li{font-size:0.76rem;color:var(--text-muted);line-height:1.45;}
 .clash-panel b{color:var(--text);font-weight:600;}
-/* STATUS TOGGLE (Possible <-> Attending) */
+/* STATUS TOGGLE (Potential <-> Attending; the type key is still `possible`) */
 .status-toggle{margin-top:11px;display:inline-flex;align-items:center;gap:6px;font-size:0.71rem;font-weight:700;padding:7px 13px;border-radius:var(--radius-sm);border:1px solid var(--border-hi);background:transparent;letter-spacing:0.02em;transition:background .15s,border-color .15s,color .15s;}
 .status-toggle.possible{color:var(--green);border-color:rgba(62,207,142,.45);}
 .status-toggle.possible:hover{background:var(--green);color:#0A0A0A;border-color:var(--green);}
@@ -423,7 +423,7 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
     </div>
     <div class="fg"><label>Type</label>
       <select id="fType">
-        <option value="possible">Conference — Possible</option>
+        <option value="possible">Conference — Potential</option>
         <option value="attending">Conference — Attending</option>
         <option value="bitcoin">Bitcoin Date</option>
         <option value="milestone">Strive Milestone</option>
@@ -444,7 +444,9 @@ const MONTHS=['January','February','March','April','May','June','July','August',
 const MON_SHORT=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const WD_FULL=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-const TYPE_LABELS={bitcoin:'Bitcoin Date',milestone:'Strive Milestone',attending:'Attending',possible:'Possible',holiday:'Holiday / OOO'};
+/* The `possible` type key is unchanged — renaming it would break every saved localStorage
+   override. Only the label the reader sees moved from "Possible" to "Potential". */
+const TYPE_LABELS={bitcoin:'Bitcoin Date',milestone:'Strive Milestone',attending:'Attending',possible:'Potential',holiday:'Holiday / OOO'};
 /* ── THE PRIORITY ORDER ──
    ONE list drives every ordered surface, so the toolbar chips and the event panel can
    never drift apart: legend/filter chips, the month "at a glance" chips, the side-panel
@@ -452,7 +454,7 @@ const TYPE_LABELS={bitcoin:'Bitcoin Date',milestone:'Strive Milestone',attending
    Changing this line changes all of them. */
 const TYPE_ORDER=['attending','bitcoin','possible','milestone','holiday'];
 const TYPE_VAR={bitcoin:'--btc',milestone:'--yellow',attending:'--green',possible:'--red',holiday:'--blue'};
-const GROUP_LABELS={attending:'Attending',bitcoin:'Bitcoin dates',possible:'Under consideration',milestone:'Strive milestones',holiday:'Holidays &amp; closures'};
+const GROUP_LABELS={attending:'Attending',bitcoin:'Bitcoin dates',possible:'Potential events',milestone:'Strive milestones',holiday:'Holidays &amp; closures'};
 const prio=t=>TYPE_ORDER.indexOf(t);
 const byPriority=(a,b)=>prio(a.type)-prio(b.type)||a.date.localeCompare(b.date);
 const LS_KEY='strive-calendar-v1';
@@ -532,19 +534,19 @@ let events=[
   // ── CONFERENCES — CONFIRMED / ATTENDING (GREEN) ──
   {id:201,date:'2026-09-28',title:'Bitcoin Treasuries Conference 2026 — New York (SECOND, Midtown)',type:'attending',rec:'Matt Cole (CEO) and Ben Werkman (CIO) — a small, decision-maker-dense room of treasury peers and allocators; both belong here. Jeff Walton (CRO) valuable for the accounting and regulatory sessions.',notes:'300+ treasury strategists, CFOs, and institutional allocators focused on corporate Bitcoin balance-sheet adoption. WHY STRIVE: The single most on-target room — Strive is a public Bitcoin treasury company (ASST), and this is the decision-maker audience that understands and could allocate to SATA. Pairs directly with the TrueNorth Happy Hour.'},
   {id:202,date:'2027-02-24',end:'2027-02-25',title:'Bitcoin for Corporations 2027 — Las Vegas',type:'attending',rec:'Matt Cole (CEO) — peer-level positioning alongside Strategy (MSTR) is a CEO-to-CEO room; Ben Werkman (CIO) to present SATA as a capital-markets innovation.',notes:'Feb 24–25 (2026 dates; confirm 2027). Strategy\'s (Michael Saylor) executive network for Bitcoin treasury companies — CEOs, CFOs, treasurers, investors, and builders. WHY STRIVE: Direct peer positioning alongside Strategy (MSTR); showcase SATA as a capital-markets innovation to other treasury companies.'},
-  // ── CONFERENCES — POSSIBLE (RED) ──
-  {id:210,date:'2026-10-07',end:'2026-10-08',title:'TOKEN2049 Singapore',type:'possible',rec:'Ben Werkman (CIO) to lead on institutional and APAC capital; add Matt Cole (CEO) if pursuing top-tier Asia-Pacific relationships.',notes:'Oct 7–8, Marina Bay Sands, Singapore. Premier global crypto event with deep APAC institutional capital. WHY STRIVE: Broad institutional and Asia-Pacific investor exposure for the Strive brand and SATA. POSSIBLE — confirm attendance to move this to Attending.'},
-  {id:221,date:'2026-09-16',end:'2026-09-17',title:'European Blockchain Convention 2026 — Barcelona',type:'possible',rec:'Ben Werkman (CIO) to lead on EU institutional capital; Jeff Walton (CRO) is a strong alternate given the institutional and regulatory focus.',notes:'Sep 16–17, Fira Barcelona Gran Via. The 12th EBC — 6,000+ attendees from 70+ countries, with a strong 2026 focus on institutional capital entering digital assets (three main stages, large expo). WHY STRIVE: Europe\'s premier institutional blockchain gathering — direct access to EU allocators, family offices, and digital-asset institutions; an ideal stage for Strive\'s Bitcoin-treasury story and SATA. POSSIBLE — confirm attendance to move to Attending.'},
-  {id:217,date:'2026-10-13',end:'2026-10-16',title:'Forbes | SHOOK Top Advisor Summit — Las Vegas',type:'possible',rec:'Matt Cole (CEO) + Ben Werkman (CIO) — the country\'s top-AUM advisors are the prime SATA distribution audience; CEO presence earns credibility while the CIO sells the daily-dividend thesis. Highest-priority red event.',notes:'Oct 13–16, The Wynn, Las Vegas. Forbes/SHOOK convenes America\'s top-ranked wealth advisors — among the highest-AUM advisors in the country. WHY STRIVE: A concentrated room of elite advisors who allocate large client books — ideal for introducing SATA\'s daily-dividend preferred (13% annualized) as a differentiated, Bitcoin-backed income product. POSSIBLE — confirm attendance to move to Attending.'},
-  {id:218,date:'2026-10-13',end:'2026-10-14',title:'Maxim Growth Summit — New York (Hard Rock Hotel)',type:'possible',rec:'Ben Werkman (CIO) — investor meetings and capital-markets conversations are core CIO work. CONFLICT: same dates as Forbes SHOOK in Las Vegas — split the team or pick one.',notes:'Oct 13–14, Hard Rock Hotel, New York City. Maxim Group\'s investor and executive summit — keynotes plus one-on-one investor meetings across multiple sectors. WHY STRIVE: Capital-markets visibility for ASST and direct access to institutional investors; a venue to tell the Strive treasury and SATA story. (Listed as "Maximum Growth Summit"; the 2025 edition ran Oct 22–23 — confirm 2026 dates.) POSSIBLE — confirm attendance to move to Attending.'},
-  {id:219,date:'2026-10-27',end:'2026-10-29',title:'Schwab IMPACT 2026 — Boston',type:'possible',rec:'Ben Werkman (CIO) — the largest RIA gathering in the U.S. and a top SATA-distribution target for the Chief Investment Officer.',notes:'Oct 27–29, MGM Music Hall at Fenway, Boston. The largest RIA/advisor conference in the U.S. — thousands of advisors on the Schwab platform. WHY STRIVE: The single biggest concentration of RIAs anywhere — prime venue to put SATA\'s 13% daily-dividend preferred in front of advisors building client income portfolios. POSSIBLE — confirm attendance to move to Attending.'},
-  {id:211,date:'2026-11-13',end:'2026-11-14',title:'Bitcoin Amsterdam 2026',type:'possible',rec:'Ben Werkman (CIO) — carry the investment thesis and SATA to the EU institutional and retail audience.',notes:'Nov 13–14, Sugarfactory, Amsterdam. Europe\'s flagship Bitcoin conference (5,000+ attendees). WHY STRIVE: EU institutional and retail reach; brand presence in a key European market. POSSIBLE — confirm attendance to move this to Attending.'},
-  {id:213,date:'2026-11-12',title:'Adopting Bitcoin — El Salvador',type:'possible',rec:'Matt Cole (CEO) — a sovereign-adoption stage is a thought-leadership and keynote moment best carried by the CEO.',notes:'November, date TBD. El Salvador — the sovereign Bitcoin-adoption hub. WHY STRIVE: Thought-leadership positioning at the center of nation-state Bitcoin adoption. POSSIBLE — confirm date and attendance.'},
-  {id:220,date:'2026-11-16',end:'2026-11-17',title:'Investments & Wealth Institute — Experience, Scottsdale AZ',type:'possible',rec:'Ben Werkman (CIO) — a credentialed, multi-channel advisor audience and a strong fit for SATA\'s income story.',notes:'Nov 16–17, Scottsdale, AZ. The Institute\'s premier wealth-management conference — 600+ attendees spanning wirehouses, independent advisors, and RIAs. WHY STRIVE: A credentialed advisor audience across every channel; strong fit for SATA\'s income story. POSSIBLE — confirm attendance to move to Attending.'},
-  {id:212,date:'2026-12-08',title:'Bitcoin MENA / BFC Symposium — Abu Dhabi',type:'possible',rec:'Matt Cole (CEO) for sovereign and large-allocator relationships; Jeff Walton (CRO) to own the regulatory and risk lens that matters in the MENA market.',notes:'Dec 8, Abu Dhabi, UAE. One of the largest Bitcoin gatherings in the Middle East; sovereign and institutional capital. WHY STRIVE: Access to large MENA allocators for SATA exposure. POSSIBLE — confirm attendance to move this to Attending.'},
-  {id:215,date:'2027-04-21',end:'2027-04-22',title:'TOKEN2049 Dubai',type:'possible',rec:'Ben Werkman (CIO) on global institutional capital; add Matt Cole (CEO) if building sovereign-capital relationships in the Gulf.',notes:'Apr 21–22, Dubai. Global capital-hub event. WHY STRIVE: Pairs with a MENA strategy; access to international allocators. POSSIBLE — confirm attendance to move this to Attending.'},
-  {id:216,date:'2027-06-10',title:'BTC Prague 2027',type:'possible',rec:'Ben Werkman (CIO) or a senior delegate — strong European reach, but lower executive priority than the institutional and advisor events.',notes:'June, date TBD. Prague — the largest European Bitcoin conference. WHY STRIVE: Major European audience and brand reach. POSSIBLE — confirm date and attendance.'},
-  {id:214,date:'2027-07-15',end:'2027-07-17',title:'Bitcoin 2027 — Nashville, TN',type:'possible',rec:'Matt Cole (CEO) for a keynote and brand presence on the world\'s largest Bitcoin stage; Ben Werkman (CIO) for investment and treasury panels.',notes:'Jul 15–17. The world\'s largest Bitcoin conference (40,000+ attendees). WHY STRIVE: Flagship U.S. brand presence and capital-markets visibility for ASST and SATA. POSSIBLE — confirm attendance to move this to Attending.'},
+  // ── CONFERENCES — POTENTIAL (RED, type key stays `possible`) ──
+  {id:210,date:'2026-10-07',end:'2026-10-08',title:'TOKEN2049 Singapore',type:'possible',rec:'Ben Werkman (CIO) to lead on institutional and APAC capital; add Matt Cole (CEO) if pursuing top-tier Asia-Pacific relationships.',notes:'Oct 7–8, Marina Bay Sands, Singapore. Premier global crypto event with deep APAC institutional capital. WHY STRIVE: Broad institutional and Asia-Pacific investor exposure for the Strive brand and SATA. POTENTIAL — confirm attendance to move this to Attending.'},
+  {id:221,date:'2026-09-16',end:'2026-09-17',title:'European Blockchain Convention 2026 — Barcelona',type:'possible',rec:'Ben Werkman (CIO) to lead on EU institutional capital; Jeff Walton (CRO) is a strong alternate given the institutional and regulatory focus.',notes:'Sep 16–17, Fira Barcelona Gran Via. The 12th EBC — 6,000+ attendees from 70+ countries, with a strong 2026 focus on institutional capital entering digital assets (three main stages, large expo). WHY STRIVE: Europe\'s premier institutional blockchain gathering — direct access to EU allocators, family offices, and digital-asset institutions; an ideal stage for Strive\'s Bitcoin-treasury story and SATA. POTENTIAL — confirm attendance to move to Attending.'},
+  {id:217,date:'2026-10-13',end:'2026-10-16',title:'Forbes | SHOOK Top Advisor Summit — Las Vegas',type:'possible',rec:'Matt Cole (CEO) + Ben Werkman (CIO) — the country\'s top-AUM advisors are the prime SATA distribution audience; CEO presence earns credibility while the CIO sells the daily-dividend thesis. Highest-priority red event.',notes:'Oct 13–16, The Wynn, Las Vegas. Forbes/SHOOK convenes America\'s top-ranked wealth advisors — among the highest-AUM advisors in the country. WHY STRIVE: A concentrated room of elite advisors who allocate large client books — ideal for introducing SATA\'s daily-dividend preferred (13% annualized) as a differentiated, Bitcoin-backed income product. POTENTIAL — confirm attendance to move to Attending.'},
+  {id:218,date:'2026-10-13',end:'2026-10-14',title:'Maxim Growth Summit — New York (Hard Rock Hotel)',type:'possible',rec:'Ben Werkman (CIO) — investor meetings and capital-markets conversations are core CIO work. CONFLICT: same dates as Forbes SHOOK in Las Vegas — split the team or pick one.',notes:'Oct 13–14, Hard Rock Hotel, New York City. Maxim Group\'s investor and executive summit — keynotes plus one-on-one investor meetings across multiple sectors. WHY STRIVE: Capital-markets visibility for ASST and direct access to institutional investors; a venue to tell the Strive treasury and SATA story. (Listed as "Maximum Growth Summit"; the 2025 edition ran Oct 22–23 — confirm 2026 dates.) POTENTIAL — confirm attendance to move to Attending.'},
+  {id:219,date:'2026-10-27',end:'2026-10-29',title:'Schwab IMPACT 2026 — Boston',type:'possible',rec:'Ben Werkman (CIO) — the largest RIA gathering in the U.S. and a top SATA-distribution target for the Chief Investment Officer.',notes:'Oct 27–29, MGM Music Hall at Fenway, Boston. The largest RIA/advisor conference in the U.S. — thousands of advisors on the Schwab platform. WHY STRIVE: The single biggest concentration of RIAs anywhere — prime venue to put SATA\'s 13% daily-dividend preferred in front of advisors building client income portfolios. POTENTIAL — confirm attendance to move to Attending.'},
+  {id:211,date:'2026-11-13',end:'2026-11-14',title:'Bitcoin Amsterdam 2026',type:'possible',rec:'Ben Werkman (CIO) — carry the investment thesis and SATA to the EU institutional and retail audience.',notes:'Nov 13–14, Sugarfactory, Amsterdam. Europe\'s flagship Bitcoin conference (5,000+ attendees). WHY STRIVE: EU institutional and retail reach; brand presence in a key European market. POTENTIAL — confirm attendance to move this to Attending.'},
+  {id:213,date:'2026-11-12',title:'Adopting Bitcoin — El Salvador',type:'possible',rec:'Matt Cole (CEO) — a sovereign-adoption stage is a thought-leadership and keynote moment best carried by the CEO.',notes:'November, date TBD. El Salvador — the sovereign Bitcoin-adoption hub. WHY STRIVE: Thought-leadership positioning at the center of nation-state Bitcoin adoption. POTENTIAL — confirm date and attendance.'},
+  {id:220,date:'2026-11-16',end:'2026-11-17',title:'Investments & Wealth Institute — Experience, Scottsdale AZ',type:'possible',rec:'Ben Werkman (CIO) — a credentialed, multi-channel advisor audience and a strong fit for SATA\'s income story.',notes:'Nov 16–17, Scottsdale, AZ. The Institute\'s premier wealth-management conference — 600+ attendees spanning wirehouses, independent advisors, and RIAs. WHY STRIVE: A credentialed advisor audience across every channel; strong fit for SATA\'s income story. POTENTIAL — confirm attendance to move to Attending.'},
+  {id:212,date:'2026-12-08',title:'Bitcoin MENA / BFC Symposium — Abu Dhabi',type:'possible',rec:'Matt Cole (CEO) for sovereign and large-allocator relationships; Jeff Walton (CRO) to own the regulatory and risk lens that matters in the MENA market.',notes:'Dec 8, Abu Dhabi, UAE. One of the largest Bitcoin gatherings in the Middle East; sovereign and institutional capital. WHY STRIVE: Access to large MENA allocators for SATA exposure. POTENTIAL — confirm attendance to move this to Attending.'},
+  {id:215,date:'2027-04-21',end:'2027-04-22',title:'TOKEN2049 Dubai',type:'possible',rec:'Ben Werkman (CIO) on global institutional capital; add Matt Cole (CEO) if building sovereign-capital relationships in the Gulf.',notes:'Apr 21–22, Dubai. Global capital-hub event. WHY STRIVE: Pairs with a MENA strategy; access to international allocators. POTENTIAL — confirm attendance to move this to Attending.'},
+  {id:216,date:'2027-06-10',title:'BTC Prague 2027',type:'possible',rec:'Ben Werkman (CIO) or a senior delegate — strong European reach, but lower executive priority than the institutional and advisor events.',notes:'June, date TBD. Prague — the largest European Bitcoin conference. WHY STRIVE: Major European audience and brand reach. POTENTIAL — confirm date and attendance.'},
+  {id:214,date:'2027-07-15',end:'2027-07-17',title:'Bitcoin 2027 — Nashville, TN',type:'possible',rec:'Matt Cole (CEO) for a keynote and brand presence on the world\'s largest Bitcoin stage; Ben Werkman (CIO) for investment and treasury panels.',notes:'Jul 15–17. The world\'s largest Bitcoin conference (40,000+ attendees). WHY STRIVE: Flagship U.S. brand presence and capital-markets visibility for ASST and SATA. POTENTIAL — confirm attendance to move this to Attending.'},
 ];
 
 /* ── PERSISTENCE ── */
@@ -613,7 +615,7 @@ function localChangeCount(){
 function resetLocal(){
   const n=localChangeCount();
   if(!n)return;
-  if(!confirm(`Reset ${n} local change${n>1?'s':''}?\n\nThis clears the Attending/Possible flips and any events you added in this browser, and returns the calendar to the published version. Nobody else is affected — their browsers were never changed.`))return;
+  if(!confirm(`Reset ${n} local change${n>1?'s':''}?\n\nThis clears the Attending/Potential flips and any events you added in this browser, and returns the calendar to the published version. Nobody else is affected — their browsers were never changed.`))return;
   try{localStorage.removeItem(LS_KEY);}catch(err){/* storage unavailable */}
   location.reload();
 }
@@ -714,7 +716,7 @@ function toggleBtn(e){
         ? `Changed by you. Teammates opening the link still see this as <b>${esc(typeLabel(base))}</b>.`
         : `Saves in your browser only &mdash; it will not change what teammates see.`);
   return `<button class="status-toggle ${e.type}" data-id="${e.id}" title="Changes how this event looks for you. Saved in this browser only — it does not update the shared calendar.">`
-    +(e.type==='possible'?'&#10003; Mark attending &mdash; for me':'&#8634; Move back to possible')
+    +(e.type==='possible'?'&#10003; Mark attending &mdash; for me':'&#8634; Move back to potential')
     +`</button><span class="local-note">${note}</span>`;
 }
 
@@ -1011,7 +1013,7 @@ function renderClashPanel(m,dateStr){
     +`</ul></div>`;
 }
 
-/* ── STATUS TOGGLE (Possible <-> Attending) ──
+/* ── STATUS TOGGLE (Potential <-> Attending) ──
    One delegated handler for every view. Local-only: see toggleBtn() and saveState(). */
 document.addEventListener('click',e=>{
   const btn=e.target.closest('.status-toggle');
@@ -1021,7 +1023,7 @@ document.addEventListener('click',e=>{
   ev.type=ev.type==='attending'?'possible':'attending';
   activeTypes.add(ev.type);            // don't let a hidden filter swallow it
   saveState();
-  flash(ev.type==='attending'?'Marked attending — in your browser only':'Moved back to possible — in your browser only');
+  flash(ev.type==='attending'?'Marked attending — in your browser only':'Moved back to potential — in your browser only');
   renderLegend();render();
 });
 

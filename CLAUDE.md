@@ -46,11 +46,29 @@ The table below is in the owner's **priority order** — see the next section; d
 |---|---|---|---|
 | 1 | 🟢 Green | `attending` | Conferences/events Strive is **confirmed** for |
 | 2 | 🟠 Bitcoin orange | `bitcoin` | Significant Bitcoin dates — genesis block, halvings, whitepaper day, Pizza Day, ETF approval |
-| 3 | 🔴 Red | `possible` | Conferences/events **under consideration** |
+| 3 | 🔴 Red | `possible` | **Potential** — conferences/events under consideration |
 | 4 | 🟡 Strive yellow | `milestone` | Strive corporate milestones — going public (ASST), SATA daily-dividend launch, product launches, major public announcements |
 | 5 | 🔵 Blue | `holiday` | US federal holidays and Strive office closures |
 
 New conferences default to 🔴 `possible` until the owner confirms attendance.
+
+### ⚠️ `possible` is the key; "Potential" is the label
+
+The owner renamed this category from **Possible** to **Potential**. Only the *label* changed — the
+`type` value in every event object is still the string `'possible'`, and it must stay that way:
+`localStorage` overrides are keyed by it, so renaming the key would silently drop everyone's saved
+Attending flips. The reader never sees the key.
+
+Where the wording lives:
+
+- `TYPE_LABELS.possible` → `'Potential'` — filter chip, per-card type tag, .ics `CATEGORIES`
+- `GROUP_LABELS.possible` → `'Potential events'` — the side-panel band header (plural; it heads a group)
+- Event `notes` end with `POTENTIAL — confirm attendance to move to Attending.`
+- The toggle button, its flash, and the reset dialog all say "potential"
+
+Note the singular/plural split is deliberate: a single card tagged "POTENTIAL EVENTS" reads wrong.
+One occurrence of the old word survives on purpose — the Spot Bitcoin ETF note says "the world made
+possible by this approval," which is ordinary English, not a label. Don't sweep it up in a find-and-replace.
 
 ## ⚠️ The priority order — one list, five surfaces
 
@@ -76,7 +94,7 @@ one and leave the other stale. If a future request needs the chips and the panel
 back out deliberately — don't let them drift.
 
 Within each band, events stay chronological. `GROUP_LABELS` carries the panel's friendlier wording
-("Under consideration" rather than "Possible") and must be kept in step with any new type.
+("Potential events" rather than "Potential") and must be kept in step with any new type.
 
 ## Event schema
 
@@ -99,7 +117,7 @@ Events are objects in the `events` array in `index.html`:
 - `notes` for a conference should state dates + venue, what the event is, and a **`WHY STRIVE:`**
   clause explaining the strategic value — especially for reaching advisors/allocators with **SATA**,
   Strive's preferred stock paying dividends every business day (13% annualized). Red events end with
-  "POSSIBLE — confirm attendance to move to Attending."
+  "POTENTIAL — confirm attendance to move to Attending."
 - Research conference dates and details before adding — don't guess. Verify against the official site.
 - **Don't add a `rec` to new events** — see below.
 
@@ -141,7 +159,7 @@ same `#scroll` container and are shown/hidden by `setView()` — there is no ful
 - **Relative timing** — every event card carries a `Today` / `Tomorrow` / `In 3 weeks` / `Done` badge.
 - **Conflict detection** — overlapping travel flagged per month; clashing days marked `CLASH`
 - **Filter chips** — click a legend colour to show/hide that category
-- **Status toggle** — flip any conference 🔴 Possible ⇄ 🟢 Attending (per-browser; see Gotchas)
+- **Status toggle** — flip any conference 🔴 Potential ⇄ 🟢 Attending (per-browser; see Gotchas)
 - **Reset my changes** — appears in the toolbar only when local changes exist; clears them
 - **Export .ics** — downloads everything currently shown, importable into Outlook/Google/Apple.
   All-day `DTEND` is exclusive (a 3-day event ends on day 4) and lines fold at 75 **octets**.
