@@ -144,8 +144,10 @@ same `#scroll` container and are shown/hidden by `setView()` — there is no ful
   gets its scroll back (`.scroll.locked` reverts to `overflow-y:auto`).
 - **The header wraps below 900px.** Three view buttons + Today + Add overflowed a phone header once
   the Month button was added; `Add Event` goes icon-only below 600px.
-- **Future Proof Festival was deliberately removed** from September at the owner's request. Don't
-  re-add it.
+- **Events deliberately removed at the owner's request — don't re-add them.** Both were pulled on
+  purpose, so treat their absence as intentional, not as a research gap:
+  - **Future Proof Festival** (September)
+  - **Bitcoin for Business — Dallas @ The Crescent** (was id 2, Sep 4 2026, a Strive-run event)
 - The local folder is inside OneDrive. Fine on one machine; don't work from a second clone
   simultaneously, since OneDrive syncing `.git` can corrupt it.
 
