@@ -23,9 +23,14 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 .year-nav button:hover{background:var(--surface-3);color:var(--text);}
 .btn-add{display:inline-flex;align-items:center;gap:7px;background:var(--btc);color:#0A0A0A;font-weight:700;font-size:0.9rem;padding:10px 18px;border-radius:var(--radius-sm);transition:background .15s;}
 .btn-add:hover{background:#ffa33d;}
-.legend{flex-shrink:0;padding:10px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:24px;background:var(--bg);flex-wrap:wrap;}
-.legend-item{display:flex;align-items:center;gap:8px;font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:600;}
-.legend-dot{width:8px;height:8px;border-radius:50%;}
+/* LEGEND = FILTER CHIPS */
+.legend{flex-shrink:0;padding:10px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:var(--bg);flex-wrap:wrap;}
+.legend-item{display:inline-flex;align-items:center;gap:8px;font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;padding:6px 11px;border-radius:99px;border:1px solid var(--border);background:var(--surface);transition:background .15s,border-color .15s,color .15s,opacity .15s;}
+.legend-item:hover{border-color:var(--border-hi);color:var(--text);}
+.legend-item.off{opacity:.38;}
+.legend-item.off .legend-dot{background:var(--text-faint)!important;}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.legend-n{font-size:0.66rem;color:var(--text-faint);font-weight:700;}
 .legend-count{margin-left:auto;font-size:0.75rem;color:var(--text-faint);}
 /* SEARCH */
 .search-bar{flex-shrink:0;padding:10px 28px;border-bottom:1px solid var(--border);background:var(--bg);display:flex;align-items:center;gap:12px;}
@@ -58,11 +63,11 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 .attending{--c:var(--green);--cd:var(--green-dim);}
 .possible{--c:var(--red);--cd:var(--red-dim);}
 .holiday{--c:var(--blue);--cd:var(--blue-dim);}
-.src-meta{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.src-meta{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
 .src-date-lbl{font-size:0.67rem;color:var(--text-faint);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;}
 .src-title{font-weight:700;font-size:0.94rem;margin-bottom:5px;line-height:1.35;}
 .src-notes{font-size:0.81rem;color:var(--text-muted);line-height:1.55;}
-.src-notes mark,.src-title mark{background:rgba(247,147,26,0.22);color:var(--btc);border-radius:2px;padding:0 2px;}
+.src-notes mark,.src-title mark,.src-rec mark{background:rgba(247,147,26,0.22);color:var(--btc);border-radius:2px;padding:0 2px;}
 .src-rec{margin-top:9px;font-size:0.76rem;line-height:1.5;color:var(--text-muted);}
 .search-empty{grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--text-faint);}
 .search-empty h3{font-family:var(--font-display);font-size:1.4rem;color:var(--text-muted);margin-bottom:8px;}
@@ -74,9 +79,9 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 /* MONTH CARD */
 .month{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;cursor:pointer;transition:border-color .18s,transform .18s,box-shadow .18s;user-select:none;}
 .month:hover{border-color:var(--btc);transform:translateY(-3px);box-shadow:0 8px 32px rgba(247,147,26,0.10);}
-.month-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px;}
+.month-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px;gap:8px;}
 .month-name{font-family:var(--font-display);font-size:1.25rem;}
-.month-tally{font-size:0.68rem;color:var(--btc);font-weight:700;}
+.month-tally{font-size:0.68rem;color:var(--btc);font-weight:700;white-space:nowrap;}
 .weekdays{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:5px;}
 .weekdays div{text-align:center;font-size:0.62rem;color:var(--text-faint);font-weight:700;}
 .days{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
@@ -89,7 +94,7 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 .d{background:var(--c);}
 .day.today .d{background:#0A0A0A;}
 /* TOOLTIP */
-.tooltip{position:fixed;z-index:400;background:var(--surface-3);border:1px solid var(--border-hi);border-radius:var(--radius-md);padding:10px 13px;max-width:260px;box-shadow:0 12px 32px rgba(0,0,0,.6);pointer-events:none;opacity:0;transform:translateY(5px);transition:opacity .12s,transform .12s;}
+.tooltip{position:fixed;z-index:400;background:var(--surface-3);border:1px solid var(--border-hi);border-radius:var(--radius-md);padding:10px 13px;max-width:270px;box-shadow:0 12px 32px rgba(0,0,0,.6);pointer-events:none;opacity:0;transform:translateY(5px);transition:opacity .12s,transform .12s;}
 .tooltip.show{opacity:1;transform:translateY(0);}
 .tooltip-row{display:flex;align-items:flex-start;gap:8px;}
 .tooltip-row+.tooltip-row{margin-top:7px;padding-top:7px;border-top:1px solid var(--border);}
@@ -117,9 +122,11 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 .zoom-day.has-event:hover{background:var(--surface-3);border-color:var(--border-hi);}
 .zoom-day.today{border-color:var(--btc);box-shadow:0 0 0 1px var(--btc);}
 .zoom-day.selected{background:var(--btc-dim);border-color:var(--btc);}
-.zoom-day-num{font-size:0.78rem;font-weight:700;color:var(--text-muted);}
+.zoom-day-num{font-size:0.78rem;font-weight:700;color:var(--text-muted);display:flex;align-items:center;justify-content:space-between;gap:4px;}
 .zoom-day.today .zoom-day-num{color:var(--btc);}
+.clash-flag{font-size:0.6rem;color:var(--red);font-weight:800;}
 .zoom-pill{padding:3px 6px;border-radius:3px;font-size:0.67rem;font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--cd);color:var(--c);}
+.zoom-pill.cont{opacity:.68;}
 .zoom-sidebar{display:flex;flex-direction:column;position:sticky;top:0;}
 .zoom-sidebar-title{font-family:var(--font-display);font-size:1.1rem;color:var(--text-muted);font-style:italic;margin-bottom:14px;}
 .zoom-events-list{display:flex;flex-direction:column;gap:10px;}
@@ -131,7 +138,15 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 .rec-tag{display:block;font-size:0.58rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--btc);margin-bottom:4px;}
 .src-rec .rec-tag{display:inline-block;margin-bottom:0;margin-right:5px;}
 .z-empty{color:var(--text-faint);font-size:0.88rem;text-align:center;padding:32px 0;}
-.type-tag{display:inline-block;padding:2px 8px;border-radius:3px;font-size:0.62rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:6px;background:var(--cd);color:var(--c);}
+.type-tag{display:inline-block;padding:2px 8px;border-radius:3px;font-size:0.62rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;background:var(--cd);color:var(--c);}
+.z-event .type-tag{margin-bottom:6px;}
+.span-tag{display:inline-block;font-size:0.6rem;font-weight:700;color:var(--text-faint);letter-spacing:0.05em;text-transform:uppercase;}
+/* CLASH PANEL */
+.clash-panel{background:rgba(241,86,95,.07);border:1px solid rgba(241,86,95,.3);border-radius:var(--radius-md);padding:12px 14px;margin-bottom:14px;}
+.clash-panel h4{font-size:0.64rem;font-weight:800;letter-spacing:0.09em;text-transform:uppercase;color:var(--red);margin-bottom:7px;}
+.clash-panel ul{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.clash-panel li{font-size:0.76rem;color:var(--text-muted);line-height:1.45;}
+.clash-panel b{color:var(--text);font-weight:600;}
 /* STATUS TOGGLE (Possible <-> Attending) */
 .status-toggle{margin-top:11px;display:inline-flex;align-items:center;gap:6px;font-size:0.71rem;font-weight:700;padding:7px 13px;border-radius:var(--radius-sm);border:1px solid var(--border-hi);background:transparent;letter-spacing:0.02em;transition:background .15s,border-color .15s,color .15s;}
 .status-toggle.possible{color:var(--green);border-color:rgba(62,207,142,.45);}
@@ -141,7 +156,7 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 /* MODAL */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;padding:20px;z-index:500;opacity:0;pointer-events:none;transition:opacity .18s;}
 .overlay.open{opacity:1;pointer-events:all;}
-.modal{background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-lg);width:100%;max-width:460px;padding:26px;transform:translateY(10px);transition:transform .18s;}
+.modal{background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-lg);width:100%;max-width:460px;padding:26px;transform:translateY(10px);transition:transform .18s;max-height:92dvh;overflow-y:auto;}
 .overlay.open .modal{transform:translateY(0);}
 .modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
 .modal-date{font-family:var(--font-display);font-size:1.3rem;}
@@ -151,17 +166,22 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 .fg label{display:block;font-size:0.68rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:7px;}
 .fg input,.fg select,.fg textarea{width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 13px;font:inherit;font-size:0.93rem;color:var(--text);transition:border-color .15s;}
 .fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--btc);}
-.fg textarea{resize:vertical;min-height:90px;line-height:1.5;}
+.fg textarea{resize:vertical;min-height:80px;line-height:1.5;}
 .fg select option{background:var(--surface);}
+.fg-hint{font-size:0.68rem;color:var(--text-faint);margin-top:5px;}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .form-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;}
 .btn-ghost{padding:10px 16px;border-radius:var(--radius-sm);color:var(--text-muted);transition:background .15s,color .15s;}
 .btn-ghost:hover{background:var(--surface-2);color:var(--text);}
+.saved-flash{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(12px);background:var(--surface-3);border:1px solid var(--border-hi);color:var(--text);font-size:0.8rem;font-weight:600;padding:9px 16px;border-radius:99px;z-index:600;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;}
+.saved-flash.show{opacity:1;transform:translateX(-50%) translateY(0);}
 @media(max-width:900px){.zoom-layout{grid-template-columns:1fr;}.zoom-sidebar{position:static;}}
-@media(max-width:600px){.header{padding:11px 14px;}.legend,.search-bar{padding:9px 14px;}.scroll{padding:16px 14px 50px;}.year-grid{grid-template-columns:1fr;}.zoom-head{padding:12px 16px;}.zoom-body{padding:16px;}.search-results-grid{grid-template-columns:1fr;}}
+@media(max-width:600px){.header{padding:11px 14px;}.legend,.search-bar{padding:9px 14px;}.scroll{padding:16px 14px 50px;}.year-grid{grid-template-columns:1fr;}.zoom-head{padding:12px 16px;}.zoom-body{padding:16px;}.search-results-grid{grid-template-columns:1fr;}.fg-row{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 <div class="tooltip" id="tooltip"></div>
+<div class="saved-flash" id="savedFlash">Saved</div>
 
 <!-- SEARCH RESULTS OVERLAY -->
 <div class="search-overlay" id="searchOverlay">
@@ -198,6 +218,7 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
       </div>
       <div class="zoom-sidebar">
         <div class="zoom-sidebar-title" id="zoomSidebarTitle">All Events</div>
+        <div id="clashHost"></div>
         <div class="zoom-events-list" id="zoomList"></div>
       </div>
     </div>
@@ -215,9 +236,9 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
     <div class="logo-text">Strive <span>Internal Planning Calendar</span></div>
   </div>
   <div class="year-nav">
-    <button id="prevYear"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <button id="prevYear" title="Previous year"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
     <span id="yearLabel">2026</span>
-    <button id="nextYear"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+    <button id="nextYear" title="Next year"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
   </div>
   <button class="btn-add" id="addBtn">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
@@ -225,19 +246,12 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
   </button>
 </header>
 
-<div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background:var(--btc)"></div>Bitcoin Date</div>
-  <div class="legend-item"><div class="legend-dot" style="background:var(--yellow)"></div>Strive Milestone</div>
-  <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Attending</div>
-  <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>Possible</div>
-  <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>Holiday / OOO</div>
-  <div class="legend-count" id="legendCount"></div>
-</div>
+<div class="legend" id="legend"></div>
 
 <div class="search-bar">
   <div class="search-wrap">
     <span class="search-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>
-    <input class="search-input" id="searchInput" type="text" placeholder="Search events, descriptions, Bitcoin dates, keywords…" autocomplete="off" spellcheck="false">
+    <input class="search-input" id="searchInput" type="text" placeholder="Search events, notes, attendees, dates…" autocomplete="off" spellcheck="false">
     <button class="search-clear" id="searchClear"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <span class="search-hint" id="searchHint"></span>
@@ -255,7 +269,10 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
       <button class="modal-x" id="addModalClose"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="fg"><label>Title</label><input type="text" id="fTitle" placeholder="Event name"></div>
-    <div class="fg"><label>Date</label><input type="date" id="fDate"></div>
+    <div class="fg-row">
+      <div class="fg"><label>Start date</label><input type="date" id="fDate"></div>
+      <div class="fg"><label>End date <span style="text-transform:none;font-weight:500">(optional)</span></label><input type="date" id="fEnd"></div>
+    </div>
     <div class="fg"><label>Type</label>
       <select id="fType">
         <option value="possible">Conference — Possible</option>
@@ -266,6 +283,7 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
       </select>
     </div>
     <div class="fg"><label>Notes / Agenda</label><textarea id="fNotes" placeholder="Details, owner, prep items, agenda..."></textarea></div>
+    <div class="fg"><label>Suggested attendees <span style="text-transform:none;font-weight:500">(optional)</span></label><textarea id="fRec" placeholder="Who should go, and why" style="min-height:60px"></textarea></div>
     <div class="form-actions">
       <button class="btn-ghost" id="addCancel">Cancel</button>
       <button class="btn-add" id="addSave">Save Event</button>
@@ -274,34 +292,51 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 </div>
 
 <script>
+'use strict';
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MON_SHORT=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const TYPE_LABELS={bitcoin:'Bitcoin Date',milestone:'Strive Milestone',attending:'Attending',possible:'Possible',holiday:'Holiday / OOO'};
+const TYPE_ORDER=['bitcoin','milestone','attending','possible','holiday'];
+const TYPE_VAR={bitcoin:'--btc',milestone:'--yellow',attending:'--green',possible:'--red',holiday:'--blue'};
+const LS_KEY='strive-calendar-v1';
 const today=new Date();
+
 let year=today.getFullYear();
 let nextId=300;
 let activeZoomMonth=null;
 let selectedDay=null;
+let activeTypes=new Set(TYPE_ORDER);
 
-const TYPE_LABELS={bitcoin:'Bitcoin Date',milestone:'Strive Milestone',attending:'Attending',possible:'Possible',holiday:'Holiday / OOO'};
 const typeLabel=t=>TYPE_LABELS[t]||t;
 const pad=n=>String(n).padStart(2,'0');
-const byDate=d=>events.filter(e=>e.date===d);
-const byMonth=(y,m)=>events.filter(e=>e.date.startsWith(`${y}-${pad(m+1)}`));
-const fmt=d=>{const[y,mo,dd]=d.split('-');return `${MONTHS[+mo-1]} ${+dd}, ${y}`;};
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
+/* ── DATE HELPERS (range-aware) ── */
+const dnum=ds=>{const[y,m,d]=ds.split('-').map(Number);return Date.UTC(y,m-1,d)/864e5;};
+const endOf=e=>e.end||e.date;
+const spans=e=>dnum(endOf(e))-dnum(e.date)+1;
+const covers=(e,ds)=>{const x=dnum(ds);return x>=dnum(e.date)&&x<=dnum(endOf(e));};
+const dayIndex=(e,ds)=>dnum(ds)-dnum(e.date)+1;
+const fmt=ds=>{const[y,m,d]=ds.split('-');return `${MONTHS[+m-1]} ${+d}, ${y}`;};
+function fmtSpan(e){
+  if(!e.end||e.end===e.date)return fmt(e.date);
+  const[y1,m1,d1]=e.date.split('-'),[y2,m2,d2]=e.end.split('-');
+  if(y1===y2&&m1===m2)return `${MONTHS[+m1-1]} ${+d1}–${+d2}, ${y1}`;
+  if(y1===y2)return `${MON_SHORT[+m1-1]} ${+d1} – ${MON_SHORT[+m2-1]} ${+d2}, ${y1}`;
+  return `${fmt(e.date)} – ${fmt(e.end)}`;
+}
+
+/* ── DATA ──
+   Multi-day events use a single entry with `end`. `rec` = suggested attendees. */
 let events=[
-  // ── COMPANY EVENTS / CONFERENCES ──
-  {id:1,date:'2026-06-26',title:'BFC Symposium — New York',type:'possible',notes:'Jeff Walton and Ben Werkman speaking. Bitcoin for Companies symposium in New York City. Prepare talking points, slides, and networking materials. Confirm travel logistics and attendee list in advance.'},
-  {id:2,date:'2026-09-04',title:'Bitcoin for Business — Dallas @ The Crescent (TBD Thursday)',type:'possible',rec:'Matt Cole (CEO) to host/headline this Strive business event; Ben Werkman (CIO) to carry the SATA and investment story to the Dallas business audience.',notes:'Date TBD — Thursday in September. Venue: The Crescent, Dallas TX. Internal Strive event. Begin planning logistics, speaker list, and invitee outreach. Update date when confirmed. Coordinate with Dallas team.'},
-  {id:3,date:'2026-10-15',title:'Bitcoin Alpha — Santa Monica (Day 1 of 3)',type:'possible',rec:'Ben Werkman (CIO) to lead on the Bitcoin investment thesis and SATA; reserve the CEO for flagship stages given the packed October.',notes:'Bitcoin Alpha conference, Santa Monica CA. Oct 15–17. Day 1. Prepare digital assets collateral and physical handouts. Confirm speaker schedule and booth setup.'},
-  {id:4,date:'2026-10-16',title:'Bitcoin Alpha — Santa Monica (Day 2 of 3)',type:'possible',rec:'Ben Werkman (CIO) — investment-led presence.',notes:'Bitcoin Alpha conference, Santa Monica CA. Oct 15–17. Day 2. Main conference sessions.'},
-  {id:5,date:'2026-10-17',title:'Bitcoin Alpha — Santa Monica (Day 3 of 3)',type:'possible',rec:'Ben Werkman (CIO) — investment-led presence; wrap-up and follow-ups.',notes:'Bitcoin Alpha conference, Santa Monica CA. Oct 15–17. Day 3. Wrap-up, follow-up scheduling, post-event debrief.'},
-  {id:6,date:'2026-07-22',title:'Miami Event — Golf w/ Celebrities & Advisors (Day 1)',type:'possible',rec:'Matt Cole (CEO) — a high-touch relationship and brand event with celebrities and advisors is ideal for the CEO; Ben Werkman (CIO) to turn advisor conversations into SATA interest.',notes:'Miami. Golfing event with celebrities and advisors. July 22–23. Confirm guest list, logistics, and talking points for advisor conversations. Great opportunity for relationship building and brand positioning.'},
-  {id:7,date:'2026-07-23',title:'Miami Event — Golf w/ Celebrities & Advisors (Day 2)',type:'possible',rec:'Matt Cole (CEO) and Ben Werkman (CIO) — continued relationship building and advisor follow-ups.',notes:'Miami. Day 2 of golf event with celebrities and advisors. Follow-up conversations, networking, and informal meetings.'},
-  {id:8,date:'2026-08-27',title:'BTC Hong Kong — Day 1 of 3',type:'attending',notes:'BTC Hong Kong conference. Aug 27–29. BRING: Digital Assets collateral (decks, one-pagers), physical handouts, business cards, SATA and ASST materials. Prep Asia-Pacific messaging and compliance review for HK market.'},
-  {id:9,date:'2026-08-28',title:'BTC Hong Kong — Day 2 of 3',type:'attending',notes:'BTC Hong Kong. Aug 27–29. Day 2. Main sessions and panel discussions. Remind team: bring physical handouts and digital assets materials.'},
-  {id:10,date:'2026-08-29',title:'BTC Hong Kong — Day 3 of 3',type:'attending',notes:'BTC Hong Kong. Aug 27–29. Day 3. Final sessions, media availability, wrap-up networking. Post-event debrief and follow-up list.'},
-  {id:11,date:'2026-09-22',title:'TrueNorth Event / Happy Hour @ BTC Treasuries Conference — New York',type:'attending',notes:'TrueNorth Event and Happy Hour co-located with Bitcoin Treasuries Conference in New York. September date TBD — update when confirmed. Confirm RSVP list, venue logistics, and Strive brand presence. Great venue for treasury strategy conversations.'},
+  // ── STRIVE EVENTS & CONFERENCES ──
+  {id:1,date:'2026-06-26',title:'BFC Symposium — New York',type:'possible',rec:'Jeff Walton (CRO) and Ben Werkman (CIO) are already slated to speak — keep both; this is a Bitcoin-for-companies audience where the risk framework and the investment thesis both land.',notes:'Jeff Walton and Ben Werkman speaking. Bitcoin for Companies symposium in New York City. Prepare talking points, slides, and networking materials. Confirm travel logistics and attendee list in advance.'},
+  {id:2,date:'2026-09-04',title:'Bitcoin for Business — Dallas @ The Crescent',type:'possible',rec:'Matt Cole (CEO) to host/headline this Strive-run event; Ben Werkman (CIO) to carry the SATA and investment story to the Dallas business audience.',notes:'Date TBD — Thursday in September. Venue: The Crescent, Dallas TX. Internal Strive event. Begin planning logistics, speaker list, and invitee outreach. Update date when confirmed. Coordinate with Dallas team.'},
+  {id:3,date:'2026-10-15',end:'2026-10-17',title:'Bitcoin Alpha — Santa Monica',type:'possible',rec:'Ben Werkman (CIO) to lead on the Bitcoin investment thesis and SATA; reserve the CEO for flagship stages given how packed October is.',notes:'Bitcoin Alpha conference, Santa Monica CA. Oct 15–17 (3 days). Prepare digital assets collateral and physical handouts. Confirm speaker schedule and booth setup. Day 3: wrap-up, follow-up scheduling, post-event debrief.'},
+  {id:6,date:'2026-07-22',end:'2026-07-23',title:'Miami Event — Golf w/ Celebrities & Advisors',type:'possible',rec:'Matt Cole (CEO) — a high-touch relationship and brand event with celebrities and advisors is ideal for the CEO; Ben Werkman (CIO) to turn advisor conversations into SATA interest.',notes:'Miami. Golfing event with celebrities and advisors, July 22–23. Confirm guest list, logistics, and talking points for advisor conversations. Day 2 is follow-up conversations, networking, and informal meetings. Strong opportunity for relationship building and brand positioning.'},
+  {id:8,date:'2026-08-27',end:'2026-08-29',title:'BTC Hong Kong',type:'attending',rec:'Ben Werkman (CIO) to lead on APAC institutional capital and the SATA story; Jeff Walton (CRO) is a strong add for the Hong Kong regulatory and compliance lens.',notes:'BTC Hong Kong conference, Aug 27–29. BRING: Digital Assets collateral (decks, one-pagers), physical handouts, business cards, SATA and ASST materials. Prep Asia-Pacific messaging and compliance review for the HK market. Final day: media availability, wrap-up networking, post-event debrief and follow-up list. NOTE: the public Bitcoin Asia 2026 programme is listed as Aug 27–28 — confirm whether our third day is conference programming or team meetings.'},
+  {id:11,date:'2026-09-22',title:'TrueNorth Event / Happy Hour @ BTC Treasuries Conference — New York',type:'attending',rec:'Matt Cole (CEO) to host — this is a Strive-branded room of treasury decision-makers; Ben Werkman (CIO) for the SATA and treasury-strategy conversations.',notes:'TrueNorth Event and Happy Hour co-located with the Bitcoin Treasuries Conference in New York. September date still TBD. IMPORTANT: the Bitcoin Treasuries Conference itself is confirmed for Sep 28 at SECOND in Midtown — consider moving this happy hour to Sep 28 so the two line up. Confirm RSVP list, venue logistics, and Strive brand presence.'},
   {id:12,date:'2027-04-07',title:'RiskWorld 2027',type:'possible',rec:'Jeff Walton (CRO) — a dedicated risk-management conference is the natural home for the Chief Risk Officer and positions Strive\'s risk framework to an institutional audience.',notes:'RiskWorld annual conference 2027. Begin planning Strive presence, booth logistics, and speaking submissions early (typically 6+ months in advance). Key risk management and institutional audience — strategic networking opportunity for ASST and SATA positioning.'},
   // ── STRIVE MILESTONES ──
   {id:13,date:'2026-06-16',title:'SATA Daily Dividend Launch — U.S. First',type:'milestone',notes:'Strive\'s SATA preferred stock begins paying dividends every business day — the first U.S.-listed security in history to do so. 13% annualized rate (approximately 13.88% effective with daily compounding). Previously paid monthly. Historic milestone for Strive and the Bitcoin-backed income investing category. Traded on Nasdaq near $100 par value.'},
@@ -333,45 +368,115 @@ let events=[
   {id:108,date:'2026-11-11',title:'Veterans Day',type:'holiday',notes:'Federal holiday.'},
   {id:109,date:'2026-11-26',title:'Thanksgiving',type:'holiday',notes:'Federal holiday. Fourth Thursday of November. Strive offices closed.'},
   {id:110,date:'2026-11-27',title:'Day After Thanksgiving',type:'holiday',notes:'Strive offices closed.'},
-  {id:111,date:'2026-12-24',title:'Christmas Eve',type:'holiday',notes:'Strive offices closed.'},
-  {id:112,date:'2026-12-25',title:'Christmas Day',type:'holiday',notes:'Federal holiday.'},
-  {id:113,date:'2026-12-31',title:"New Year's Eve",type:'holiday',notes:'Strive offices closed. End of year.'},
-  {id:114,date:'2027-01-01',title:"New Year's Day 2027",type:'holiday',notes:'Federal holiday.'},
-  // ── RECOMMENDED CONFERENCES — CONFIRMED / ATTENDING (GREEN) ──
-  {id:200,date:'2026-09-14',title:'Future Proof Festival 2026 — Huntington Beach, CA (Sep 14–17)',type:'attending',notes:'The largest wealth-management festival — thousands of RIAs and financial advisors, with roughly $20T in AUM represented. WHY STRIVE: Prime venue to put SATA\'s daily-dividend preferred (13% annualized) in front of advisors building income portfolios for clients. A differentiated, Bitcoin-backed yield product for a largely non-crypto-native allocator audience.'},
-  {id:201,date:'2026-09-28',title:'Bitcoin Treasuries Conference 2026 — New York (SECOND, Midtown)',type:'attending',notes:'300+ treasury strategists, CFOs, and institutional allocators focused on corporate Bitcoin balance-sheet adoption. WHY STRIVE: The single most on-target room — Strive is a public Bitcoin treasury company (ASST), and this is the decision-maker audience that understands and could allocate to SATA. Pairs directly with the TrueNorth Happy Hour.'},
-  {id:202,date:'2027-02-24',title:'Bitcoin for Corporations 2027 — Las Vegas (Feb, date TBD)',type:'attending',notes:'Strategy\'s (Michael Saylor) executive network for Bitcoin treasury companies — CEOs, CFOs, treasurers, investors, and builders. WHY STRIVE: Direct peer positioning alongside Strategy (MSTR); showcase SATA as a capital-markets innovation to other treasury companies. The 2026 edition was Feb 24–25 — update the date when confirmed.'},
-  // ── RECOMMENDED CONFERENCES — POSSIBLE (RED) ──
-  {id:210,date:'2026-10-07',title:'TOKEN2049 Singapore (Oct 7–8)',type:'possible',rec:'Ben Werkman (CIO) to lead on institutional and APAC capital; add Matt Cole (CEO) if pursuing top-tier Asia-Pacific relationships.',notes:'Marina Bay Sands, Singapore. Premier global crypto event with deep APAC institutional capital. WHY STRIVE: Broad institutional and Asia-Pacific investor exposure for the Strive brand and SATA. POSSIBLE — confirm attendance to move this to Attending.'},
-  {id:211,date:'2026-11-13',title:'Bitcoin Amsterdam 2026 (Nov 13–14)',type:'possible',rec:'Ben Werkman (CIO) — carry the investment thesis and SATA to the EU institutional and retail audience.',notes:'Sugarfactory, Amsterdam. Europe\'s flagship Bitcoin conference (5,000+ attendees). WHY STRIVE: EU institutional and retail reach; brand presence in a key European market. POSSIBLE — confirm attendance to move this to Attending.'},
-  {id:212,date:'2026-12-08',title:'Bitcoin MENA / BFC Symposium — Abu Dhabi',type:'possible',rec:'Matt Cole (CEO) for sovereign and large-allocator relationships; Jeff Walton (CRO) to own the regulatory and risk lens that matters in the MENA market.',notes:'Abu Dhabi, UAE. One of the largest Bitcoin gatherings in the Middle East; sovereign and institutional capital. WHY STRIVE: Access to large MENA allocators for SATA exposure. POSSIBLE — confirm attendance to move this to Attending.'},
-  {id:213,date:'2026-11-12',title:'Adopting Bitcoin — El Salvador (Nov, date TBD)',type:'possible',rec:'Matt Cole (CEO) — a sovereign-adoption stage is a thought-leadership and keynote moment best carried by the CEO.',notes:'El Salvador. The sovereign Bitcoin-adoption hub. WHY STRIVE: Thought-leadership positioning at the center of nation-state Bitcoin adoption. POSSIBLE — confirm date and attendance.'},
-  {id:214,date:'2027-07-15',title:'Bitcoin 2027 — Nashville, TN (Jul 15–17)',type:'possible',rec:'Matt Cole (CEO) for a keynote and brand presence on the world\'s largest Bitcoin stage; Ben Werkman (CIO) for investment and treasury panels.',notes:'The world\'s largest Bitcoin conference (40,000+ attendees). WHY STRIVE: Flagship U.S. brand presence and capital-markets visibility for ASST and SATA. POSSIBLE — confirm attendance to move this to Attending.'},
-  {id:215,date:'2027-04-21',title:'TOKEN2049 Dubai (Apr 21–22)',type:'possible',rec:'Ben Werkman (CIO) on global institutional capital; add Matt Cole (CEO) if building sovereign-capital relationships in the Gulf.',notes:'Dubai. Global capital-hub event. WHY STRIVE: Pairs with a MENA strategy; access to international allocators. POSSIBLE — confirm attendance to move this to Attending.'},
-  {id:216,date:'2027-06-10',title:'BTC Prague 2027 (Jun, date TBD)',type:'possible',rec:'Ben Werkman (CIO) or a senior delegate — strong European reach, but lower executive priority than the institutional and advisor events.',notes:'Prague. The largest European Bitcoin conference. WHY STRIVE: Major European audience and brand reach. POSSIBLE — confirm date and attendance.'},
-  // ── ADVISOR / WEALTH-MANAGEMENT SUMMITS — POSSIBLE (RED) ──
-  {id:217,date:'2026-10-13',title:'Forbes | SHOOK Top Advisor Summit — Las Vegas (Oct 13–16)',type:'possible',rec:'Matt Cole (CEO) + Ben Werkman (CIO) — the country\'s top-AUM advisors are the prime SATA distribution audience; CEO presence earns credibility while the CIO sells the daily-dividend thesis.',notes:'The Wynn, Las Vegas. Forbes/SHOOK convenes America\'s top-ranked wealth advisors — among the highest-AUM advisors in the country. WHY STRIVE: A concentrated room of elite advisors who allocate large client books — ideal for introducing SATA\'s daily-dividend preferred (13% annualized) as a differentiated, Bitcoin-backed income product. POSSIBLE — confirm attendance to move to Attending.'},
-  {id:218,date:'2026-10-13',title:'Maxim Growth Summit — New York (Hard Rock Hotel, Oct 13–14)',type:'possible',rec:'Ben Werkman (CIO) — investor meetings and capital-markets conversations are core CIO work; add Matt Cole (CEO) for headline investor relationships. Note: dates collide with Forbes SHOOK — split the team or choose one.',notes:'Hard Rock Hotel, New York City. Maxim Group\'s investor and executive summit — keynotes plus one-on-one investor meetings across multiple sectors. WHY STRIVE: Capital-markets visibility for ASST and direct access to institutional investors; a venue to tell the Strive treasury and SATA story. (Listed by you as "Maximum Growth Summit"; 2025 edition ran Oct 22–23 — confirm 2026 dates.) POSSIBLE — confirm attendance to move to Attending.'},
-  {id:219,date:'2026-10-27',title:'Schwab IMPACT 2026 — Boston (Oct 27–29)',type:'possible',rec:'Ben Werkman (CIO) — the largest RIA gathering in the U.S. is a top SATA-distribution target for the Chief Investment Officer.',notes:'MGM Music Hall at Fenway, Boston. The largest RIA/advisor conference in the U.S. — thousands of advisors on the Schwab platform. WHY STRIVE: The single biggest concentration of RIAs anywhere — prime venue to put SATA\'s 13% daily-dividend preferred in front of advisors building client income portfolios. POSSIBLE — confirm attendance to move to Attending.'},
-  {id:220,date:'2026-11-16',title:'Investments & Wealth Institute — Experience, Scottsdale AZ (Nov 16–17)',type:'possible',rec:'Ben Werkman (CIO) — a credentialed, multi-channel advisor audience and a strong fit for SATA\'s income story.',notes:'Scottsdale, AZ. The Institute\'s premier wealth-management conference — 600+ attendees spanning wirehouses, independent advisors, and RIAs. WHY STRIVE: A credentialed advisor audience across every channel; strong fit for SATA\'s income story. POSSIBLE — confirm attendance to move to Attending.'},
-  {id:221,date:'2026-09-16',title:'European Blockchain Convention 2026 — Barcelona (Sep 16–17)',type:'possible',rec:'Ben Werkman (CIO) to lead on EU institutional capital; Jeff Walton (CRO) is a strong alternate given the institutional and regulatory focus.',notes:'Fira Barcelona Gran Via. The 12th EBC — 6,000+ attendees from 70+ countries, with a strong 2026 focus on institutional capital entering digital assets (three main stages, large expo). WHY STRIVE: Europe\'s premier institutional blockchain gathering — direct access to EU allocators, family offices, and digital-asset institutions; an ideal stage for Strive\'s Bitcoin-treasury story and SATA. (You noted the 17th; the event runs Sep 16–17.) POSSIBLE — confirm attendance to move to Attending.'},
+  {id:111,date:'2026-12-24',end:'2026-12-25',title:'Christmas Eve & Christmas Day',type:'holiday',notes:'Dec 24: Strive offices closed. Dec 25: federal holiday.'},
+  {id:113,date:'2026-12-31',end:'2027-01-01',title:"New Year's Eve & New Year's Day",type:'holiday',notes:'Dec 31: Strive offices closed, end of year. Jan 1: federal holiday.'},
+  // ── CONFERENCES — CONFIRMED / ATTENDING (GREEN) ──
+  {id:200,date:'2026-09-14',end:'2026-09-17',title:'Future Proof Festival 2026 — Huntington Beach, CA',type:'attending',rec:'Ben Werkman (CIO) — this is the highest-value SATA distribution room of the year; the CIO should own the income-product conversation with advisors. Matt Cole (CEO) worth adding for a headline appearance if the schedule allows.',notes:'Sep 14–17. The largest wealth-management festival — thousands of RIAs and financial advisors, with roughly $20T in AUM represented. WHY STRIVE: Prime venue to put SATA\'s daily-dividend preferred (13% annualized) in front of advisors building income portfolios for clients. A differentiated, Bitcoin-backed yield product for a largely non-crypto-native allocator audience.'},
+  {id:201,date:'2026-09-28',title:'Bitcoin Treasuries Conference 2026 — New York (SECOND, Midtown)',type:'attending',rec:'Matt Cole (CEO) and Ben Werkman (CIO) — a small, decision-maker-dense room of treasury peers and allocators; both belong here. Jeff Walton (CRO) valuable for the accounting and regulatory sessions.',notes:'300+ treasury strategists, CFOs, and institutional allocators focused on corporate Bitcoin balance-sheet adoption. WHY STRIVE: The single most on-target room — Strive is a public Bitcoin treasury company (ASST), and this is the decision-maker audience that understands and could allocate to SATA. Pairs directly with the TrueNorth Happy Hour.'},
+  {id:202,date:'2027-02-24',end:'2027-02-25',title:'Bitcoin for Corporations 2027 — Las Vegas',type:'attending',rec:'Matt Cole (CEO) — peer-level positioning alongside Strategy (MSTR) is a CEO-to-CEO room; Ben Werkman (CIO) to present SATA as a capital-markets innovation.',notes:'Feb 24–25 (2026 dates; confirm 2027). Strategy\'s (Michael Saylor) executive network for Bitcoin treasury companies — CEOs, CFOs, treasurers, investors, and builders. WHY STRIVE: Direct peer positioning alongside Strategy (MSTR); showcase SATA as a capital-markets innovation to other treasury companies.'},
+  // ── CONFERENCES — POSSIBLE (RED) ──
+  {id:210,date:'2026-10-07',end:'2026-10-08',title:'TOKEN2049 Singapore',type:'possible',rec:'Ben Werkman (CIO) to lead on institutional and APAC capital; add Matt Cole (CEO) if pursuing top-tier Asia-Pacific relationships.',notes:'Oct 7–8, Marina Bay Sands, Singapore. Premier global crypto event with deep APAC institutional capital. WHY STRIVE: Broad institutional and Asia-Pacific investor exposure for the Strive brand and SATA. POSSIBLE — confirm attendance to move this to Attending.'},
+  {id:221,date:'2026-09-16',end:'2026-09-17',title:'European Blockchain Convention 2026 — Barcelona',type:'possible',rec:'Ben Werkman (CIO) to lead on EU institutional capital; Jeff Walton (CRO) is a strong alternate given the institutional and regulatory focus. NOTE: overlaps Future Proof (Sep 14–17) — these two cannot be covered by the same person.',notes:'Sep 16–17, Fira Barcelona Gran Via. The 12th EBC — 6,000+ attendees from 70+ countries, with a strong 2026 focus on institutional capital entering digital assets (three main stages, large expo). WHY STRIVE: Europe\'s premier institutional blockchain gathering — direct access to EU allocators, family offices, and digital-asset institutions; an ideal stage for Strive\'s Bitcoin-treasury story and SATA. POSSIBLE — confirm attendance to move to Attending.'},
+  {id:217,date:'2026-10-13',end:'2026-10-16',title:'Forbes | SHOOK Top Advisor Summit — Las Vegas',type:'possible',rec:'Matt Cole (CEO) + Ben Werkman (CIO) — the country\'s top-AUM advisors are the prime SATA distribution audience; CEO presence earns credibility while the CIO sells the daily-dividend thesis. Highest-priority red event.',notes:'Oct 13–16, The Wynn, Las Vegas. Forbes/SHOOK convenes America\'s top-ranked wealth advisors — among the highest-AUM advisors in the country. WHY STRIVE: A concentrated room of elite advisors who allocate large client books — ideal for introducing SATA\'s daily-dividend preferred (13% annualized) as a differentiated, Bitcoin-backed income product. POSSIBLE — confirm attendance to move to Attending.'},
+  {id:218,date:'2026-10-13',end:'2026-10-14',title:'Maxim Growth Summit — New York (Hard Rock Hotel)',type:'possible',rec:'Ben Werkman (CIO) — investor meetings and capital-markets conversations are core CIO work. CONFLICT: same dates as Forbes SHOOK in Las Vegas — split the team or pick one.',notes:'Oct 13–14, Hard Rock Hotel, New York City. Maxim Group\'s investor and executive summit — keynotes plus one-on-one investor meetings across multiple sectors. WHY STRIVE: Capital-markets visibility for ASST and direct access to institutional investors; a venue to tell the Strive treasury and SATA story. (Listed as "Maximum Growth Summit"; the 2025 edition ran Oct 22–23 — confirm 2026 dates.) POSSIBLE — confirm attendance to move to Attending.'},
+  {id:219,date:'2026-10-27',end:'2026-10-29',title:'Schwab IMPACT 2026 — Boston',type:'possible',rec:'Ben Werkman (CIO) — the largest RIA gathering in the U.S. and a top SATA-distribution target for the Chief Investment Officer.',notes:'Oct 27–29, MGM Music Hall at Fenway, Boston. The largest RIA/advisor conference in the U.S. — thousands of advisors on the Schwab platform. WHY STRIVE: The single biggest concentration of RIAs anywhere — prime venue to put SATA\'s 13% daily-dividend preferred in front of advisors building client income portfolios. POSSIBLE — confirm attendance to move to Attending.'},
+  {id:211,date:'2026-11-13',end:'2026-11-14',title:'Bitcoin Amsterdam 2026',type:'possible',rec:'Ben Werkman (CIO) — carry the investment thesis and SATA to the EU institutional and retail audience.',notes:'Nov 13–14, Sugarfactory, Amsterdam. Europe\'s flagship Bitcoin conference (5,000+ attendees). WHY STRIVE: EU institutional and retail reach; brand presence in a key European market. POSSIBLE — confirm attendance to move this to Attending.'},
+  {id:213,date:'2026-11-12',title:'Adopting Bitcoin — El Salvador',type:'possible',rec:'Matt Cole (CEO) — a sovereign-adoption stage is a thought-leadership and keynote moment best carried by the CEO.',notes:'November, date TBD. El Salvador — the sovereign Bitcoin-adoption hub. WHY STRIVE: Thought-leadership positioning at the center of nation-state Bitcoin adoption. POSSIBLE — confirm date and attendance.'},
+  {id:220,date:'2026-11-16',end:'2026-11-17',title:'Investments & Wealth Institute — Experience, Scottsdale AZ',type:'possible',rec:'Ben Werkman (CIO) — a credentialed, multi-channel advisor audience and a strong fit for SATA\'s income story.',notes:'Nov 16–17, Scottsdale, AZ. The Institute\'s premier wealth-management conference — 600+ attendees spanning wirehouses, independent advisors, and RIAs. WHY STRIVE: A credentialed advisor audience across every channel; strong fit for SATA\'s income story. POSSIBLE — confirm attendance to move to Attending.'},
+  {id:212,date:'2026-12-08',title:'Bitcoin MENA / BFC Symposium — Abu Dhabi',type:'possible',rec:'Matt Cole (CEO) for sovereign and large-allocator relationships; Jeff Walton (CRO) to own the regulatory and risk lens that matters in the MENA market.',notes:'Dec 8, Abu Dhabi, UAE. One of the largest Bitcoin gatherings in the Middle East; sovereign and institutional capital. WHY STRIVE: Access to large MENA allocators for SATA exposure. POSSIBLE — confirm attendance to move this to Attending.'},
+  {id:215,date:'2027-04-21',end:'2027-04-22',title:'TOKEN2049 Dubai',type:'possible',rec:'Ben Werkman (CIO) on global institutional capital; add Matt Cole (CEO) if building sovereign-capital relationships in the Gulf.',notes:'Apr 21–22, Dubai. Global capital-hub event. WHY STRIVE: Pairs with a MENA strategy; access to international allocators. POSSIBLE — confirm attendance to move this to Attending.'},
+  {id:216,date:'2027-06-10',title:'BTC Prague 2027',type:'possible',rec:'Ben Werkman (CIO) or a senior delegate — strong European reach, but lower executive priority than the institutional and advisor events.',notes:'June, date TBD. Prague — the largest European Bitcoin conference. WHY STRIVE: Major European audience and brand reach. POSSIBLE — confirm date and attendance.'},
+  {id:214,date:'2027-07-15',end:'2027-07-17',title:'Bitcoin 2027 — Nashville, TN',type:'possible',rec:'Matt Cole (CEO) for a keynote and brand presence on the world\'s largest Bitcoin stage; Ben Werkman (CIO) for investment and treasury panels.',notes:'Jul 15–17. The world\'s largest Bitcoin conference (40,000+ attendees). WHY STRIVE: Flagship U.S. brand presence and capital-markets visibility for ASST and SATA. POSSIBLE — confirm attendance to move this to Attending.'},
 ];
 
-/* ─── RENDER ─── */
+/* ── PERSISTENCE ── */
+const BASE_TYPE={};
+events.forEach(e=>{BASE_TYPE[e.id]=e.type;});
+const flashEl=document.getElementById('savedFlash');
+let flashTimer=null;
+function flash(msg){
+  flashEl.textContent=msg;
+  flashEl.classList.add('show');
+  clearTimeout(flashTimer);
+  flashTimer=setTimeout(()=>flashEl.classList.remove('show'),1400);
+}
+function saveState(){
+  try{
+    const overrides={};
+    events.forEach(e=>{if(BASE_TYPE[e.id]!==undefined&&e.type!==BASE_TYPE[e.id])overrides[e.id]=e.type;});
+    const custom=events.filter(e=>e.custom).map(e=>({id:e.id,date:e.date,end:e.end,title:e.title,type:e.type,notes:e.notes,rec:e.rec,custom:true}));
+    localStorage.setItem(LS_KEY,JSON.stringify({v:1,overrides,custom}));
+  }catch(err){/* storage unavailable (private mode / file restrictions) — session-only */}
+}
+function loadState(){
+  try{
+    const raw=localStorage.getItem(LS_KEY);
+    if(!raw)return;
+    const s=JSON.parse(raw);
+    if(s&&s.overrides)Object.keys(s.overrides).forEach(id=>{
+      const t=s.overrides[id],e=events.find(x=>x.id===+id);
+      if(e&&TYPE_LABELS[t])e.type=t;
+    });
+    if(s&&Array.isArray(s.custom))s.custom.forEach(c=>{
+      if(c&&c.id!=null&&c.date&&c.title&&TYPE_LABELS[c.type]&&!events.some(e=>e.id===c.id)){
+        events.push(c);
+        BASE_TYPE[c.id]=c.type;
+      }
+    });
+    const ids=events.filter(e=>e.custom).map(e=>e.id);
+    if(ids.length)nextId=Math.max(nextId,Math.max.apply(null,ids)+1);
+  }catch(err){/* corrupt or unavailable storage — fall back to defaults */}
+}
+loadState();
+
+/* ── QUERIES (filter-aware) ── */
+const shown=()=>events.filter(e=>activeTypes.has(e.type));
+const byDate=ds=>shown().filter(e=>covers(e,ds)).sort((a,b)=>TYPE_ORDER.indexOf(a.type)-TYPE_ORDER.indexOf(b.type));
+function byMonth(y,m){
+  const first=`${y}-${pad(m+1)}-01`,last=`${y}-${pad(m+1)}-${pad(new Date(y,m+1,0).getDate())}`;
+  const lo=dnum(first),hi=dnum(last);
+  return shown().filter(e=>dnum(e.date)<=hi&&dnum(endOf(e))>=lo).sort((a,b)=>a.date.localeCompare(b.date)||TYPE_ORDER.indexOf(a.type)-TYPE_ORDER.indexOf(b.type));
+}
+const inYear=y=>shown().filter(e=>+e.date.slice(0,4)===y||+endOf(e).slice(0,4)===y);
+/* travel commitments that can physically conflict */
+const isTravel=e=>e.type==='attending'||e.type==='possible';
+
+/* ── LEGEND / FILTERS ── */
+function renderLegend(){
+  const host=document.getElementById('legend');
+  const counts={};
+  TYPE_ORDER.forEach(t=>{counts[t]=events.filter(e=>e.type===t&&(+e.date.slice(0,4)===year||+endOf(e).slice(0,4)===year)).length;});
+  host.innerHTML=TYPE_ORDER.map(t=>`<button class="legend-item${activeTypes.has(t)?'':' off'}" data-t="${t}" title="Show / hide ${esc(typeLabel(t))}"><span class="legend-dot" style="background:var(${TYPE_VAR[t]})"></span>${esc(typeLabel(t))}<span class="legend-n">${counts[t]}</span></button>`).join('')
+    +`<span class="legend-count" id="legendCount"></span>`;
+  const n=inYear(year).length;
+  document.getElementById('legendCount').textContent=`${n} shown in ${year}`;
+}
+document.getElementById('legend').addEventListener('click',e=>{
+  const b=e.target.closest('.legend-item');
+  if(!b)return;
+  const t=b.dataset.t;
+  if(activeTypes.has(t)){
+    if(activeTypes.size===1)return; // never hide everything
+    activeTypes.delete(t);
+  }else activeTypes.add(t);
+  renderLegend();render();
+  if(activeZoomMonth!==null)refreshZoom();
+});
+
+/* ── YEAR GRID ── */
 function render(){
   document.getElementById('yearLabel').textContent=year;
-  const n=events.filter(e=>e.date.startsWith(String(year))).length;
-  document.getElementById('legendCount').textContent=`${n} event${n!==1?'s':''} in ${year}`;
+  renderLegendCountOnly();
   const grid=document.getElementById('yearGrid');
   grid.innerHTML='';
   for(let m=0;m<12;m++){
     const card=document.createElement('div');
     card.className='month';
     const tally=byMonth(year,m).length;
-    card.innerHTML=`<div class="month-head"><span class="month-name">${MONTHS[m]}</span><span class="month-tally">${tally?tally+' event'+(tally>1?'s':''):''}</span></div><div class="weekdays">${WD.map(d=>`<div>${d}</div>`).join('')}</div><div class="days" id="mdays-${m}"></div>`;
-    const daysEl=card.querySelector(`#mdays-${m}`);
+    card.innerHTML=`<div class="month-head"><span class="month-name">${MONTHS[m]}</span><span class="month-tally">${tally?tally+' event'+(tally>1?'s':''):''}</span></div><div class="weekdays">${WD.map(d=>`<div>${d}</div>`).join('')}</div><div class="days"></div>`;
+    const daysEl=card.querySelector('.days');
     const first=new Date(year,m,1).getDay(),count=new Date(year,m+1,0).getDate();
-    for(let i=0;i<first;i++){const e=document.createElement('div');e.className='day empty';daysEl.appendChild(e);}
+    for(let i=0;i<first;i++){const c=document.createElement('div');c.className='day empty';daysEl.appendChild(c);}
     for(let d=1;d<=count;d++){
       const ds=`${year}-${pad(m+1)}-${pad(d)}`;
       const evts=byDate(ds);
@@ -379,22 +484,30 @@ function render(){
       const cell=document.createElement('div');
       cell.className='day'+(evts.length?' event':'')+(isToday?' today':'');
       cell.innerHTML=`<span>${d}</span>`+(evts.length?`<div class="day-dots">${evts.slice(0,3).map(e=>`<span class="d ${e.type}"></span>`).join('')}</div>`:'');
-      if(evts.length) attachTip(cell,evts);
+      if(evts.length)attachTip(cell,evts,ds);
       daysEl.appendChild(cell);
     }
     card.addEventListener('click',()=>openZoom(m));
     grid.appendChild(card);
   }
 }
+function renderLegendCountOnly(){
+  const el=document.getElementById('legendCount');
+  if(el)el.textContent=`${inYear(year).length} shown in ${year}`;
+}
 
-/* ─── TOOLTIP ─── */
+/* ── TOOLTIP ── */
 const tipEl=document.getElementById('tooltip');
-function attachTip(el,evts){
-  el.addEventListener('mouseenter',e=>{
-    tipEl.innerHTML=evts.map(ev=>`<div class="tooltip-row"><span class="tooltip-dot d ${ev.type}"></span><div><div class="tooltip-title">${ev.title}</div>${ev.notes?`<div class="tooltip-notes">${ev.notes.substring(0,100)}${ev.notes.length>100?'…':''}</div>`:''}</div></div>`).join('');
+function attachTip(el,evts,ds){
+  el.addEventListener('mouseenter',ev=>{
+    tipEl.innerHTML=evts.map(e=>{
+      const multi=spans(e)>1?`<div class="tooltip-notes" style="color:var(--text-faint)">Day ${dayIndex(e,ds)} of ${spans(e)} · ${esc(fmtSpan(e))}</div>`:'';
+      const nt=e.notes?`<div class="tooltip-notes">${esc(e.notes.substring(0,90))}${e.notes.length>90?'…':''}</div>`:'';
+      return `<div class="tooltip-row"><span class="tooltip-dot d ${e.type}"></span><div><div class="tooltip-title">${esc(e.title)}</div>${multi}${nt}</div></div>`;
+    }).join('');
     tipEl.classList.add('show');
     posTip(el);
-    e.stopPropagation();
+    ev.stopPropagation();
   });
   el.addEventListener('mouseleave',()=>tipEl.classList.remove('show'));
 }
@@ -407,71 +520,107 @@ function posTip(el){
   tipEl.style.left=x+'px';tipEl.style.top=y+'px';
 }
 
-/* ─── ZOOM ─── */
+/* ── ZOOM ── */
 function openZoom(m){
-  activeZoomMonth=m; selectedDay=null;
+  activeZoomMonth=m;selectedDay=null;
   document.getElementById('zoomTitle').textContent=`${MONTHS[m]} ${year}`;
-  buildZoomGrid(m);
-  renderZoomSidebar(null,m);
+  refreshZoom();
   document.getElementById('zoom').classList.add('open');
   tipEl.classList.remove('show');
 }
 function closeZoom(){document.getElementById('zoom').classList.remove('open');activeZoomMonth=null;selectedDay=null;}
-
+function refreshZoom(){
+  const m=activeZoomMonth;
+  if(m===null)return;
+  buildZoomGrid(m);
+  renderZoomSidebar(selectedDay!==null?`${year}-${pad(m+1)}-${pad(selectedDay)}`:null,m);
+}
 function buildZoomGrid(m){
-  document.getElementById('zoomWdays').innerHTML=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<div>${d}</div>`).join('');
+  document.getElementById('zoomWdays').innerHTML=WD.map(d=>`<div>${d}</div>`).join('');
   const cont=document.getElementById('zoomDays');
   cont.innerHTML='';
   const first=new Date(year,m,1).getDay(),count=new Date(year,m+1,0).getDate();
-  for(let i=0;i<first;i++){const e=document.createElement('div');e.className='zoom-day empty';cont.appendChild(e);}
+  for(let i=0;i<first;i++){const c=document.createElement('div');c.className='zoom-day empty';cont.appendChild(c);}
   for(let d=1;d<=count;d++){
     const ds=`${year}-${pad(m+1)}-${pad(d)}`;
     const evts=byDate(ds);
     const isToday=today.getFullYear()===year&&today.getMonth()===m&&today.getDate()===d;
+    const clash=evts.filter(isTravel).length>1;
     const cell=document.createElement('div');
     cell.className='zoom-day'+(evts.length?' has-event':'')+(isToday?' today':'')+(selectedDay===d?' selected':'');
     cell.dataset.day=d;
-    cell.innerHTML=`<div class="zoom-day-num">${d}</div>`+evts.map(e=>`<div class="zoom-pill ${e.type}">${e.title}</div>`).join('');
+    cell.innerHTML=`<div class="zoom-day-num"><span>${d}</span>${clash?'<span class="clash-flag" title="Two or more travel events overlap">CLASH</span>':''}</div>`
+      +evts.map(e=>{
+        const cont2=dayIndex(e,ds)>1;
+        return `<div class="zoom-pill ${e.type}${cont2?' cont':''}" title="${esc(e.title)}">${cont2?'↳ ':''}${esc(e.title)}</div>`;
+      }).join('');
     if(evts.length){
       cell.addEventListener('click',()=>{
-        document.querySelectorAll('.zoom-day.selected').forEach(el=>el.classList.remove('selected'));
-        if(selectedDay===d){selectedDay=null;renderZoomSidebar(null,m);}
-        else{selectedDay=d;cell.classList.add('selected');renderZoomSidebar(ds,m);}
+        if(selectedDay===d){selectedDay=null;}else{selectedDay=d;}
+        refreshZoom();
       });
     }
     cont.appendChild(cell);
   }
 }
-
 function renderZoomSidebar(dateStr,m){
   const list=document.getElementById('zoomList');
   const title=document.getElementById('zoomSidebarTitle');
-  const evts=dateStr?byDate(dateStr):byMonth(year,m).sort((a,b)=>a.date.localeCompare(b.date));
+  const evts=dateStr?byDate(dateStr):byMonth(year,m);
   title.textContent=dateStr?fmt(dateStr):`${MONTHS[m]} — All Events`;
+  renderClashPanel(m,dateStr);
   if(!evts.length){list.innerHTML=`<div class="z-empty">No events${dateStr?' this day':' this month'}.</div>`;return;}
-  list.innerHTML=evts.map(e=>`<div class="z-event ${e.type}"><span class="type-tag ${e.type}">${typeLabel(e.type)}</span><div class="z-event-date">${fmt(e.date)}</div><div class="z-event-title">${e.title}</div>${e.notes?`<div class="z-event-notes">${e.notes}</div>`:''}${e.rec?`<div class="z-event-rec"><span class="rec-tag">★ Suggested attendees</span>${e.rec}</div>`:''}${(e.type==='possible'||e.type==='attending')?`<button class="status-toggle ${e.type}" data-id="${e.id}">${e.type==='possible'?'✓ Confirm — We\'re Attending':'↺ Revert to Possible'}</button>`:''}</div>`).join('');
+  list.innerHTML=evts.map(e=>{
+    const multi=spans(e)>1;
+    const dayNote=dateStr&&multi?` <span class="span-tag">· day ${dayIndex(e,dateStr)} of ${spans(e)}</span>`:'';
+    return `<div class="z-event ${e.type}"><span class="type-tag ${e.type}">${esc(typeLabel(e.type))}</span>`
+      +`<div class="z-event-date">${esc(fmtSpan(e))}${multi?` <span class="span-tag">· ${spans(e)} days</span>`:''}${dayNote}</div>`
+      +`<div class="z-event-title">${esc(e.title)}</div>`
+      +(e.notes?`<div class="z-event-notes">${esc(e.notes)}</div>`:'')
+      +(e.rec?`<div class="z-event-rec"><span class="rec-tag">★ Suggested attendees</span>${esc(e.rec)}</div>`:'')
+      +(isTravel(e)?`<button class="status-toggle ${e.type}" data-id="${e.id}">${e.type==='possible'?'✓ Confirm — We&rsquo;re Attending':'↺ Revert to Possible'}</button>`:'')
+      +`</div>`;
+  }).join('');
+}
+/* conflict detection: overlapping travel events in the visible month */
+function renderClashPanel(m,dateStr){
+  const host=document.getElementById('clashHost');
+  host.innerHTML='';
+  if(dateStr)return;
+  const trav=byMonth(year,m).filter(isTravel);
+  const pairs=[];
+  for(let i=0;i<trav.length;i++)for(let j=i+1;j<trav.length;j++){
+    const a=trav[i],b=trav[j];
+    if(dnum(a.date)<=dnum(endOf(b))&&dnum(b.date)<=dnum(endOf(a)))pairs.push([a,b]);
+  }
+  if(!pairs.length)return;
+  host.innerHTML=`<div class="clash-panel"><h4>⚠ ${pairs.length} scheduling overlap${pairs.length>1?'s':''} this month</h4><ul>`
+    +pairs.map(p=>`<li><b>${esc(p[0].title)}</b> (${esc(fmtSpan(p[0]))}) overlaps <b>${esc(p[1].title)}</b> (${esc(fmtSpan(p[1]))})</li>`).join('')
+    +`</ul></div>`;
 }
 
-/* ─── STATUS TOGGLE (Possible <-> Attending) ─── */
+/* ── STATUS TOGGLE (Possible <-> Attending) ── */
 document.getElementById('zoomList').addEventListener('click',e=>{
   const btn=e.target.closest('.status-toggle');
   if(!btn)return;
   const ev=events.find(x=>x.id===+btn.dataset.id);
   if(!ev)return;
   ev.type=ev.type==='attending'?'possible':'attending';
-  render();
-  if(activeZoomMonth!==null){
-    buildZoomGrid(activeZoomMonth);
-    renderZoomSidebar(selectedDay!==null?`${year}-${pad(activeZoomMonth+1)}-${pad(selectedDay)}`:null,activeZoomMonth);
-  }
+  saveState();
+  flash(ev.type==='attending'?'Confirmed — attending':'Moved back to possible');
+  renderLegend();render();refreshZoom();
 });
 
-/* ─── ADD EVENT ─── */
+/* ── ADD EVENT ── */
 function openAdd(){
   const m=activeZoomMonth!==null?activeZoomMonth:today.getMonth();
-  document.getElementById('fDate').value=`${year}-${pad(m+1)}-${pad(today.getDate())}`;
+  const d=activeZoomMonth!==null&&selectedDay!==null?selectedDay:today.getDate();
+  const safe=Math.min(d,new Date(year,m+1,0).getDate());
+  document.getElementById('fDate').value=`${year}-${pad(m+1)}-${pad(safe)}`;
+  document.getElementById('fEnd').value='';
   document.getElementById('fTitle').value='';
   document.getElementById('fNotes').value='';
+  document.getElementById('fRec').value='';
   document.getElementById('fType').value='possible';
   document.getElementById('addModal').classList.add('open');
   setTimeout(()=>document.getElementById('fTitle').focus(),80);
@@ -485,60 +634,93 @@ document.getElementById('addModal').onclick=e=>{if(e.target.id==='addModal')clos
 document.getElementById('addSave').onclick=()=>{
   const title=document.getElementById('fTitle').value.trim();
   const date=document.getElementById('fDate').value;
+  let end=document.getElementById('fEnd').value||null;
   if(!title||!date)return;
-  events.push({id:nextId++,date,title,type:document.getElementById('fType').value,notes:document.getElementById('fNotes').value.trim()});
+  if(end&&dnum(end)<dnum(date))end=null;            // ignore backwards ranges
+  if(end===date)end=null;
+  const type=document.getElementById('fType').value;
+  const ev={id:nextId++,date,title,type,notes:document.getElementById('fNotes').value.trim(),custom:true};
+  if(end)ev.end=end;
+  const rec=document.getElementById('fRec').value.trim();
+  if(rec)ev.rec=rec;
+  events.push(ev);
+  BASE_TYPE[ev.id]=type;
+  activeTypes.add(type);                             // don't add into a hidden filter
+  saveState();
   closeAdd();
-  year=+date.split('-')[0];
-  render();
-  const m=+date.split('-')[1]-1;
-  if(document.getElementById('zoom').classList.contains('open')&&activeZoomMonth===m){buildZoomGrid(m);renderZoomSidebar(null,m);}
+  flash('Event added');
+  year=+date.slice(0,4);
+  renderLegend();render();
+  const m=+date.slice(5,7)-1;
+  if(document.getElementById('zoom').classList.contains('open')){activeZoomMonth=m;selectedDay=null;document.getElementById('zoomTitle').textContent=`${MONTHS[m]} ${year}`;refreshZoom();}
 };
+
+/* ── NAV ── */
 document.getElementById('zoomBack').onclick=closeZoom;
-document.getElementById('prevYear').onclick=()=>{year--;render();document.getElementById('scroll').scrollTo(0,0);};
-document.getElementById('nextYear').onclick=()=>{year++;render();document.getElementById('scroll').scrollTo(0,0);};
+function goYear(y){year=y;renderLegend();render();document.getElementById('scroll').scrollTo(0,0);}
+document.getElementById('prevYear').onclick=()=>goYear(year-1);
+document.getElementById('nextYear').onclick=()=>goYear(year+1);
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){closeAdd();closeZoom();closeSearch();}
-  if(!document.getElementById('addModal').classList.contains('open')&&!document.getElementById('zoom').classList.contains('open')){
-    if(e.key==='ArrowLeft'){year--;render();}
-    if(e.key==='ArrowRight'){year++;render();}
+  const searchOpen=document.getElementById('searchOverlay').classList.contains('open');
+  const modalOpen=document.getElementById('addModal').classList.contains('open');
+  const zoomOpen=document.getElementById('zoom').classList.contains('open');
+  if(e.key==='Escape'){
+    if(modalOpen)closeAdd();
+    else if(searchOpen)closeSearch();
+    else if(zoomOpen)closeZoom();
+    return;
   }
+  if(modalOpen||searchOpen)return;
+  if(zoomOpen){                                      // month-to-month inside zoom
+    if(e.key==='ArrowLeft'){const m=activeZoomMonth-1;if(m<0){year--;openZoom(11);}else openZoom(m);renderLegend();render();}
+    if(e.key==='ArrowRight'){const m=activeZoomMonth+1;if(m>11){year++;openZoom(0);}else openZoom(m);renderLegend();render();}
+    return;
+  }
+  if(e.key==='ArrowLeft')goYear(year-1);
+  if(e.key==='ArrowRight')goYear(year+1);
+  if(e.key==='/'){e.preventDefault();document.getElementById('searchInput').focus();}
 });
 
-/* ─── SEARCH ─── */
+/* ── SEARCH ── */
 function hl(text,q){
-  if(!q||!text)return text||'';
-  const esc=q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-  return text.replace(new RegExp(`(${esc})`,'gi'),'<mark>$1</mark>');
+  const safe=esc(text);
+  if(!q)return safe;
+  const rx=q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  return safe.replace(new RegExp(`(${rx})`,'gi'),'<mark>$1</mark>');
 }
 function runSearch(q){
   q=q.trim();
   document.getElementById('searchClear').classList.toggle('visible',q.length>0);
   if(!q){closeSearch();document.getElementById('searchHint').textContent='';return;}
   const low=q.toLowerCase();
-  const results=events.filter(e=>
+  const results=shown().filter(e=>
     e.title.toLowerCase().includes(low)||
     (e.notes&&e.notes.toLowerCase().includes(low))||
     (e.rec&&e.rec.toLowerCase().includes(low))||
-    e.date.includes(low)||
+    e.date.includes(low)||(e.end&&e.end.includes(low))||
     typeLabel(e.type).toLowerCase().includes(low)||
-    fmt(e.date).toLowerCase().includes(low)||
-    MONTHS[+e.date.split('-')[1]-1].toLowerCase().includes(low)
+    fmtSpan(e).toLowerCase().includes(low)||
+    MONTHS[+e.date.slice(5,7)-1].toLowerCase().includes(low)
   ).sort((a,b)=>a.date.localeCompare(b.date));
-  document.getElementById('searchHint').textContent=results.length?`${results.length} result${results.length!==1?'s':''}`:' No results';
-  document.getElementById('searchLabel').innerHTML=`Results <span>for &ldquo;${q}&rdquo; &mdash; ${results.length} found</span>`;
+  document.getElementById('searchHint').textContent=results.length?`${results.length} result${results.length!==1?'s':''}`:'No results';
+  document.getElementById('searchLabel').innerHTML=`Results <span>for &ldquo;${esc(q)}&rdquo; &mdash; ${results.length} found</span>`;
   if(!results.length){
     document.getElementById('searchGrid').innerHTML=`<div class="search-empty"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><h3>No results found</h3><p>Try a different keyword, date, or event type.</p></div>`;
-  } else {
+  }else{
     document.getElementById('searchGrid').innerHTML=results.map(e=>{
       const notes=e.notes?(e.notes.length>220?e.notes.substring(0,220)+'…':e.notes):'';
-      return `<div class="src-card ${e.type}" data-date="${e.date}" data-m="${+e.date.split('-')[1]-1}" data-y="${e.date.split('-')[0]}"><div class="src-meta"><span class="type-tag ${e.type}">${typeLabel(e.type)}</span><span class="src-date-lbl">${fmt(e.date)}</span></div><div class="src-title">${hl(e.title,q)}</div>${notes?`<div class="src-notes">${hl(notes,q)}</div>`:''}${e.rec?`<div class="src-rec"><span class="rec-tag">★ Suggested</span>${hl(e.rec,q)}</div>`:''}</div>`;
+      return `<div class="src-card ${e.type}" data-m="${+e.date.slice(5,7)-1}" data-y="${e.date.slice(0,4)}">`
+        +`<div class="src-meta"><span class="type-tag ${e.type}">${esc(typeLabel(e.type))}</span><span class="src-date-lbl">${esc(fmtSpan(e))}</span>${spans(e)>1?`<span class="span-tag">${spans(e)} days</span>`:''}</div>`
+        +`<div class="src-title">${hl(e.title,q)}</div>`
+        +(notes?`<div class="src-notes">${hl(notes,q)}</div>`:'')
+        +(e.rec?`<div class="src-rec"><span class="rec-tag">★ Suggested</span>${hl(e.rec,q)}</div>`:'')
+        +`</div>`;
     }).join('');
     document.querySelectorAll('.src-card').forEach(card=>{
       card.addEventListener('click',()=>{
-        const m=parseInt(card.dataset.m);
-        year=parseInt(card.dataset.y);
-        render();
-        closeSearch();
+        year=parseInt(card.dataset.y,10);
+        const m=parseInt(card.dataset.m,10);
+        renderLegend();render();closeSearch();
         document.getElementById('searchInput').value='';
         document.getElementById('searchClear').classList.remove('visible');
         document.getElementById('searchHint').textContent='';
@@ -550,11 +732,18 @@ function runSearch(q){
 }
 function closeSearch(){document.getElementById('searchOverlay').classList.remove('open');}
 document.getElementById('searchInput').addEventListener('input',e=>runSearch(e.target.value));
-document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Escape')closeSearch();});
-document.getElementById('searchClear').addEventListener('click',()=>{document.getElementById('searchInput').value='';document.getElementById('searchClear').classList.remove('visible');closeSearch();document.getElementById('searchHint').textContent='';document.getElementById('searchInput').focus();});
+document.getElementById('searchClear').addEventListener('click',()=>{
+  document.getElementById('searchInput').value='';
+  document.getElementById('searchClear').classList.remove('visible');
+  closeSearch();
+  document.getElementById('searchHint').textContent='';
+  document.getElementById('searchInput').focus();
+});
 document.getElementById('searchCloseBtn').addEventListener('click',closeSearch);
 
+/* ── BOOT ── */
 function scrollToMonth(m){const cards=document.querySelectorAll('.month');if(cards[m])cards[m].scrollIntoView({behavior:'smooth',block:'center'});}
+renderLegend();
 render();
 if(year===today.getFullYear())setTimeout(()=>scrollToMonth(today.getMonth()),120);
 </script>

@@ -18,13 +18,21 @@ Open **`strive-calendar-final.html`** in any modern browser. No build step and n
 
 ## Features
 
-- Year navigation (arrows or ← / → keys) and full-screen month zoom
-- Click a day for its event detail; hover for a quick tooltip
-- Search across titles, notes, dates, and types
-- Add new events from the header or month view
-- **Status toggle:** flip any conference between 🔴 Possible and 🟢 Attending — the color updates everywhere instantly
+- **Multi-day events** are single entries with a date range — they render across every day they span
+- **Filter chips:** click any color in the legend to show/hide that category (counts update per year)
+- **Conflict detection:** overlapping travel commitments are flagged per month, and clashing days are marked `CLASH`
+- **Status toggle:** flip any conference between 🔴 Possible and 🟢 Attending — colors update everywhere instantly
+- **Saves automatically:** status changes and added events persist in the browser via `localStorage`
+- **Suggested attendees:** each conference carries a recommendation for which executive should go and why
+- Year navigation (← / → keys); inside a month view, ← / → move month to month
+- Search across titles, notes, suggested attendees, dates, and types; press `/` to jump to search
+- Full-screen month zoom, day-level detail, hover tooltips
+- Add events (with optional end date) from the header or month view
 
 ## Notes
 
 - Conference dates were researched and verified where possible; a few are marked TBD pending confirmation.
-- Event additions and status toggles are currently in-session (reset on reload). Persistence can be added if needed.
+- Saved state lives in the browser it was saved in — it does not sync between people. For shared
+  planning, edits should be made in the `events` array in the HTML and committed.
+- Two known items to confirm: BTC Hong Kong's third day (public programme lists Aug 27–28), and
+  whether the TrueNorth happy hour should move to Sep 28 to line up with the Bitcoin Treasuries Conference.
