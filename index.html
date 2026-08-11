@@ -211,6 +211,11 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 .mv-side-scroll::-webkit-scrollbar{width:6px;}
 .mv-side-scroll::-webkit-scrollbar-thumb{background:var(--surface-3);border-radius:4px;}
 .mv-events{display:flex;flex-direction:column;gap:10px;padding-bottom:14px;}
+/* Priority band header — makes the non-chronological order read as deliberate */
+.ev-group{display:flex;align-items:center;gap:8px;margin-top:7px;font-size:0.62rem;font-weight:800;letter-spacing:0.11em;text-transform:uppercase;color:var(--c);}
+.ev-group:first-child{margin-top:0;}
+.ev-group em{font-style:normal;font-size:0.6rem;font-weight:800;letter-spacing:0;padding:1px 6px;border-radius:99px;background:var(--cd);}
+.ev-group i{flex:1;height:1px;background:var(--c);opacity:.22;}
 /* EVENT CARD (shared by the month panel) */
 .ev{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:13px 15px;border-left:3px solid var(--c);}
 .ev.gone{opacity:.55;}
@@ -448,6 +453,13 @@ const WD_FULL=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Satu
 const TYPE_LABELS={bitcoin:'Bitcoin Date',milestone:'Strive Milestone',attending:'Attending',possible:'Possible',holiday:'Holiday / OOO'};
 const TYPE_ORDER=['bitcoin','milestone','attending','possible','holiday'];
 const TYPE_VAR={bitcoin:'--btc',milestone:'--yellow',attending:'--green',possible:'--red',holiday:'--blue'};
+/* Reading order for the event panel and the day cells: what the team must act on
+   first (confirmed travel), then the dates that matter, then open decisions, then closures.
+   TYPE_ORDER stays as-is — it drives the legend and filter chips. */
+const PRIORITY=['attending','milestone','bitcoin','possible','holiday'];
+const GROUP_LABELS={attending:'Attending',milestone:'Strive milestones',bitcoin:'Bitcoin dates',possible:'Under consideration',holiday:'Holidays &amp; closures'};
+const prio=t=>PRIORITY.indexOf(t);
+const byPriority=(a,b)=>prio(a.type)-prio(b.type)||a.date.localeCompare(b.date);
 const LS_KEY='strive-calendar-v1';
 const today=new Date();
 
@@ -580,7 +592,7 @@ loadState();
 
 /* ── QUERIES (filter-aware) ── */
 const shown=()=>events.filter(e=>activeTypes.has(e.type));
-const byDate=ds=>shown().filter(e=>covers(e,ds)).sort((a,b)=>TYPE_ORDER.indexOf(a.type)-TYPE_ORDER.indexOf(b.type));
+const byDate=ds=>shown().filter(e=>covers(e,ds)).sort(byPriority);
 function byMonth(y,m){
   const first=`${y}-${pad(m+1)}-01`,last=`${y}-${pad(m+1)}-${pad(new Date(y,m+1,0).getDate())}`;
   const lo=dnum(first),hi=dnum(last);
@@ -952,9 +964,24 @@ function renderMonthPanel(){
   document.getElementById('mvClear').style.display=ds?'':'none';
   renderClashPanel(month,ds);
   const host=document.getElementById('mvEvents');
-  host.innerHTML=evts.length
-    ? evts.map(e=>eventCard(e,ds)).join('')
-    : `<div class="z-empty">${ds?'Nothing scheduled on this day.':`Nothing scheduled in ${MONTHS[month]} ${year}.`}<br>Turn a filter back on above, or use <b>Add Event</b>.</div>`;
+  if(!evts.length){
+    host.innerHTML=`<div class="z-empty">${ds?'Nothing scheduled on this day.':`Nothing scheduled in ${MONTHS[month]} ${year}.`}<br>Turn a filter back on above, or use <b>Add Event</b>.</div>`;
+    return;
+  }
+  /* Priority order, banded by type. Headers only earn their space once there is
+     more than one band — a single-type day would just repeat the card's own tag. */
+  const ordered=evts.slice().sort(byPriority);
+  const bands=[...new Set(ordered.map(e=>e.type))];
+  let html='',cur=null;
+  ordered.forEach(e=>{
+    if(bands.length>1&&e.type!==cur){
+      cur=e.type;
+      const n=ordered.filter(x=>x.type===e.type).length;
+      html+=`<div class="ev-group ${e.type}">${GROUP_LABELS[e.type]}<em>${n}</em><i></i></div>`;
+    }
+    html+=eventCard(e,ds);
+  });
+  host.innerHTML=html;
 }
 document.getElementById('mvDays').addEventListener('click',e=>{
   const cell=e.target.closest('.mv-day.has-event');
