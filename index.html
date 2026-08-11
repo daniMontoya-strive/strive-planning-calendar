@@ -13,7 +13,7 @@
 html{-webkit-font-smoothing:antialiased;}
 body{font-family:var(--font-body);background:var(--bg);color:var(--text);height:100dvh;overflow:hidden;display:flex;flex-direction:column;font-size:16px;}
 button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
-.header{flex-shrink:0;border-bottom:1px solid var(--border);padding:13px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--bg);}
+.header{flex-shrink:0;border-bottom:1px solid var(--border);padding:11px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--bg);}
 .logo{display:flex;align-items:center;gap:11px;}
 .logo-text{font-family:var(--font-display);font-size:1.25rem;line-height:1;}
 .logo-text span{display:block;font-family:var(--font-body);font-size:0.63rem;font-weight:500;color:var(--text-muted);letter-spacing:0.12em;text-transform:uppercase;margin-top:3px;}
@@ -23,20 +23,24 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 .year-nav button:hover{background:var(--surface-3);color:var(--text);}
 .btn-add{display:inline-flex;align-items:center;gap:7px;background:var(--btc);color:#0A0A0A;font-weight:700;font-size:0.9rem;padding:10px 18px;border-radius:var(--radius-sm);transition:background .15s;}
 .btn-add:hover{background:#ffa33d;}
-/* LEGEND = FILTER CHIPS */
-.legend{flex-shrink:0;padding:10px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:var(--bg);flex-wrap:wrap;}
+/* TOOLBAR — filter chips, search and tools share one row so the calendar keeps its height */
+.toolbar{flex-shrink:0;display:flex;align-items:center;gap:12px;padding:8px 28px;border-bottom:1px solid var(--border);background:var(--bg);flex-wrap:wrap;}
+.legend{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.tool-right{display:flex;align-items:center;gap:9px;margin-left:auto;flex-wrap:wrap;}
 .legend-item{display:inline-flex;align-items:center;gap:8px;font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;padding:6px 11px;border-radius:99px;border:1px solid var(--border);background:var(--surface);transition:background .15s,border-color .15s,color .15s,opacity .15s;}
 .legend-item:hover{border-color:var(--border-hi);color:var(--text);}
 .legend-item.off{opacity:.38;}
 .legend-item.off .legend-dot{background:var(--text-faint)!important;}
 .legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .legend-n{font-size:0.66rem;color:var(--text-faint);font-weight:700;}
-.legend-count{margin-left:auto;font-size:0.75rem;color:var(--text-faint);}
+.legend-count{font-size:0.73rem;color:var(--text-faint);white-space:nowrap;}
+.btn-mini{display:inline-flex;align-items:center;gap:6px;font-size:0.68rem;font-weight:700;letter-spacing:0.03em;padding:6px 10px;border-radius:var(--radius-sm);border:1px solid var(--border);color:var(--text-muted);white-space:nowrap;transition:background .15s,color .15s,border-color .15s;}
+.btn-mini:hover{background:var(--surface-2);color:var(--text);border-color:var(--border-hi);}
+.btn-mini.warn:hover{border-color:var(--red);color:var(--red);background:rgba(241,86,95,.08);}
 /* SEARCH */
-.search-bar{flex-shrink:0;padding:10px 28px;border-bottom:1px solid var(--border);background:var(--bg);display:flex;align-items:center;gap:12px;}
-.search-wrap{position:relative;flex:1;max-width:580px;}
-.search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--text-faint);pointer-events:none;}
-.search-input{width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:10px 36px 10px 40px;font:inherit;font-size:0.9rem;color:var(--text);transition:border-color .15s,box-shadow .15s;}
+.search-wrap{position:relative;flex:1 1 220px;max-width:400px;min-width:170px;}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-faint);pointer-events:none;display:flex;}
+.search-input{width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:8px 34px 8px 37px;font:inherit;font-size:0.87rem;color:var(--text);transition:border-color .15s,box-shadow .15s;}
 .search-input:focus{outline:none;border-color:var(--btc);box-shadow:0 0 0 3px rgba(247,147,26,0.10);}
 .search-input::placeholder{color:var(--text-faint);}
 .search-clear{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:50%;color:var(--text-faint);transition:background .12s,color .12s;opacity:0;pointer-events:none;}
@@ -106,9 +110,21 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 .ag-today-line i{flex:1;height:1px;background:var(--btc);opacity:.45;}
 .ag-empty{text-align:center;padding:70px 20px;color:var(--text-faint);}
 .ag-empty h3{font-family:var(--font-display);font-size:1.4rem;color:var(--text-muted);margin-bottom:8px;}
+.ag-jump{font-size:0.66rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-faint);padding:4px 9px;border-radius:var(--radius-sm);border:1px solid var(--border);transition:color .14s,border-color .14s,background .14s;}
+.ag-jump:hover{color:var(--btc);border-color:var(--btc);background:var(--btc-dim);}
 @media(max-width:600px){.ag-row{grid-template-columns:1fr;gap:8px;}.ag-when{flex-direction:row;align-items:baseline;gap:8px;}}
+/* RELATIVE-TIME BADGE — "how soon is this?" at a glance */
+.rel{display:inline-flex;align-items:center;font-size:0.61rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;padding:2px 7px;border-radius:3px;background:var(--surface-3);color:var(--text-muted);white-space:nowrap;}
+.rel.now{background:var(--btc);color:#0A0A0A;}
+.rel.soon{background:var(--btc-dim);color:var(--btc);}
+.rel.gone{background:transparent;color:var(--text-faint);border:1px solid var(--border);}
+/* Honesty note under the status toggle — the change is per-browser, not shared */
+.local-note{display:block;margin-top:6px;font-size:0.64rem;line-height:1.45;color:var(--text-faint);max-width:46ch;}
 /* SCROLL */
-.scroll{flex:1;overflow-y:auto;padding:28px 28px 60px;}
+.scroll{flex:1;min-height:0;overflow-y:auto;padding:28px 28px 60px;}
+/* Month view is a fixed-height dashboard: the calendar and the event panel each
+   manage their own scrolling, so the page itself must not scroll. */
+.scroll.locked{overflow:hidden;padding:18px 28px;}
 .scroll::-webkit-scrollbar{width:7px;}
 .scroll::-webkit-scrollbar-thumb{background:var(--surface-3);border-radius:4px;}
 .year-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:20px;max-width:1600px;margin:0 auto;}
@@ -137,45 +153,76 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 .tooltip-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px;}
 .tooltip-title{font-size:0.82rem;font-weight:600;color:var(--text);line-height:1.3;}
 .tooltip-notes{font-size:0.73rem;color:var(--text-muted);line-height:1.4;margin-top:2px;}
-/* ZOOM */
-.zoom{position:fixed;inset:0;z-index:300;background:var(--bg);display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .22s;}
-.zoom.open{opacity:1;pointer-events:all;}
-.zoom-head{flex-shrink:0;border-bottom:1px solid var(--border);padding:16px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
-.zoom-back{display:inline-flex;align-items:center;gap:8px;color:var(--text-muted);font-size:0.88rem;font-weight:600;padding:8px 14px;border-radius:var(--radius-sm);transition:background .15s,color .15s;}
-.zoom-back:hover{background:var(--surface-2);color:var(--text);}
-.zoom-title{font-family:var(--font-display);font-size:2.2rem;flex:1;}
-.zoom-body{flex:1;overflow-y:auto;padding:28px 32px;}
-.zoom-body::-webkit-scrollbar{width:7px;}
-.zoom-body::-webkit-scrollbar-thumb{background:var(--surface-3);border-radius:4px;}
-.zoom-layout{display:grid;grid-template-columns:minmax(0,2.4fr) 360px;gap:36px;align-items:start;max-width:1500px;margin:0 auto;}
-.zoom-cal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;}
-.zoom-wdays{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-bottom:10px;}
-.zoom-wdays div{text-align:center;font-size:0.72rem;color:var(--text-faint);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;}
-.zoom-days-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;}
-.zoom-day{min-width:0;min-height:90px;border-radius:var(--radius-md);padding:8px 10px;border:1px solid var(--border);background:var(--surface-2);display:flex;flex-direction:column;gap:4px;transition:border-color .15s,background .15s;}
-.zoom-day.empty{background:transparent;border-color:transparent;}
-.zoom-day.has-event{cursor:pointer;}
-.zoom-day.has-event:hover{background:var(--surface-3);border-color:var(--border-hi);}
-.zoom-day.today{border-color:var(--btc);box-shadow:0 0 0 1px var(--btc);}
-.zoom-day.selected{background:var(--btc-dim);border-color:var(--btc);}
-.zoom-day-num{font-size:0.78rem;font-weight:700;color:var(--text-muted);display:flex;align-items:center;justify-content:space-between;gap:4px;}
-.zoom-day.today .zoom-day-num{color:var(--btc);}
-.clash-flag{font-size:0.6rem;color:var(--red);font-weight:800;}
-.zoom-pill{padding:3px 6px;border-radius:3px;font-size:0.67rem;font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--cd);color:var(--c);}
-.zoom-pill.cont{opacity:.68;}
-.zoom-sidebar{display:flex;flex-direction:column;position:sticky;top:0;}
-.zoom-sidebar-title{font-family:var(--font-display);font-size:1.1rem;color:var(--text-muted);font-style:italic;margin-bottom:14px;}
-.zoom-events-list{display:flex;flex-direction:column;gap:10px;}
-.z-event{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 16px;border-left:3px solid var(--c);}
-.z-event-date{font-size:0.67rem;color:var(--text-faint);font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px;}
-.z-event-title{font-weight:700;font-size:0.95rem;margin-bottom:5px;}
-.z-event-notes{font-size:0.82rem;color:var(--text-muted);line-height:1.55;}
-.z-event-rec{margin-top:10px;font-size:0.78rem;line-height:1.5;color:var(--text);background:var(--surface-2);border:1px solid var(--border);border-left:3px solid var(--btc);border-radius:var(--radius-sm);padding:8px 11px;}
+/* ── MONTH BAR — always-visible month navigation for the month view ── */
+.monthbar{flex-shrink:0;display:none;align-items:center;gap:9px;padding:7px 28px;border-bottom:1px solid var(--border);background:var(--bg);}
+.monthbar.on{display:flex;}
+.mb-arrow{width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-sm);border:1px solid var(--border);color:var(--text-muted);transition:background .15s,color .15s,border-color .15s;}
+.mb-arrow:hover{background:var(--surface-2);color:var(--text);border-color:var(--border-hi);}
+.mb-months{display:flex;gap:4px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;}
+.mb-months::-webkit-scrollbar{display:none;}
+.mb-m{flex:1;min-width:54px;display:flex;flex-direction:column;align-items:center;gap:1px;padding:5px 4px;border-radius:var(--radius-sm);border:1px solid transparent;color:var(--text-faint);font-size:0.7rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;transition:background .14s,color .14s,border-color .14s;}
+.mb-m:hover{background:var(--surface-2);color:var(--text);}
+.mb-m em{font-style:normal;font-size:0.63rem;font-weight:700;color:var(--text-faint);letter-spacing:0;}
+.mb-m.on{background:var(--surface-3);color:var(--text);border-color:var(--border-hi);}
+.mb-m.on em{color:var(--btc);}
+.mb-m.now:not(.on){color:var(--btc);}
+/* ── MONTH VIEW — calendar grid and that month's events on one screen ── */
+.month-view{height:100%;min-height:0;}
+.mv-layout{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:22px;height:100%;min-height:0;max-width:1720px;margin:0 auto;}
+.mv-cal{min-width:0;min-height:0;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:15px 15px 13px;}
+.mv-cal-head{display:flex;align-items:baseline;gap:14px;margin-bottom:11px;flex-wrap:wrap;flex-shrink:0;}
+.mv-cal-title{font-family:var(--font-display);font-size:1.6rem;line-height:1;}
+.mv-glance{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap;}
+.mv-chip{display:inline-flex;align-items:center;font-size:0.63rem;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;padding:3px 8px;border-radius:99px;background:var(--cd);color:var(--c);}
+.mv-chip.none{background:transparent;color:var(--text-faint);border:1px solid var(--border);}
+.mv-wdays{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-bottom:6px;flex-shrink:0;}
+.mv-wdays div{text-align:center;font-size:0.65rem;color:var(--text-faint);font-weight:800;text-transform:uppercase;letter-spacing:0.09em;}
+.mv-wdays div.we{opacity:.55;}
+/* minmax(0,…) is required: pills are nowrap, and plain 1fr blows the columns out. */
+.mv-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-auto-rows:minmax(78px,1fr);gap:5px;flex:1;min-height:0;overflow-y:auto;}
+.mv-days::-webkit-scrollbar{width:6px;}
+.mv-days::-webkit-scrollbar-thumb{background:var(--surface-3);border-radius:4px;}
+.mv-day{min-width:0;overflow:hidden;border-radius:var(--radius-md);padding:5px 6px;border:1px solid var(--border);background:var(--surface-2);display:flex;flex-direction:column;gap:3px;transition:border-color .14s,background .14s;}
+.mv-day.we{background:rgba(255,255,255,.014);}
+.mv-day.empty{background:transparent;border-color:transparent;}
+.mv-day.has-event{cursor:pointer;}
+.mv-day.has-event:hover{background:var(--surface-3);border-color:var(--border-hi);}
+.mv-day.today{border-color:var(--btc);}
+.mv-day.selected{background:var(--btc-dim);border-color:var(--btc);box-shadow:0 0 0 1px var(--btc);}
+.mv-daynum{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:4px;font-size:0.74rem;font-weight:700;color:var(--text-muted);line-height:1.2;}
+.mv-day.today .mv-daynum>span:first-child{background:var(--btc);color:#0A0A0A;border-radius:4px;padding:0 5px;font-weight:800;}
+.clash-flag{font-size:0.57rem;color:var(--red);font-weight:800;letter-spacing:.04em;}
+.mv-pills{display:flex;flex-direction:column;gap:2px;min-height:0;overflow:hidden;}
+/* Square ends by default so a multi-day run reads as one continuous band;
+   radius is re-added at the true start/end of the run and at week boundaries. */
+.mv-pill{flex-shrink:0;padding:2px 6px;border-radius:0;font-size:0.65rem;font-weight:600;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--cd);color:var(--c);}
+.mv-pill.r-l{border-top-left-radius:4px;border-bottom-left-radius:4px;}
+.mv-pill.r-r{border-top-right-radius:4px;border-bottom-right-radius:4px;}
+.mv-pill.cont{opacity:.72;}
+.mv-more{flex-shrink:0;font-size:0.59rem;font-weight:800;color:var(--text-faint);letter-spacing:0.04em;}
+/* Event panel — same screen, own scroll */
+.mv-side{min-width:0;min-height:0;display:flex;flex-direction:column;}
+.mv-side-head{flex-shrink:0;display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;}
+.mv-side-title{font-family:var(--font-display);font-size:1.28rem;line-height:1.2;min-width:0;}
+.mv-side-title span{display:block;font-family:var(--font-body);font-size:0.65rem;font-weight:800;letter-spacing:0.09em;text-transform:uppercase;color:var(--text-faint);margin-top:5px;}
+.mv-clear{margin-left:auto;flex-shrink:0;font-size:0.67rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--btc);padding:5px 9px;border-radius:var(--radius-sm);border:1px solid rgba(247,147,26,.35);transition:background .14s;}
+.mv-clear:hover{background:var(--btc-dim);}
+.mv-side-scroll{flex:1;min-height:0;overflow-y:auto;padding-right:5px;}
+.mv-side-scroll::-webkit-scrollbar{width:6px;}
+.mv-side-scroll::-webkit-scrollbar-thumb{background:var(--surface-3);border-radius:4px;}
+.mv-events{display:flex;flex-direction:column;gap:10px;padding-bottom:14px;}
+/* EVENT CARD (shared by the month panel) */
+.ev{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:13px 15px;border-left:3px solid var(--c);}
+.ev.gone{opacity:.55;}
+.ev-meta{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:7px;}
+.ev-date{font-size:0.67rem;color:var(--text-faint);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;}
+.ev-title{font-weight:700;font-size:0.95rem;line-height:1.35;margin-bottom:6px;}
+.ev-notes{font-size:0.81rem;color:var(--text-muted);line-height:1.55;}
+.ev-rec{margin-top:10px;font-size:0.78rem;line-height:1.5;color:var(--text);background:var(--surface-2);border:1px solid var(--border);border-left:3px solid var(--btc);border-radius:var(--radius-sm);padding:8px 11px;}
 .rec-tag{display:block;font-size:0.58rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--btc);margin-bottom:4px;}
 .src-rec .rec-tag{display:inline-block;margin-bottom:0;margin-right:5px;}
-.z-empty{color:var(--text-faint);font-size:0.88rem;text-align:center;padding:32px 0;}
+.z-empty{color:var(--text-faint);font-size:0.88rem;text-align:center;padding:34px 12px;line-height:1.6;}
 .type-tag{display:inline-block;padding:2px 8px;border-radius:3px;font-size:0.62rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;background:var(--cd);color:var(--c);}
-.z-event .type-tag{margin-bottom:6px;}
 .span-tag{display:inline-block;font-size:0.6rem;font-weight:700;color:var(--text-faint);letter-spacing:0.05em;text-transform:uppercase;}
 /* CLASH PANEL */
 .clash-panel{background:rgba(241,86,95,.07);border:1px solid rgba(241,86,95,.3);border-radius:var(--radius-md);padding:12px 14px;margin-bottom:14px;}
@@ -211,10 +258,49 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 .btn-ghost:hover{background:var(--surface-2);color:var(--text);}
 .saved-flash{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(12px);background:var(--surface-3);border:1px solid var(--border-hi);color:var(--text);font-size:0.8rem;font-weight:600;padding:9px 16px;border-radius:99px;z-index:600;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;}
 .saved-flash.show{opacity:1;transform:translateX(-50%) translateY(0);}
-/* Below ~1150px a 360px sidebar starves the day grid (columns drop under ~90px and
-   event titles truncate to nothing), so stack instead and give the calendar full width. */
-@media(max-width:1150px){.zoom-layout{grid-template-columns:minmax(0,1fr);}.zoom-sidebar{position:static;}}
-@media(max-width:600px){.header{padding:11px 14px;}.legend,.search-bar{padding:9px 14px;}.scroll{padding:16px 14px 50px;}.year-grid{grid-template-columns:1fr;}.zoom-head{padding:12px 16px;}.zoom-body{padding:16px;}.search-results-grid{grid-template-columns:1fr;}.fg-row{grid-template-columns:1fr;}}
+/* Below ~1150px a 400px event panel starves the day grid (columns drop under ~90px and
+   event titles truncate to nothing), so stack instead and hand the page its scroll back. */
+@media(max-width:1150px){
+  .mv-layout{grid-template-columns:minmax(0,1fr);height:auto;}
+  .mv-days{grid-auto-rows:minmax(96px,auto);overflow:visible;}
+  .mv-side{margin-top:22px;}
+  .mv-side-scroll{overflow:visible;padding-right:0;}
+  .month-view{height:auto;}
+  .scroll.locked{overflow-y:auto;padding:18px 28px 60px;}
+}
+/* Three view buttons + Today + Add overflow a narrow header, so let it wrap. */
+@media(max-width:900px){
+  .header{flex-wrap:wrap;gap:10px 12px;}
+  .view-tools{margin-left:auto;}
+}
+@media(max-width:600px){
+  .header{padding:9px 12px;gap:8px;}
+  .logo-text{font-size:1.05rem;}
+  .logo-text span{font-size:0.56rem;}
+  .year-nav{gap:8px;}
+  .year-nav span{font-size:1.3rem;min-width:58px;}
+  .year-nav button{width:30px;height:30px;}
+  .view-tools{gap:6px;}
+  .seg button{padding:6px 8px;font-size:0.7rem;gap:5px;}
+  .btn-today{padding:7px 9px;font-size:0.7rem;}
+  .btn-add{padding:8px 11px;}
+  .btn-add span{display:none;}          /* icon-only Add on phones */
+  .toolbar{padding:8px 14px;gap:9px;}
+  .search-wrap{max-width:none;}
+  .tool-right{margin-left:0;}
+  .monthbar{padding:7px 10px;gap:6px;}
+  .mb-m{min-width:48px;font-size:0.66rem;}
+  .scroll{padding:16px 14px 50px;}
+  .scroll.locked{padding:16px 14px 50px;}
+  .year-grid{grid-template-columns:1fr;}
+  .mv-cal{padding:11px;}
+  .mv-cal-title{font-size:1.35rem;}
+  .mv-days{grid-auto-rows:minmax(66px,auto);gap:3px;}
+  .mv-day{padding:4px;}
+  .mv-pill{font-size:0.57rem;padding:1px 4px;}
+  .search-results-grid{grid-template-columns:1fr;}
+  .fg-row{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
@@ -235,34 +321,6 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
   </div>
 </div>
 
-<!-- ZOOM FULLSCREEN -->
-<div class="zoom" id="zoom">
-  <div class="zoom-head">
-    <button class="zoom-back" id="zoomBack">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-      All Months
-    </button>
-    <div class="zoom-title" id="zoomTitle"></div>
-    <button class="btn-add" id="zoomAddBtn">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-      Add Event
-    </button>
-  </div>
-  <div class="zoom-body">
-    <div class="zoom-layout">
-      <div class="zoom-cal">
-        <div class="zoom-wdays" id="zoomWdays"></div>
-        <div class="zoom-days-grid" id="zoomDays"></div>
-      </div>
-      <div class="zoom-sidebar">
-        <div class="zoom-sidebar-title" id="zoomSidebarTitle">All Events</div>
-        <div id="clashHost"></div>
-        <div class="zoom-events-list" id="zoomList"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- HEADER -->
 <header class="header">
   <div class="logo">
@@ -280,36 +338,74 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
   </div>
   <div class="view-tools">
     <div class="seg">
-      <button id="viewAgenda" class="on" title="Chronological list of every event">
+      <button id="viewMonth" class="on" title="One month, with that month&rsquo;s events beside it (M)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+        Month
+      </button>
+      <button id="viewAgenda" title="Chronological list of every event (A)">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
         Agenda
       </button>
-      <button id="viewYear" title="12-month calendar grid">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+      <button id="viewYear" title="All 12 months at once (Y)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
         Year
       </button>
     </div>
     <button class="btn-today" id="todayBtn" title="Jump to today">Today</button>
-    <button class="btn-add" id="addBtn">
+    <button class="btn-add" id="addBtn" title="Add an event (saved in your browser only)">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-      Add Event
+      <span>Add Event</span>
     </button>
   </div>
 </header>
 
-<div class="legend" id="legend"></div>
-
-<div class="search-bar">
+<div class="toolbar">
+  <div class="legend" id="legend"></div>
   <div class="search-wrap">
-    <span class="search-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>
-    <input class="search-input" id="searchInput" type="text" placeholder="Search events, notes, attendees, dates…" autocomplete="off" spellcheck="false">
+    <span class="search-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>
+    <input class="search-input" id="searchInput" type="text" placeholder="Search events, notes, attendees…" autocomplete="off" spellcheck="false">
     <button class="search-clear" id="searchClear"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
-  <span class="search-hint" id="searchHint"></span>
+  <div class="tool-right">
+    <span class="search-hint" id="searchHint"></span>
+    <span class="legend-count" id="legendCount"></span>
+    <button class="btn-mini warn" id="resetLocal" style="display:none" title="Discard the changes saved in this browser and return to the published calendar"></button>
+    <button class="btn-mini" id="exportIcs" title="Download everything currently shown as an .ics file you can import into Outlook, Google Calendar or Apple Calendar">&#8595; Export .ics</button>
+  </div>
 </div>
 
-<div class="scroll" id="scroll">
-  <div class="agenda" id="agenda"></div>
+<!-- MONTH NAVIGATION (month view only) -->
+<div class="monthbar" id="monthBar">
+  <button class="mb-arrow" id="mbPrev" title="Previous month (←)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+  <div class="mb-months" id="mbMonths"></div>
+  <button class="mb-arrow" id="mbNext" title="Next month (→)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
+</div>
+
+<div class="scroll locked" id="scroll">
+  <!-- MONTH VIEW — grid on the left, that month's events on the right, same screen -->
+  <div class="month-view" id="monthView">
+    <div class="mv-layout">
+      <section class="mv-cal">
+        <div class="mv-cal-head">
+          <h2 class="mv-cal-title" id="mvTitle"></h2>
+          <div class="mv-glance" id="mvGlance"></div>
+        </div>
+        <div class="mv-wdays" id="mvWdays"></div>
+        <div class="mv-days" id="mvDays"></div>
+      </section>
+      <aside class="mv-side">
+        <div class="mv-side-head">
+          <div class="mv-side-title" id="mvSideTitle"></div>
+          <button class="mv-clear" id="mvClear" style="display:none">Whole month</button>
+        </div>
+        <div class="mv-side-scroll">
+          <div id="clashHost"></div>
+          <div class="mv-events" id="mvEvents"></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+  <div class="agenda" id="agenda" style="display:none"></div>
   <div class="year-grid" id="yearGrid" style="display:none"></div>
 </div>
 
@@ -348,6 +444,7 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const MON_SHORT=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const WD_FULL=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const TYPE_LABELS={bitcoin:'Bitcoin Date',milestone:'Strive Milestone',attending:'Attending',possible:'Possible',holiday:'Holiday / OOO'};
 const TYPE_ORDER=['bitcoin','milestone','attending','possible','holiday'];
 const TYPE_VAR={bitcoin:'--btc',milestone:'--yellow',attending:'--green',possible:'--red',holiday:'--blue'};
@@ -355,8 +452,9 @@ const LS_KEY='strive-calendar-v1';
 const today=new Date();
 
 let year=today.getFullYear();
+let month=today.getMonth();
+let view='month';
 let nextId=300;
-let activeZoomMonth=null;
 let selectedDay=null;
 let activeTypes=new Set(TYPE_ORDER);
 
@@ -492,16 +590,83 @@ const inYear=y=>shown().filter(e=>+e.date.slice(0,4)===y||+endOf(e).slice(0,4)==
 /* travel commitments that can physically conflict */
 const isTravel=e=>e.type==='attending'||e.type==='possible';
 
+/* ── LOCAL (per-browser) CHANGES ──
+   Everything saved here lives in this browser only. It never reaches the shared
+   calendar, so the UI has to say so plainly wherever a change can be made. */
+function localChangeCount(){
+  let n=0;
+  events.forEach(e=>{
+    if(e.custom)n++;
+    else if(BASE_TYPE[e.id]!==undefined&&e.type!==BASE_TYPE[e.id])n++;
+  });
+  return n;
+}
+function resetLocal(){
+  const n=localChangeCount();
+  if(!n)return;
+  if(!confirm(`Reset ${n} local change${n>1?'s':''}?\n\nThis clears the Attending/Possible flips and any events you added in this browser, and returns the calendar to the published version. Nobody else is affected — their browsers were never changed.`))return;
+  try{localStorage.removeItem(LS_KEY);}catch(err){/* storage unavailable */}
+  location.reload();
+}
+
+/* ── .ICS EXPORT ── */
+const icsEsc=s=>String(s==null?'':s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\r?\n/g,'\\n');
+/* RFC 5545: all-day DTEND is exclusive, so a 3-day event ends on day 4. */
+function icsEnd(ds){
+  const d=new Date((dnum(ds)+1)*864e5);
+  return `${d.getUTCFullYear()}${pad(d.getUTCMonth()+1)}${pad(d.getUTCDate())}`;
+}
+/* RFC 5545 folds at 75 OCTETS, not characters — and a fold must never land inside a
+   character. for..of walks code points, so surrogate pairs stay intact. */
+const TE=new TextEncoder();
+function icsFold(line){
+  const out=[];let cur='',n=0;
+  for(const ch of line){
+    const w=TE.encode(ch).length;
+    if(n+w>75){out.push(cur);cur=' '+ch;n=1+w;}
+    else{cur+=ch;n+=w;}
+  }
+  out.push(cur);
+  return out.join('\r\n');
+}
+function exportICS(){
+  const list=shown().slice().sort((a,b)=>a.date.localeCompare(b.date));
+  if(!list.length){flash('Nothing to export — every filter is off');return;}
+  const stamp=`${today.getFullYear()}${pad(today.getMonth()+1)}${pad(today.getDate())}T000000Z`;
+  const out=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Strive//Internal Planning Calendar//EN','CALSCALE:GREGORIAN','METHOD:PUBLISH','X-WR-CALNAME:Strive Planning Calendar'];
+  list.forEach(e=>{
+    out.push('BEGIN:VEVENT',
+      `UID:strive-${e.id}@strive-planning-calendar`,
+      `DTSTAMP:${stamp}`,
+      `DTSTART;VALUE=DATE:${e.date.replace(/-/g,'')}`,
+      `DTEND;VALUE=DATE:${icsEnd(endOf(e))}`,
+      icsFold(`SUMMARY:${icsEsc(e.title)}`),
+      icsFold(`DESCRIPTION:${icsEsc((e.notes||'')+(e.rec?`\n\n★ Suggested attendees: ${e.rec}`:''))}`),
+      icsFold(`CATEGORIES:${icsEsc(typeLabel(e.type))}`),
+      'TRANSP:TRANSPARENT','END:VEVENT');
+  });
+  out.push('END:VCALENDAR');
+  const url=URL.createObjectURL(new Blob([out.join('\r\n')+'\r\n'],{type:'text/calendar;charset=utf-8'}));
+  const a=document.createElement('a');
+  a.href=url;a.download='strive-planning-calendar.ics';
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1500);
+  flash(`Downloaded ${list.length} events as .ics`);
+}
+
 /* ── LEGEND / FILTERS ── */
 function renderLegend(){
   const host=document.getElementById('legend');
   const counts={};
   TYPE_ORDER.forEach(t=>{counts[t]=events.filter(e=>e.type===t&&(+e.date.slice(0,4)===year||+endOf(e).slice(0,4)===year)).length;});
-  host.innerHTML=TYPE_ORDER.map(t=>`<button class="legend-item${activeTypes.has(t)?'':' off'}" data-t="${t}" title="Show / hide ${esc(typeLabel(t))}"><span class="legend-dot" style="background:var(${TYPE_VAR[t]})"></span>${esc(typeLabel(t))}<span class="legend-n">${counts[t]}</span></button>`).join('')
-    +`<span class="legend-count" id="legendCount"></span>`;
-  const n=inYear(year).length;
-  document.getElementById('legendCount').textContent=`${n} shown in ${year}`;
+  host.innerHTML=TYPE_ORDER.map(t=>`<button class="legend-item${activeTypes.has(t)?'':' off'}" data-t="${t}" title="Show / hide ${esc(typeLabel(t))}"><span class="legend-dot" style="background:var(${TYPE_VAR[t]})"></span>${esc(typeLabel(t))}<span class="legend-n">${counts[t]}</span></button>`).join('');
+  const n=localChangeCount(),reset=document.getElementById('resetLocal');
+  reset.style.display=n?'':'none';
+  if(n)reset.innerHTML=`&#8634; Reset my ${n} change${n>1?'s':''}`;
+  document.getElementById('legendCount').textContent=`${inYear(year).length} shown in ${year}`;
 }
+document.getElementById('exportIcs').onclick=exportICS;
+document.getElementById('resetLocal').onclick=resetLocal;
 document.getElementById('legend').addEventListener('click',e=>{
   const b=e.target.closest('.legend-item');
   if(!b)return;
@@ -511,11 +676,40 @@ document.getElementById('legend').addEventListener('click',e=>{
     activeTypes.delete(t);
   }else activeTypes.add(t);
   renderLegend();render();
-  if(activeZoomMonth!==null)refreshZoom();
 });
 
-/* ── AGENDA VIEW ── */
+/* ── SHARED EVENT BITS ── */
 const TODAY_DS=`${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
+const TODAY_N=dnum(TODAY_DS);
+const isPast=e=>dnum(endOf(e))<TODAY_N;
+/* "How soon is this?" — the question the team actually asks of a planning calendar. */
+function relOf(e){
+  const s=dnum(e.date),en=dnum(endOf(e));
+  if(TODAY_N>en)return{t:'Done',c:'gone'};
+  if(TODAY_N>=s)return{t:spans(e)>1?`Now · day ${TODAY_N-s+1} of ${spans(e)}`:'Today',c:'now'};
+  const d=s-TODAY_N;
+  if(d===1)return{t:'Tomorrow',c:'soon'};
+  if(d<=14)return{t:`In ${d} days`,c:'soon'};
+  if(d<=70)return{t:`In ${Math.round(d/7)} weeks`,c:''};
+  return{t:`In ${Math.round(d/30.44)} months`,c:''};
+}
+const relTag=e=>{const r=relOf(e);return `<span class="rel ${r.c}">${r.t}</span>`;};
+/* The status toggle writes to localStorage only. Say so every single time it is offered,
+   and be specific about what teammates opening the same link actually see. */
+function toggleBtn(e){
+  if(!isTravel(e))return '';
+  const base=BASE_TYPE[e.id];
+  const note=e.custom
+    ? `You added this in your browser &mdash; it is not on the shared calendar at all.`
+    : (base!==undefined&&e.type!==base
+        ? `Changed by you. Teammates opening the link still see this as <b>${esc(typeLabel(base))}</b>.`
+        : `Saves in your browser only &mdash; it will not change what teammates see.`);
+  return `<button class="status-toggle ${e.type}" data-id="${e.id}" title="Changes how this event looks for you. Saved in this browser only — it does not update the shared calendar.">`
+    +(e.type==='possible'?'&#10003; Mark attending &mdash; for me':'&#8634; Move back to possible')
+    +`</button><span class="local-note">${note}</span>`;
+}
+
+/* ── AGENDA VIEW ── */
 let expanded=new Set();
 /* events that overlap another travel event anywhere in the year */
 function clashSet(list){
@@ -539,9 +733,9 @@ function renderAgenda(){
   list.forEach(e=>{const m=+e.date.slice(5,7)-1;(groups[m]=groups[m]||[]).push(e);});
   Object.keys(groups).map(Number).sort((a,b)=>a-b).forEach(m=>{
     const evts=groups[m];
-    html+=`<div class="ag-group"><div class="ag-month"><h3>${MONTHS[m]}</h3><span class="ag-n">${evts.length} event${evts.length>1?'s':''}</span></div>`;
+    html+=`<div class="ag-group"><div class="ag-month"><h3>${MONTHS[m]}</h3><button class="ag-jump" data-m="${m}">Open month &rarr;</button><span class="ag-n">${evts.length} event${evts.length>1?'s':''}</span></div>`;
     evts.forEach(e=>{
-      const past=dnum(endOf(e))<dnum(TODAY_DS);
+      const past=isPast(e);
       if(!todayDrawn&&!past&&year===today.getFullYear()){
         html+=`<div class="ag-today-line"><span>Today &middot; ${MON_SHORT[today.getMonth()]} ${today.getDate()}</span><i></i></div>`;
         todayDrawn=true;
@@ -556,21 +750,21 @@ function renderAgenda(){
         +`</div>`
         +`<div class="ag-main">`
         +`<div class="ag-head"><span class="type-tag ${e.type}">${esc(typeLabel(e.type))}</span>`
+        +relTag(e)
         +(clashes.has(e.id)?`<span class="ag-clash">⚠ overlaps another trip</span>`:'')
         +`</div>`
         +`<div class="ag-title">${esc(e.title)}</div>`
         +(e.notes?`<div class="ag-notes${long&&!open?' clamp':''}">${esc(e.notes)}</div>`:'')
         +(long?`<button class="ag-more" data-x="${e.id}">${open?'Show less':'Show more'}</button>`:'')
-        +(e.rec&&open?`<div class="ag-rec"><span class="rec-tag">★ Suggested attendees</span>${esc(e.rec)}</div>`:'')
-        +(e.rec&&!open?`<div class="ag-rec"><span class="rec-tag">★ Suggested attendees</span>${esc(e.rec.length>110?e.rec.slice(0,110)+'…':e.rec)}</div>`:'')
-        +(isTravel(e)?`<button class="status-toggle ${e.type}" data-id="${e.id}">${e.type==='possible'?'✓ Confirm — We&rsquo;re Attending':'↺ Revert to Possible'}</button>`:'')
+        +(e.rec?`<div class="ag-rec"><span class="rec-tag">★ Suggested attendees</span>${esc(open||e.rec.length<=110?e.rec:e.rec.slice(0,110)+'…')}</div>`:'')
+        +toggleBtn(e)
         +`</div></div>`;
     });
     html+=`</div>`;
   });
   host.innerHTML=html;
 }
-/* agenda interactions: expand notes + status toggle */
+/* agenda interactions: expand notes + jump into a month */
 document.getElementById('agenda').addEventListener('click',ev=>{
   const more=ev.target.closest('.ag-more');
   if(more){
@@ -579,24 +773,20 @@ document.getElementById('agenda').addEventListener('click',ev=>{
     renderAgenda();
     return;
   }
-  const btn=ev.target.closest('.status-toggle');
-  if(!btn)return;
-  const e=events.find(x=>x.id===+btn.dataset.id);
-  if(!e)return;
-  e.type=e.type==='attending'?'possible':'attending';
-  saveState();
-  flash(e.type==='attending'?'Confirmed — attending':'Moved back to possible');
-  renderLegend();render();
+  const jump=ev.target.closest('.ag-jump');
+  if(jump){month=+jump.dataset.m;selectedDay=null;setView('month');}
 });
 
 /* ── VIEW SWITCHING ── */
-let view='agenda';
+const VIEW_EL={month:'viewMonth',agenda:'viewAgenda',year:'viewYear'};
 function setView(v){
   view=v;
+  document.getElementById('monthView').style.display=v==='month'?'':'none';
   document.getElementById('agenda').style.display=v==='agenda'?'':'none';
   document.getElementById('yearGrid').style.display=v==='year'?'':'none';
-  document.getElementById('viewAgenda').classList.toggle('on',v==='agenda');
-  document.getElementById('viewYear').classList.toggle('on',v==='year');
+  document.getElementById('monthBar').classList.toggle('on',v==='month');
+  document.getElementById('scroll').classList.toggle('locked',v==='month');
+  Object.keys(VIEW_EL).forEach(k=>document.getElementById(VIEW_EL[k]).classList.toggle('on',k===v));
   render();
   document.getElementById('scroll').scrollTo(0,0);
   if(v==='year'&&year===today.getFullYear())setTimeout(()=>scrollToMonth(today.getMonth()),100);
@@ -606,24 +796,28 @@ function scrollToToday(){
   const line=document.querySelector('.ag-today-line');
   if(line)line.scrollIntoView({behavior:'smooth',block:'center'});
 }
-document.getElementById('viewAgenda').onclick=()=>setView('agenda');
-document.getElementById('viewYear').onclick=()=>setView('year');
+Object.keys(VIEW_EL).forEach(k=>{document.getElementById(VIEW_EL[k]).onclick=()=>setView(k);});
 document.getElementById('todayBtn').onclick=()=>{
-  if(activeZoomMonth!==null)closeZoom();
   closeSearch();
   const changed=year!==today.getFullYear();
-  year=today.getFullYear();
-  if(changed){renderLegend();}
+  year=today.getFullYear();month=today.getMonth();selectedDay=null;
+  if(changed)renderLegend();
   render();
   if(view==='agenda')setTimeout(scrollToToday,80);
-  else setTimeout(()=>scrollToMonth(today.getMonth()),80);
+  else if(view==='year')setTimeout(()=>scrollToMonth(today.getMonth()),80);
 };
 
-/* ── YEAR GRID ── */
+/* ── RENDER DISPATCH ── */
 function render(){
   document.getElementById('yearLabel').textContent=year;
   renderLegendCountOnly();
   if(view==='agenda'){renderAgenda();return;}
+  if(view==='month'){renderMonthView();return;}
+  renderYearGrid();
+}
+
+/* ── YEAR GRID ── */
+function renderYearGrid(){
   const grid=document.getElementById('yearGrid');
   grid.innerHTML='';
   for(let m=0;m<12;m++){
@@ -644,7 +838,7 @@ function render(){
       if(evts.length)attachTip(cell,evts,ds);
       daysEl.appendChild(cell);
     }
-    card.addEventListener('click',()=>openZoom(m));
+    card.addEventListener('click',()=>{month=m;selectedDay=null;setView('month');});
     grid.appendChild(card);
   }
 }
@@ -677,68 +871,107 @@ function posTip(el){
   tipEl.style.left=x+'px';tipEl.style.top=y+'px';
 }
 
-/* ── ZOOM ── */
-function openZoom(m){
-  activeZoomMonth=m;selectedDay=null;
-  document.getElementById('zoomTitle').textContent=`${MONTHS[m]} ${year}`;
-  refreshZoom();
-  document.getElementById('zoom').classList.add('open');
-  tipEl.classList.remove('show');
+/* ── MONTH VIEW ──
+   One month's grid and that month's events side by side on a single screen.
+   Clicking a day narrows the panel to that day; clicking it again widens back out. */
+const MAX_PILLS=3;
+function goMonth(delta){
+  let m=month+delta,y=year;
+  while(m<0){m+=12;y--;}
+  while(m>11){m-=12;y++;}
+  month=m;selectedDay=null;
+  if(y!==year){year=y;renderLegend();}
+  render();
 }
-function closeZoom(){document.getElementById('zoom').classList.remove('open');activeZoomMonth=null;selectedDay=null;}
-function refreshZoom(){
-  const m=activeZoomMonth;
-  if(m===null)return;
-  buildZoomGrid(m);
-  renderZoomSidebar(selectedDay!==null?`${year}-${pad(m+1)}-${pad(selectedDay)}`:null,m);
+function renderMonthView(){
+  document.getElementById('mvTitle').textContent=`${MONTHS[month]} ${year}`;
+  renderMonthBar();
+  renderGlance();
+  buildMonthGrid();
+  renderMonthPanel();
 }
-function buildZoomGrid(m){
-  document.getElementById('zoomWdays').innerHTML=WD.map(d=>`<div>${d}</div>`).join('');
-  const cont=document.getElementById('zoomDays');
+function renderMonthBar(){
+  document.getElementById('mbMonths').innerHTML=MONTHS.map((name,m)=>{
+    const n=byMonth(year,m).length;
+    const now=today.getFullYear()===year&&today.getMonth()===m;
+    return `<button class="mb-m${m===month?' on':''}${now?' now':''}" data-m="${m}" title="${name} ${year} — ${n} event${n===1?'':'s'}"><span>${MON_SHORT[m]}</span><em>${n||'·'}</em></button>`;
+  }).join('');
+}
+function renderGlance(){
+  const list=byMonth(year,month);
+  const host=document.getElementById('mvGlance');
+  if(!list.length){host.innerHTML=`<span class="mv-chip none">Nothing scheduled</span>`;return;}
+  host.innerHTML=TYPE_ORDER.filter(t=>list.some(e=>e.type===t))
+    .map(t=>`<span class="mv-chip ${t}">${list.filter(e=>e.type===t).length} ${esc(typeLabel(t))}</span>`).join('');
+}
+function buildMonthGrid(){
+  document.getElementById('mvWdays').innerHTML=WD.map((d,i)=>`<div${i===0||i===6?' class="we"':''}>${d}</div>`).join('');
+  const cont=document.getElementById('mvDays');
   cont.innerHTML='';
-  const first=new Date(year,m,1).getDay(),count=new Date(year,m+1,0).getDate();
-  for(let i=0;i<first;i++){const c=document.createElement('div');c.className='zoom-day empty';cont.appendChild(c);}
+  const first=new Date(year,month,1).getDay(),count=new Date(year,month+1,0).getDate();
+  for(let i=0;i<first;i++){const c=document.createElement('div');c.className='mv-day empty';cont.appendChild(c);}
   for(let d=1;d<=count;d++){
-    const ds=`${year}-${pad(m+1)}-${pad(d)}`;
+    const ds=`${year}-${pad(month+1)}-${pad(d)}`;
     const evts=byDate(ds);
-    const isToday=today.getFullYear()===year&&today.getMonth()===m&&today.getDate()===d;
+    const dow=(first+d-1)%7;
+    const isToday=today.getFullYear()===year&&today.getMonth()===month&&today.getDate()===d;
     const clash=evts.filter(isTravel).length>1;
     const cell=document.createElement('div');
-    cell.className='zoom-day'+(evts.length?' has-event':'')+(isToday?' today':'')+(selectedDay===d?' selected':'');
+    cell.className='mv-day'+(evts.length?' has-event':'')+(isToday?' today':'')+(selectedDay===d?' selected':'')+(dow===0||dow===6?' we':'');
     cell.dataset.day=d;
-    cell.innerHTML=`<div class="zoom-day-num"><span>${d}</span>${clash?'<span class="clash-flag" title="Two or more travel events overlap">CLASH</span>':''}</div>`
-      +evts.map(e=>{
-        const cont2=dayIndex(e,ds)>1;
-        return `<div class="zoom-pill ${e.type}${cont2?' cont':''}" title="${esc(e.title)}">${cont2?'↳ ':''}${esc(e.title)}</div>`;
-      }).join('');
-    if(evts.length){
-      cell.addEventListener('click',()=>{
-        if(selectedDay===d){selectedDay=null;}else{selectedDay=d;}
-        refreshZoom();
-      });
-    }
+    cell.innerHTML=`<div class="mv-daynum"><span>${d}</span>${clash?'<span class="clash-flag" title="Two or more travel commitments overlap on this day">CLASH</span>':''}</div>`
+      +`<div class="mv-pills">`+evts.slice(0,MAX_PILLS).map(e=>{
+        const i=dayIndex(e,ds),n=spans(e);
+        /* round the ends of a run, and also where a week break interrupts it */
+        const l=i===1||dow===0,r=i===n||dow===6;
+        return `<div class="mv-pill ${e.type}${i>1?' cont':''}${l?' r-l':''}${r?' r-r':''}" title="${esc(e.title)}${n>1?` — ${esc(fmtSpan(e))}`:''}">${i>1?'↳ ':''}${esc(e.title)}</div>`;
+      }).join('')+`</div>`
+      +(evts.length>MAX_PILLS?`<div class="mv-more">+${evts.length-MAX_PILLS} more</div>`:'');
     cont.appendChild(cell);
   }
 }
-function renderZoomSidebar(dateStr,m){
-  const list=document.getElementById('zoomList');
-  const title=document.getElementById('zoomSidebarTitle');
-  const evts=dateStr?byDate(dateStr):byMonth(year,m);
-  title.textContent=dateStr?fmt(dateStr):`${MONTHS[m]} — All Events`;
-  renderClashPanel(m,dateStr);
-  if(!evts.length){list.innerHTML=`<div class="z-empty">No events${dateStr?' this day':' this month'}.</div>`;return;}
-  list.innerHTML=evts.map(e=>{
-    const multi=spans(e)>1;
-    const dayNote=dateStr&&multi?` <span class="span-tag">· day ${dayIndex(e,dateStr)} of ${spans(e)}</span>`:'';
-    return `<div class="z-event ${e.type}"><span class="type-tag ${e.type}">${esc(typeLabel(e.type))}</span>`
-      +`<div class="z-event-date">${esc(fmtSpan(e))}${multi?` <span class="span-tag">· ${spans(e)} days</span>`:''}${dayNote}</div>`
-      +`<div class="z-event-title">${esc(e.title)}</div>`
-      +(e.notes?`<div class="z-event-notes">${esc(e.notes)}</div>`:'')
-      +(e.rec?`<div class="z-event-rec"><span class="rec-tag">★ Suggested attendees</span>${esc(e.rec)}</div>`:'')
-      +(isTravel(e)?`<button class="status-toggle ${e.type}" data-id="${e.id}">${e.type==='possible'?'✓ Confirm — We&rsquo;re Attending':'↺ Revert to Possible'}</button>`:'')
-      +`</div>`;
-  }).join('');
+function eventCard(e,ds){
+  const multi=spans(e)>1;
+  const dayNote=ds&&multi?` <span class="span-tag">· day ${dayIndex(e,ds)} of ${spans(e)}</span>`:'';
+  return `<div class="ev ${e.type}${isPast(e)?' gone':''}">`
+    +`<div class="ev-meta"><span class="type-tag ${e.type}">${esc(typeLabel(e.type))}</span>${relTag(e)}</div>`
+    +`<div class="ev-date">${esc(fmtSpan(e))}${multi?` <span class="span-tag">· ${spans(e)} days</span>`:''}${dayNote}</div>`
+    +`<div class="ev-title">${esc(e.title)}</div>`
+    +(e.notes?`<div class="ev-notes">${esc(e.notes)}</div>`:'')
+    +(e.rec?`<div class="ev-rec"><span class="rec-tag">★ Suggested attendees</span>${esc(e.rec)}</div>`:'')
+    +toggleBtn(e)
+    +`</div>`;
 }
+function renderMonthPanel(){
+  const ds=selectedDay!==null?`${year}-${pad(month+1)}-${pad(selectedDay)}`:null;
+  const evts=ds?byDate(ds):byMonth(year,month);
+  const dow=ds?new Date(year,month,selectedDay).getDay():0;
+  document.getElementById('mvSideTitle').innerHTML=ds
+    ? `${WD_FULL[dow]} ${selectedDay}<span>${evts.length} event${evts.length===1?'':'s'} on this day</span>`
+    : `This month<span>${evts.length} event${evts.length===1?'':'s'} in ${MONTHS[month]} ${year}</span>`;
+  document.getElementById('mvClear').style.display=ds?'':'none';
+  renderClashPanel(month,ds);
+  const host=document.getElementById('mvEvents');
+  host.innerHTML=evts.length
+    ? evts.map(e=>eventCard(e,ds)).join('')
+    : `<div class="z-empty">${ds?'Nothing scheduled on this day.':`Nothing scheduled in ${MONTHS[month]} ${year}.`}<br>Turn a filter back on above, or use <b>Add Event</b>.</div>`;
+}
+document.getElementById('mvDays').addEventListener('click',e=>{
+  const cell=e.target.closest('.mv-day.has-event');
+  if(!cell)return;
+  const d=+cell.dataset.day;
+  selectedDay=selectedDay===d?null:d;
+  buildMonthGrid();renderMonthPanel();
+});
+document.getElementById('mvClear').onclick=()=>{selectedDay=null;buildMonthGrid();renderMonthPanel();};
+document.getElementById('mbPrev').onclick=()=>goMonth(-1);
+document.getElementById('mbNext').onclick=()=>goMonth(1);
+document.getElementById('mbMonths').addEventListener('click',e=>{
+  const b=e.target.closest('.mb-m');
+  if(!b)return;
+  month=+b.dataset.m;selectedDay=null;render();
+});
+
 /* conflict detection: overlapping travel events in the visible month */
 function renderClashPanel(m,dateStr){
   const host=document.getElementById('clashHost');
@@ -756,22 +989,24 @@ function renderClashPanel(m,dateStr){
     +`</ul></div>`;
 }
 
-/* ── STATUS TOGGLE (Possible <-> Attending) ── */
-document.getElementById('zoomList').addEventListener('click',e=>{
+/* ── STATUS TOGGLE (Possible <-> Attending) ──
+   One delegated handler for every view. Local-only: see toggleBtn() and saveState(). */
+document.addEventListener('click',e=>{
   const btn=e.target.closest('.status-toggle');
   if(!btn)return;
   const ev=events.find(x=>x.id===+btn.dataset.id);
   if(!ev)return;
   ev.type=ev.type==='attending'?'possible':'attending';
+  activeTypes.add(ev.type);            // don't let a hidden filter swallow it
   saveState();
-  flash(ev.type==='attending'?'Confirmed — attending':'Moved back to possible');
-  renderLegend();render();refreshZoom();
+  flash(ev.type==='attending'?'Marked attending — in your browser only':'Moved back to possible — in your browser only');
+  renderLegend();render();
 });
 
 /* ── ADD EVENT ── */
 function openAdd(){
-  const m=activeZoomMonth!==null?activeZoomMonth:today.getMonth();
-  const d=activeZoomMonth!==null&&selectedDay!==null?selectedDay:today.getDate();
+  const m=view==='month'?month:today.getMonth();
+  const d=view==='month'&&selectedDay!==null?selectedDay:today.getDate();
   const safe=Math.min(d,new Date(year,m+1,0).getDate());
   document.getElementById('fDate').value=`${year}-${pad(m+1)}-${pad(safe)}`;
   document.getElementById('fEnd').value='';
@@ -784,7 +1019,6 @@ function openAdd(){
 }
 function closeAdd(){document.getElementById('addModal').classList.remove('open');}
 document.getElementById('addBtn').onclick=openAdd;
-document.getElementById('zoomAddBtn').onclick=openAdd;
 document.getElementById('addModalClose').onclick=closeAdd;
 document.getElementById('addCancel').onclick=closeAdd;
 document.getElementById('addModal').onclick=e=>{if(e.target.id==='addModal')closeAdd();};
@@ -805,37 +1039,39 @@ document.getElementById('addSave').onclick=()=>{
   activeTypes.add(type);                             // don't add into a hidden filter
   saveState();
   closeAdd();
-  flash('Event added');
+  flash('Event added — in your browser only');
   year=+date.slice(0,4);
+  month=+date.slice(5,7)-1;
+  selectedDay=null;
   renderLegend();render();
-  const m=+date.slice(5,7)-1;
-  if(document.getElementById('zoom').classList.contains('open')){activeZoomMonth=m;selectedDay=null;document.getElementById('zoomTitle').textContent=`${MONTHS[m]} ${year}`;refreshZoom();}
 };
 
 /* ── NAV ── */
-document.getElementById('zoomBack').onclick=closeZoom;
 function goYear(y){year=y;renderLegend();render();document.getElementById('scroll').scrollTo(0,0);}
 document.getElementById('prevYear').onclick=()=>goYear(year-1);
 document.getElementById('nextYear').onclick=()=>goYear(year+1);
 document.addEventListener('keydown',e=>{
   const searchOpen=document.getElementById('searchOverlay').classList.contains('open');
   const modalOpen=document.getElementById('addModal').classList.contains('open');
-  const zoomOpen=document.getElementById('zoom').classList.contains('open');
   if(e.key==='Escape'){
     if(modalOpen)closeAdd();
     else if(searchOpen)closeSearch();
-    else if(zoomOpen)closeZoom();
+    else if(view==='month'&&selectedDay!==null){selectedDay=null;buildMonthGrid();renderMonthPanel();}
     return;
   }
   if(modalOpen||searchOpen)return;
-  if(zoomOpen){                                      // month-to-month inside zoom
-    if(e.key==='ArrowLeft'){const m=activeZoomMonth-1;if(m<0){year--;openZoom(11);}else openZoom(m);renderLegend();render();}
-    if(e.key==='ArrowRight'){const m=activeZoomMonth+1;if(m>11){year++;openZoom(0);}else openZoom(m);renderLegend();render();}
-    return;
-  }
-  if(e.key==='ArrowLeft')goYear(year-1);
-  if(e.key==='ArrowRight')goYear(year+1);
-  if(e.key==='/'){e.preventDefault();document.getElementById('searchInput').focus();}
+  const tag=(document.activeElement&&document.activeElement.tagName)||'';
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+  if(e.key==='/'){e.preventDefault();document.getElementById('searchInput').focus();return;}
+  // ← / → step through months in month view, years everywhere else
+  if(e.key==='ArrowLeft'){view==='month'?goMonth(-1):goYear(year-1);return;}
+  if(e.key==='ArrowRight'){view==='month'?goMonth(1):goYear(year+1);return;}
+  const k=e.key.toLowerCase();
+  if(k==='m')setView('month');
+  else if(k==='a')setView('agenda');
+  else if(k==='y')setView('year');
+  else if(k==='t')document.getElementById('todayBtn').click();
 });
 
 /* ── SEARCH ── */
@@ -876,12 +1112,13 @@ function runSearch(q){
     document.querySelectorAll('.src-card').forEach(card=>{
       card.addEventListener('click',()=>{
         year=parseInt(card.dataset.y,10);
-        const m=parseInt(card.dataset.m,10);
-        renderLegend();render();closeSearch();
+        month=parseInt(card.dataset.m,10);
+        selectedDay=null;
+        renderLegend();closeSearch();
         document.getElementById('searchInput').value='';
         document.getElementById('searchClear').classList.remove('visible');
         document.getElementById('searchHint').textContent='';
-        setTimeout(()=>openZoom(m),60);
+        setView('month');
       });
     });
   }
@@ -901,8 +1138,7 @@ document.getElementById('searchCloseBtn').addEventListener('click',closeSearch);
 /* ── BOOT ── */
 function scrollToMonth(m){const cards=document.querySelectorAll('.month');if(cards[m])cards[m].scrollIntoView({behavior:'smooth',block:'center'});}
 renderLegend();
-render();
-if(year===today.getFullYear())setTimeout(scrollToToday,140);
+setView('month');   // opens on the current month with its events already beside it
 </script>
 </body>
 </html>

@@ -81,30 +81,57 @@ Events are objects in the `events` array in `index.html`:
 - **Ben Werkman** — CIO. The SATA distribution workhorse: investment thesis, allocators, advisor and capital-markets audiences.
 - **Jeff Walton** — CRO. Risk and regulatory-heavy venues, institutional risk conversations.
 
+## The three views
+
+`view` is one of `'month' | 'agenda' | 'year'`; `render()` dispatches on it. All three live inside the
+same `#scroll` container and are shown/hidden by `setView()` — there is no full-screen overlay any more.
+
+- **Month view** (default) — one month's day grid on the left, that month's events on the right, on a
+  single screen. A month strip (`#monthBar`) above it jumps between months and shows per-month counts.
+  Clicking a day narrows the panel to that day; clicking it again widens back to the whole month.
+  The grid and the event panel each scroll independently, so the page itself does not scroll.
+- **Agenda view** — chronological list, opens at today, past events dimmed, "Today" line, and an
+  "Open month →" button on each month header.
+- **Year view** — 12 month cards at once; clicking one switches to Month view for that month.
+
 ## Features already built
 
-- **Agenda view** (default) — chronological list, opens at today, past events dimmed, "Today" line
-- **Year view** — 12-month grid; click a month for a full-screen day grid + detail panel
-- **Multi-day events** render across every day they span, with `↳` continuation markers
+- **Multi-day events** render across every day they span with `↳` continuation markers; pill corners
+  are squared mid-run so a trip reads as one continuous band, and re-rounded at week breaks.
+- **Relative timing** — every event card carries a `Today` / `Tomorrow` / `In 3 weeks` / `Done` badge.
 - **Conflict detection** — overlapping travel flagged per month; clashing days marked `CLASH`
 - **Filter chips** — click a legend colour to show/hide that category
-- **Status toggle** — flip any conference 🔴 Possible ⇄ 🟢 Attending
+- **Status toggle** — flip any conference 🔴 Possible ⇄ 🟢 Attending (per-browser; see Gotchas)
+- **Reset my changes** — appears in the toolbar only when local changes exist; clears them
+- **Export .ics** — downloads everything currently shown, importable into Outlook/Google/Apple.
+  All-day `DTEND` is exclusive (a 3-day event ends on day 4) and lines fold at 75 **octets**.
 - **Search** across titles, notes, suggested attendees, dates, types (`/` focuses it)
-- Keyboard: `←`/`→` change year (or month, inside a month view), `Esc` closes, `Today` returns to now
+- Keyboard: `←`/`→` step months in Month view and years elsewhere; `M`/`A`/`Y` switch view;
+  `T` jumps to today; `/` focuses search; `Esc` clears the selected day or closes an overlay.
 
 ## Gotchas
 
+- **⚠️ Never round-trip `index.html` through PowerShell `Get-Content`/`Set-Content`.** `Get-Content`
+  reads the (BOM-less, UTF-8) file as Windows-1252 and `Set-Content -Encoding UTF8` writes it back
+  double-encoded — every `—`, `★`, `⚠`, `↳` silently turns to mojibake. This already happened once.
+  Use the Edit/Write tools, or explicit .NET: `[System.IO.File]::ReadAllText/WriteAllText` with
+  `New-Object System.Text.UTF8Encoding($false)`. To detect it: the file should contain ~94 `—` and 0
+  occurrences of `Â` or `â€`.
 - **`localStorage` stores only type overrides (by id) and user-added events** — never the base
   `events` array. So deleting an event from the source removes it cleanly; a stale override for a
   deleted id is ignored harmlessly.
-- **Saved state is per-browser and does not sync between people.** If a teammate clicks "Confirm —
-  We're Attending," nobody else sees it. **Open item:** the button label implies a shared update and
-  should be reworded (e.g. "Mark for me — saves locally") before it misleads someone.
+- **Saved state is per-browser and does not sync between people.** The UI now says this explicitly:
+  the button reads "✓ Mark attending — for me", and a `.local-note` under it names what teammates
+  actually still see. Keep that honesty if you touch `toggleBtn()` — the live link is shared, so a
+  label implying a shared update genuinely misleads people.
 - **Day grids must use `minmax(0,1fr)`, not `1fr`.** The event pills are `white-space:nowrap`, and
   plain `1fr` resolves to `minmax(auto,1fr)`, so long titles blow the columns out — day cells once
   reached 1449px inside a 526px container. Cells also need `min-width:0`.
-- **The month view stacks below 1150px**, not 900px. Between those widths a 360px sidebar starves the
-  day grid to ~58px per column and titles truncate to two characters.
+- **The month view stacks below 1150px**, not 900px. Between those widths a 400px event panel starves
+  the day grid to ~58px per column and titles truncate to two characters. Below 1150px the page also
+  gets its scroll back (`.scroll.locked` reverts to `overflow-y:auto`).
+- **The header wraps below 900px.** Three view buttons + Today + Add overflowed a phone header once
+  the Month button was added; `Add Event` goes icon-only below 600px.
 - **Future Proof Festival was deliberately removed** from September at the owner's request. Don't
   re-add it.
 - The local folder is inside OneDrive. Fine on one machine; don't work from a second clone
@@ -120,3 +147,9 @@ Events are objects in the `events` array in `index.html`:
 - **Bitcoin for Corporations 2027** uses the 2026 dates (Feb 24–25) as a placeholder.
 - October is heavily overloaded with overlapping travel — the conflict panel flags it. Several
   advisor events (Forbes SHOOK, Schwab IMPACT) are still 🔴 and compete for the same people.
+
+## Deliberately not done
+
+- **A light theme.** Considered and skipped: 🟡 milestone yellow (`#FFD23F`) is unreadable on white,
+  and darkening it to an amber collides with 🟠 bitcoin orange — which muddies the one thing the owner
+  is most specific about. Revisit only with an explicit palette decision for all five colours.
