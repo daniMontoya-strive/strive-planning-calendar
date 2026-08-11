@@ -16,6 +16,17 @@ Open **`strive-calendar-final.html`** in any modern browser. No build step and n
 | 🔴 Red | Possible | Conferences & events **under consideration** |
 | 🔵 Blue | Holiday / OOO | US federal holidays & office closures |
 
+## Two views
+
+**Agenda** (the default) — every event for the year in one scrollable, chronological list, grouped by
+month. It opens scrolled to today, dims events that have already passed, and draws a "Today" line so
+you can see what's next at a glance. Long notes are collapsed behind *Show more*.
+
+**Year** — the 12-month calendar grid. Click any month for a full-screen view with a day-by-day grid
+and a detail panel.
+
+`Today` in the header jumps back to now from anywhere.
+
 ## Features
 
 - **Multi-day events** are single entries with a date range — they render across every day they span

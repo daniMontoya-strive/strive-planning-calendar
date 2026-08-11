@@ -71,6 +71,42 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 .src-rec{margin-top:9px;font-size:0.76rem;line-height:1.5;color:var(--text-muted);}
 .search-empty{grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--text-faint);}
 .search-empty h3{font-family:var(--font-display);font-size:1.4rem;color:var(--text-muted);margin-bottom:8px;}
+/* VIEW SWITCHER + TODAY */
+.view-tools{display:flex;align-items:center;gap:8px;}
+.seg{display:inline-flex;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:2px;}
+.seg button{display:inline-flex;align-items:center;gap:6px;font-size:0.76rem;font-weight:700;padding:7px 13px;border-radius:3px;color:var(--text-muted);transition:background .15s,color .15s;}
+.seg button.on{background:var(--surface-3);color:var(--text);}
+.seg button:hover:not(.on){color:var(--text);}
+.btn-today{font-size:0.76rem;font-weight:700;padding:8px 13px;border-radius:var(--radius-sm);border:1px solid var(--border);color:var(--text-muted);transition:background .15s,color .15s,border-color .15s;}
+.btn-today:hover{border-color:var(--btc);color:var(--btc);}
+/* AGENDA VIEW */
+.agenda{max-width:1000px;margin:0 auto;}
+.ag-month{position:sticky;top:0;z-index:5;background:var(--bg);padding:14px 0 9px;display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--border);margin-bottom:13px;}
+.ag-month h3{font-family:var(--font-display);font-size:1.55rem;line-height:1;}
+.ag-month .ag-n{font-size:0.7rem;color:var(--text-faint);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-left:auto;}
+.ag-group{margin-bottom:26px;}
+.ag-row{display:grid;grid-template-columns:118px 1fr;gap:16px;padding:13px 15px 13px 13px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--c);border-radius:var(--radius-md);margin-bottom:9px;transition:background .14s,border-color .14s;}
+.ag-row:hover{background:var(--surface-2);border-color:var(--border-hi);border-left-color:var(--c);}
+.ag-row.past{opacity:.5;}
+.ag-when{display:flex;flex-direction:column;gap:3px;}
+.ag-dow{font-size:0.63rem;font-weight:800;color:var(--text-faint);letter-spacing:0.09em;text-transform:uppercase;}
+.ag-dnum{font-family:var(--font-display);font-size:1.5rem;line-height:1;color:var(--text);}
+.ag-range{font-size:0.66rem;font-weight:700;color:var(--c);letter-spacing:0.03em;}
+.ag-main{min-width:0;}
+.ag-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px;}
+.ag-title{font-weight:700;font-size:1rem;line-height:1.35;margin-bottom:4px;}
+.ag-notes{font-size:0.82rem;color:var(--text-muted);line-height:1.55;}
+.ag-notes.clamp{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.ag-more{font-size:0.7rem;font-weight:700;color:var(--btc);margin-top:4px;letter-spacing:0.03em;}
+.ag-more:hover{text-decoration:underline;}
+.ag-rec{margin-top:9px;font-size:0.78rem;line-height:1.5;color:var(--text);background:var(--surface-2);border:1px solid var(--border);border-left:3px solid var(--btc);border-radius:var(--radius-sm);padding:8px 11px;}
+.ag-clash{display:inline-flex;align-items:center;gap:4px;font-size:0.6rem;font-weight:800;color:var(--red);letter-spacing:0.06em;text-transform:uppercase;background:rgba(241,86,95,.11);border:1px solid rgba(241,86,95,.3);padding:2px 7px;border-radius:3px;}
+.ag-today-line{display:flex;align-items:center;gap:10px;margin:4px 0 13px;}
+.ag-today-line span{font-size:0.62rem;font-weight:800;color:var(--btc);letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;}
+.ag-today-line i{flex:1;height:1px;background:var(--btc);opacity:.45;}
+.ag-empty{text-align:center;padding:70px 20px;color:var(--text-faint);}
+.ag-empty h3{font-family:var(--font-display);font-size:1.4rem;color:var(--text-muted);margin-bottom:8px;}
+@media(max-width:600px){.ag-row{grid-template-columns:1fr;gap:8px;}.ag-when{flex-direction:row;align-items:baseline;gap:8px;}}
 /* SCROLL */
 .scroll{flex:1;overflow-y:auto;padding:28px 28px 60px;}
 .scroll::-webkit-scrollbar{width:7px;}
@@ -240,10 +276,23 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
     <span id="yearLabel">2026</span>
     <button id="nextYear" title="Next year"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
   </div>
-  <button class="btn-add" id="addBtn">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-    Add Event
-  </button>
+  <div class="view-tools">
+    <div class="seg">
+      <button id="viewAgenda" class="on" title="Chronological list of every event">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        Agenda
+      </button>
+      <button id="viewYear" title="12-month calendar grid">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+        Year
+      </button>
+    </div>
+    <button class="btn-today" id="todayBtn" title="Jump to today">Today</button>
+    <button class="btn-add" id="addBtn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+      Add Event
+    </button>
+  </div>
 </header>
 
 <div class="legend" id="legend"></div>
@@ -258,7 +307,8 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 </div>
 
 <div class="scroll" id="scroll">
-  <div class="year-grid" id="yearGrid"></div>
+  <div class="agenda" id="agenda"></div>
+  <div class="year-grid" id="yearGrid" style="display:none"></div>
 </div>
 
 <!-- ADD MODAL -->
@@ -463,10 +513,116 @@ document.getElementById('legend').addEventListener('click',e=>{
   if(activeZoomMonth!==null)refreshZoom();
 });
 
+/* ── AGENDA VIEW ── */
+const TODAY_DS=`${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
+let expanded=new Set();
+/* events that overlap another travel event anywhere in the year */
+function clashSet(list){
+  const trav=list.filter(isTravel),out=new Set();
+  for(let i=0;i<trav.length;i++)for(let j=i+1;j<trav.length;j++){
+    const a=trav[i],b=trav[j];
+    if(dnum(a.date)<=dnum(endOf(b))&&dnum(b.date)<=dnum(endOf(a))){out.add(a.id);out.add(b.id);}
+  }
+  return out;
+}
+function renderAgenda(){
+  const host=document.getElementById('agenda');
+  const list=inYear(year).slice().sort((a,b)=>a.date.localeCompare(b.date)||TYPE_ORDER.indexOf(a.type)-TYPE_ORDER.indexOf(b.type));
+  if(!list.length){
+    host.innerHTML=`<div class="ag-empty"><h3>Nothing to show in ${year}</h3><p>Try another year, or switch a filter back on above.</p></div>`;
+    return;
+  }
+  const clashes=clashSet(list);
+  let html='',curMonth=-1,todayDrawn=false;
+  const groups={};
+  list.forEach(e=>{const m=+e.date.slice(5,7)-1;(groups[m]=groups[m]||[]).push(e);});
+  Object.keys(groups).map(Number).sort((a,b)=>a-b).forEach(m=>{
+    const evts=groups[m];
+    html+=`<div class="ag-group"><div class="ag-month"><h3>${MONTHS[m]}</h3><span class="ag-n">${evts.length} event${evts.length>1?'s':''}</span></div>`;
+    evts.forEach(e=>{
+      const past=dnum(endOf(e))<dnum(TODAY_DS);
+      if(!todayDrawn&&!past&&year===today.getFullYear()){
+        html+=`<div class="ag-today-line"><span>Today &middot; ${MON_SHORT[today.getMonth()]} ${today.getDate()}</span><i></i></div>`;
+        todayDrawn=true;
+      }
+      const dt=new Date(+e.date.slice(0,4),+e.date.slice(5,7)-1,+e.date.slice(8,10));
+      const multi=spans(e)>1;
+      const long=e.notes&&e.notes.length>150;
+      const open=expanded.has(e.id);
+      html+=`<div class="ag-row ${e.type}${past?' past':''}">`
+        +`<div class="ag-when"><span class="ag-dow">${WD[dt.getDay()]}</span><span class="ag-dnum">${+e.date.slice(8,10)}</span>`
+        +(multi?`<span class="ag-range">${esc(fmtSpan(e).replace(/, \d{4}$/,''))} · ${spans(e)}d</span>`:'')
+        +`</div>`
+        +`<div class="ag-main">`
+        +`<div class="ag-head"><span class="type-tag ${e.type}">${esc(typeLabel(e.type))}</span>`
+        +(clashes.has(e.id)?`<span class="ag-clash">⚠ overlaps another trip</span>`:'')
+        +`</div>`
+        +`<div class="ag-title">${esc(e.title)}</div>`
+        +(e.notes?`<div class="ag-notes${long&&!open?' clamp':''}">${esc(e.notes)}</div>`:'')
+        +(long?`<button class="ag-more" data-x="${e.id}">${open?'Show less':'Show more'}</button>`:'')
+        +(e.rec&&open?`<div class="ag-rec"><span class="rec-tag">★ Suggested attendees</span>${esc(e.rec)}</div>`:'')
+        +(e.rec&&!open?`<div class="ag-rec"><span class="rec-tag">★ Suggested attendees</span>${esc(e.rec.length>110?e.rec.slice(0,110)+'…':e.rec)}</div>`:'')
+        +(isTravel(e)?`<button class="status-toggle ${e.type}" data-id="${e.id}">${e.type==='possible'?'✓ Confirm — We&rsquo;re Attending':'↺ Revert to Possible'}</button>`:'')
+        +`</div></div>`;
+    });
+    html+=`</div>`;
+  });
+  host.innerHTML=html;
+}
+/* agenda interactions: expand notes + status toggle */
+document.getElementById('agenda').addEventListener('click',ev=>{
+  const more=ev.target.closest('.ag-more');
+  if(more){
+    const id=+more.dataset.x;
+    if(expanded.has(id))expanded.delete(id);else expanded.add(id);
+    renderAgenda();
+    return;
+  }
+  const btn=ev.target.closest('.status-toggle');
+  if(!btn)return;
+  const e=events.find(x=>x.id===+btn.dataset.id);
+  if(!e)return;
+  e.type=e.type==='attending'?'possible':'attending';
+  saveState();
+  flash(e.type==='attending'?'Confirmed — attending':'Moved back to possible');
+  renderLegend();render();
+});
+
+/* ── VIEW SWITCHING ── */
+let view='agenda';
+function setView(v){
+  view=v;
+  document.getElementById('agenda').style.display=v==='agenda'?'':'none';
+  document.getElementById('yearGrid').style.display=v==='year'?'':'none';
+  document.getElementById('viewAgenda').classList.toggle('on',v==='agenda');
+  document.getElementById('viewYear').classList.toggle('on',v==='year');
+  render();
+  document.getElementById('scroll').scrollTo(0,0);
+  if(v==='year'&&year===today.getFullYear())setTimeout(()=>scrollToMonth(today.getMonth()),100);
+  if(v==='agenda')setTimeout(scrollToToday,100);
+}
+function scrollToToday(){
+  const line=document.querySelector('.ag-today-line');
+  if(line)line.scrollIntoView({behavior:'smooth',block:'center'});
+}
+document.getElementById('viewAgenda').onclick=()=>setView('agenda');
+document.getElementById('viewYear').onclick=()=>setView('year');
+document.getElementById('todayBtn').onclick=()=>{
+  if(activeZoomMonth!==null)closeZoom();
+  closeSearch();
+  const changed=year!==today.getFullYear();
+  year=today.getFullYear();
+  if(changed){renderLegend();}
+  render();
+  if(view==='agenda')setTimeout(scrollToToday,80);
+  else setTimeout(()=>scrollToMonth(today.getMonth()),80);
+};
+
 /* ── YEAR GRID ── */
 function render(){
   document.getElementById('yearLabel').textContent=year;
   renderLegendCountOnly();
+  if(view==='agenda'){renderAgenda();return;}
   const grid=document.getElementById('yearGrid');
   grid.innerHTML='';
   for(let m=0;m<12;m++){
@@ -745,7 +901,7 @@ document.getElementById('searchCloseBtn').addEventListener('click',closeSearch);
 function scrollToMonth(m){const cards=document.querySelectorAll('.month');if(cards[m])cards[m].scrollIntoView({behavior:'smooth',block:'center'});}
 renderLegend();
 render();
-if(year===today.getFullYear())setTimeout(()=>scrollToMonth(today.getMonth()),120);
+if(year===today.getFullYear())setTimeout(scrollToToday,140);
 </script>
 </body>
 </html>
