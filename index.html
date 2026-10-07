@@ -256,6 +256,26 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 .trv-empty{color:var(--text-faint);font-size:0.86rem;text-align:center;padding:40px 0;background:var(--surface);border:1px dashed var(--border-hi);border-radius:var(--radius-md);}
 .prep-item{display:flex;align-items:baseline;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px;font-size:0.8rem;}
 .prep-item .for{color:var(--text-faint);font-size:0.7rem;margin-left:auto;white-space:nowrap;}
+/* LOGISTICS EDITOR */
+.logi-for{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:16px;}
+.logi-for b{display:block;font-size:0.9rem;line-height:1.3;}
+.logi-for span{display:block;margin-top:3px;font-size:0.7rem;color:var(--text-faint);font-weight:700;letter-spacing:0.05em;text-transform:uppercase;}
+.who-pick{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:9px;}
+.who-btn{font-size:0.75rem;font-weight:700;padding:7px 13px;border-radius:999px;border:1px solid var(--border);background:var(--surface-2);color:var(--text-muted);transition:border-color .15s,background .15s,color .15s;}
+.who-btn:hover{border-color:var(--border-hi);color:var(--text);}
+.who-btn.on{background:var(--green);border-color:var(--green);color:#0A0A0A;}
+.prep-edit{display:flex;flex-direction:column;gap:7px;}
+.prep-row{display:flex;align-items:center;gap:8px;}
+.prep-row input[type=text]{flex:1;min-width:0;}
+.prep-row input[type=text].owner{flex:0 0 110px;}
+.prep-tick{flex:none;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface-2);color:var(--text-faint);font-size:0.85rem;font-weight:800;}
+.prep-tick.on{background:var(--green);border-color:var(--green);color:#0A0A0A;}
+.prep-del{flex:none;width:30px;height:30px;border-radius:var(--radius-sm);color:var(--text-faint);font-size:1.1rem;line-height:1;}
+.prep-del:hover{background:var(--surface-3);color:var(--red);}
+.prep-add{margin-top:9px;font-size:0.76rem;padding:7px 12px;}
+#logiSnip{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:0.7rem;line-height:1.5;}
+.ev-edit{margin-top:9px;font-size:0.68rem;font-weight:700;letter-spacing:0.04em;padding:6px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface-2);color:var(--text-muted);transition:border-color .15s,color .15s;}
+.ev-edit:hover{border-color:var(--border-hi);color:var(--text);}
 @media(max-width:760px){.vlab{display:none;}}
 .z-empty{color:var(--text-faint);font-size:0.88rem;text-align:center;padding:34px 12px;line-height:1.6;}
 .type-tag{display:inline-block;padding:2px 8px;border-radius:3px;font-size:0.62rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;background:var(--cd);color:var(--c);}
@@ -479,6 +499,37 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
   </div>
 </div>
 
+<!-- TRIP LOGISTICS -->
+<div class="overlay" id="logiModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-date">Trip logistics</div>
+      <button class="modal-x" id="logiClose" title="Close"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="logi-for" id="logiFor"></div>
+    <div class="fg"><label>Who is going</label>
+      <div class="who-pick" id="logiWho"></div>
+      <input type="text" id="logiWhoOther" placeholder="Anyone else &mdash; comma separated">
+    </div>
+    <div class="fg-row">
+      <div class="fg"><label>Fly out</label><input type="date" id="logiOut"></div>
+      <div class="fg"><label>Fly back</label><input type="date" id="logiBack"></div>
+    </div>
+    <div class="fg"><label>Hotel</label><input type="text" id="logiHotel" placeholder="Hotel, confirmation number"></div>
+    <div class="fg"><label>Prep &mdash; what the office owes this trip</label>
+      <div class="prep-edit" id="logiPrep"></div>
+      <button class="btn-ghost prep-add" id="logiAddPrep">+ Add a prep item</button>
+    </div>
+    <div class="fg" id="logiSnipWrap" style="display:none"><label>Paste this into the shared file</label><textarea id="logiSnip" readonly rows="3"></textarea></div>
+    <div class="form-actions">
+      <button class="btn-ghost" id="logiCopy" title="Produce the line to put in the shared calendar">Copy for commit</button>
+      <button class="btn-ghost" id="logiCancel">Cancel</button>
+      <button class="btn-add" id="logiSave">Save</button>
+    </div>
+    <div class="local-note">Saved in this browser only &mdash; teammates opening the shared link will not see it. Use <b>Copy for commit</b> and send it over to make it part of the calendar everyone sees.</div>
+  </div>
+</div>
+
 <script>
 'use strict';
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -593,6 +644,9 @@ let events=[
 /* ── PERSISTENCE ── */
 const BASE_TYPE={};
 events.forEach(e=>{BASE_TYPE[e.id]=e.type;});
+const logiOf=e=>JSON.stringify({who:e.who||[],out:e.out||'',back:e.back||'',hotel:e.hotel||'',prep:e.prep||[]});
+const BASE_LOGI={};
+events.forEach(e=>{BASE_LOGI[e.id]=logiOf(e);});
 const flashEl=document.getElementById('savedFlash');
 let flashTimer=null;
 function flash(msg){
@@ -606,7 +660,9 @@ function saveState(){
     const overrides={};
     events.forEach(e=>{if(BASE_TYPE[e.id]!==undefined&&e.type!==BASE_TYPE[e.id])overrides[e.id]=e.type;});
     const custom=events.filter(e=>e.custom).map(e=>({id:e.id,date:e.date,end:e.end,title:e.title,type:e.type,notes:e.notes,custom:true}));
-    localStorage.setItem(LS_KEY,JSON.stringify({v:1,overrides,custom}));
+    const logi={};
+    events.forEach(e=>{const cur=logiOf(e);if(BASE_LOGI[e.id]!==undefined&&cur!==BASE_LOGI[e.id])logi[e.id]=JSON.parse(cur);});
+    localStorage.setItem(LS_KEY,JSON.stringify({v:1,overrides,custom,logi}));
   }catch(err){/* storage unavailable (private mode / file restrictions) — session-only */}
 }
 function loadState(){
@@ -623,6 +679,13 @@ function loadState(){
         events.push(c);
         BASE_TYPE[c.id]=c.type;
       }
+    });
+    if(s&&s.logi)Object.keys(s.logi).forEach(id=>{
+      const e=events.find(x=>x.id===+id),L=s.logi[id];
+      if(!e||!L)return;
+      if(Array.isArray(L.who))e.who=L.who;
+      if(Array.isArray(L.prep))e.prep=L.prep;
+      ['out','back','hotel'].forEach(k=>{if(typeof L[k]==='string')e[k]=L[k];});
     });
     const ids=events.filter(e=>e.custom).map(e=>e.id);
     if(ids.length)nextId=Math.max(nextId,Math.max.apply(null,ids)+1);
@@ -650,6 +713,7 @@ function localChangeCount(){
   events.forEach(e=>{
     if(e.custom)n++;
     else if(BASE_TYPE[e.id]!==undefined&&e.type!==BASE_TYPE[e.id])n++;
+    else if(BASE_LOGI[e.id]!==undefined&&logiOf(e)!==BASE_LOGI[e.id])n++;
   });
   return n;
 }
@@ -1019,7 +1083,8 @@ function logiRow(e){
     +chip('Travel',travelWindow(e),'Not booked')
     +chip('Hotel',e.hotel||'','Not booked')
     +chip('Prep',prepN?`${prepDone(e)} of ${prepN} done`:'','None yet')
-    +`</div>`;
+    +`</div>`
+    +`<button class="ev-edit" data-logi="${e.id}">Edit logistics</button>`;
 }
 function eventCard(e,ds){
   const multi=spans(e)>1;
@@ -1167,9 +1232,11 @@ function renderClashPanel(m,dateStr){
     +`</ul></div>`;
 }
 
-/* ── STATUS TOGGLE (Potential <-> Attending) ──
-   One delegated handler for every view. Local-only: see toggleBtn() and saveState(). */
+/* ── CARD ACTIONS (status toggle · open the logistics editor) ──
+   One delegated handler for every view. Both are local-only: see toggleBtn() and saveState(). */
 document.addEventListener('click',e=>{
+  const ed=e.target.closest('[data-logi]');
+  if(ed){openLogi(+ed.dataset.logi);return;}
   const btn=e.target.closest('.status-toggle');
   if(!btn)return;
   const ev=events.find(x=>x.id===+btn.dataset.id);
@@ -1182,6 +1249,104 @@ document.addEventListener('click',e=>{
 });
 
 /* ── ADD EVENT ── */
+/* ─── LOGISTICS EDITOR ───
+   Everything here writes to localStorage, which is per-browser: a hotel typed
+   in one person's browser is invisible to the rest of the team. That is a trap
+   for a calendar whose whole purpose is shared reference, so the editor also
+   emits the exact line to paste into the shared file, and says so plainly. */
+let logiId=null,logiDraft=null;
+const qs=id=>document.getElementById(id);
+function drawWho(){
+  qs('logiWho').innerHTML=PEOPLE.map(p=>
+    `<button type="button" class="who-btn${logiDraft.who.includes(p)?' on':''}" data-w="${esc(p)}">${esc(p)}</button>`).join('');
+  qs('logiWho').querySelectorAll('.who-btn').forEach(b=>b.onclick=()=>{
+    const w=b.dataset.w,i=logiDraft.who.indexOf(w);
+    if(i<0)logiDraft.who.push(w);else logiDraft.who.splice(i,1);
+    drawWho();
+  });
+}
+function drawPrep(){
+  qs('logiPrep').innerHTML=logiDraft.prep.map((p,i)=>
+    `<div class="prep-row" data-i="${i}">`
+    +`<button type="button" class="prep-tick${p.d?' on':''}" title="Mark done">${p.d?'&#10003;':''}</button>`
+    +`<input type="text" class="task" value="${esc(p.t)}" placeholder="e.g. Ship booth collateral">`
+    +`<input type="text" class="owner" value="${esc(p.o||'')}" placeholder="Owner">`
+    +`<button type="button" class="prep-del" title="Remove">&times;</button></div>`).join('');
+  qs('logiPrep').querySelectorAll('.prep-row').forEach(row=>{
+    const i=+row.dataset.i;
+    row.querySelector('.prep-tick').onclick=()=>{logiDraft.prep[i].d=!logiDraft.prep[i].d;drawPrep();};
+    row.querySelector('.prep-del').onclick=()=>{logiDraft.prep.splice(i,1);drawPrep();};
+    row.querySelector('.task').oninput=ev=>{logiDraft.prep[i].t=ev.target.value;};
+    row.querySelector('.owner').oninput=ev=>{logiDraft.prep[i].o=ev.target.value;};
+  });
+}
+function openLogi(id){
+  const e=events.find(x=>x.id===id);
+  if(!e)return;
+  logiId=id;
+  logiDraft={who:roster(e).slice(),prep:(Array.isArray(e.prep)?e.prep:[]).map(p=>({t:p.t||'',d:!!p.d,o:p.o||''}))};
+  qs('logiFor').innerHTML=`<b>${esc(e.title)}</b><span>${esc(fmtSpan(e))}${e.city?' &middot; '+esc(e.city):''}</span>`;
+  qs('logiOut').value=e.out||'';
+  qs('logiBack').value=e.back||'';
+  qs('logiHotel').value=e.hotel||'';
+  qs('logiWhoOther').value=logiDraft.who.filter(w=>!PEOPLE.includes(w)).join(', ');
+  qs('logiSnipWrap').style.display='none';
+  drawWho();drawPrep();
+  qs('logiModal').classList.add('open');
+  setTimeout(()=>qs('logiOut').focus(),60);
+}
+function closeLogi(){qs('logiModal').classList.remove('open');logiId=null;logiDraft=null;}
+function collectLogi(){
+  const extra=qs('logiWhoOther').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const who=PEOPLE.filter(p=>logiDraft.who.includes(p)).concat(extra);
+  const prep=logiDraft.prep.filter(p=>p.t.trim()).map(p=>({t:p.t.trim(),d:!!p.d,o:(p.o||'').trim()}));
+  return {who:who,out:qs('logiOut').value,back:qs('logiBack').value,hotel:qs('logiHotel').value.trim(),prep:prep};
+}
+function applyLogi(e,L){
+  e.who=L.who.length?L.who:undefined;
+  e.out=L.out||undefined;
+  e.back=L.back||undefined;
+  e.hotel=L.hotel||undefined;
+  e.prep=L.prep.length?L.prep:undefined;
+}
+/* The exact object fields to paste into the shared file, so a browser-local
+   edit can be promoted to the published calendar without retyping. */
+function logiSnippet(e,L){
+  /* Build a single-quoted JS literal. Escapes are composed from char codes so
+     the source carries no literal backslashes of its own to misread. */
+  const BS=String.fromCharCode(92),QT=String.fromCharCode(39);
+  const q=s=>QT+String(s).split(BS).join(BS+BS).split(QT).join(BS+QT)+QT;
+  const bits=[];
+  if(L.who.length)bits.push(`who:[${L.who.map(q).join(',')}]`);
+  if(L.out)bits.push(`out:${q(L.out)}`);
+  if(L.back)bits.push(`back:${q(L.back)}`);
+  if(L.hotel)bits.push(`hotel:${q(L.hotel)}`);
+  if(L.prep.length)bits.push(`prep:[${L.prep.map(p=>`{t:${q(p.t)},d:${p.d?'true':'false'}${p.o?`,o:${q(p.o)}`:''}}`).join(',')}]`);
+  return bits.length?`id ${e.id} (${e.title}) \u2014 add to its event object:\n${bits.join(',')}`:'Nothing set for this trip yet.';
+}
+qs('logiAddPrep').onclick=()=>{logiDraft.prep.push({t:'',d:false,o:''});drawPrep();};
+qs('logiClose').onclick=closeLogi;
+qs('logiCancel').onclick=closeLogi;
+qs('logiModal').onclick=ev=>{if(ev.target.id==='logiModal')closeLogi();};
+qs('logiCopy').onclick=()=>{
+  const e=events.find(x=>x.id===logiId);
+  if(!e)return;
+  const txt=logiSnippet(e,collectLogi());
+  qs('logiSnipWrap').style.display='';
+  qs('logiSnip').value=txt;
+  qs('logiSnip').select();
+  try{navigator.clipboard&&navigator.clipboard.writeText(txt);}catch(err){/* file:// may block the clipboard; the textarea is already selected to copy by hand */}
+  flash('Copied \u2014 send it over to publish it');
+};
+qs('logiSave').onclick=()=>{
+  const e=events.find(x=>x.id===logiId);
+  if(!e)return;
+  applyLogi(e,collectLogi());
+  saveState();
+  closeLogi();
+  render();
+  flash('Saved in this browser');
+};
 function openAdd(){
   const m=view==='month'?month:today.getMonth();
   const d=view==='month'&&selectedDay!==null?selectedDay:today.getDate();
@@ -1227,9 +1392,11 @@ document.getElementById('prevYear').onclick=()=>goYear(year-1);
 document.getElementById('nextYear').onclick=()=>goYear(year+1);
 document.addEventListener('keydown',e=>{
   const searchOpen=document.getElementById('searchOverlay').classList.contains('open');
-  const modalOpen=document.getElementById('addModal').classList.contains('open');
+  const logiOpen=document.getElementById('logiModal').classList.contains('open');
+  const modalOpen=document.getElementById('addModal').classList.contains('open')||logiOpen;
   if(e.key==='Escape'){
-    if(modalOpen)closeAdd();
+    if(logiOpen)closeLogi();
+    else if(modalOpen)closeAdd();
     else if(searchOpen)closeSearch();
     else if(view==='month'&&selectedDay!==null){selectedDay=null;buildMonthGrid();renderMonthPanel();}
     return;
