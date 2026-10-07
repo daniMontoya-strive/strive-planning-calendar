@@ -107,6 +107,13 @@ Events are objects in the `events` array in `index.html`:
   end: '2026-09-17',              // OPTIONAL — omit for single-day events
   title: 'European Blockchain Convention 2026 — Barcelona',
   type: 'possible',               // one of the five above
+  city: 'Boston, MA',             // where it physically is; drives the Travel view
+  venue: 'MGM Music Hall at Fenway',
+  who: ['Ben Werkman'],           // OPTIONAL - confirmed travellers, not suggestions
+  out: '2026-10-26',              // OPTIONAL - fly out, often a day before the event
+  back: '2026-10-29',             // OPTIONAL - fly back
+  hotel: 'Omni Parker House',     // OPTIONAL
+  prep: [{t:'Ship booth',d:false,o:'Ops'}],  // OPTIONAL - task, done, owner
   notes: 'Sep 16–17, Fira Barcelona Gran Via. ... WHY STRIVE: ...',
   rec: '…'                         // LEGACY — present on many events, rendered nowhere
 }
@@ -131,6 +138,10 @@ The `rec:` fields are still in the `events` array. They were left there delibera
 isn't lost and the change is one commit to reverse — **not** because anything is half-finished. Don't
 "helpfully" re-render them. If the owner asks to drop the data too, delete the fields.
 
+`who:` is **not** a reinstatement of this. `rec` was a suggestion Claude generated about who *ought*
+to go; `who` is a fact the owner entered about who *is* going, and it drives the Travel view's
+per-person filter. Adding to `who` is fine. Re-rendering `rec` is not.
+
 ## The executives
 
 Kept for judgement calls about who should attend what, even though the calendar no longer prints it.
@@ -139,10 +150,10 @@ Kept for judgement calls about who should attend what, even though the calendar 
 - **Ben Werkman** — CIO. The SATA distribution workhorse: investment thesis, allocators, advisor and capital-markets audiences.
 - **Jeff Walton** — CRO. Risk and regulatory-heavy venues, institutional risk conversations.
 
-## The three views
+## The four views
 
-`view` is one of `'month' | 'agenda' | 'year'`; `render()` dispatches on it. All three live inside the
-same `#scroll` container and are shown/hidden by `setView()` — there is no full-screen overlay any more.
+`view` is one of `'month' | 'agenda' | 'year' | 'travel'`; `render()` dispatches on it. All four live inside
+the same `#scroll` container and are shown/hidden by `setView()` — there is no full-screen overlay any more.
 
 - **Month view** (default) — one month's day grid on the left, that month's events on the right, on a
   single screen. A month strip (`#monthBar`) above it jumps between months and shows per-month counts.
@@ -151,10 +162,20 @@ same `#scroll` container and are shown/hidden by `setView()` — there is no ful
 - **Agenda view** — chronological list, opens at today, past events dimmed, "Today" line, and an
   "Open month →" button on each month header.
 - **Year view** — 12 month cards at once; clicking one switches to Month view for that month.
+- **Travel view** (R) — the trip roster: who is going where, what is still unbooked, and every open prep
+  item in one list. Deliberately NOT year-scoped — it shows all upcoming travel across years, because a
+  July 2027 conference needs booking from 2026, so the year selector does not apply to it.
 
 ## Features already built
 
 - **Multi-day events** render across every day they span with `↳` continuation markers; pill corners
+- **Travel & logistics** — travel events carry `city`/`venue`, and optionally a confirmed roster, a
+  fly-out/fly-back window, a hotel and a prep checklist. Cards show a location line and four chips
+  (going / travel / hotel / prep); anything unset renders as a flagged TODO rather than vanishing, so
+  the gaps in an unbooked trip stay visible. Cities not ending in a two-letter US state are badged
+  **International**, since those carry passport, visa and long-haul planning.
+- **Logistics editor** — "Edit logistics" on any travel card. Saves locally *and* emits the exact
+  object fields to paste into the shared file, because saving alone does not publish (see Gotchas).
   are squared mid-run so a trip reads as one continuous band, and re-rounded at week breaks.
 - **Relative timing** — every event card carries a `Today` / `Tomorrow` / `In 3 weeks` / `Done` badge.
 - **Conflict detection** — overlapping travel flagged per month; clashing days marked `CLASH`
@@ -164,7 +185,7 @@ same `#scroll` container and are shown/hidden by `setView()` — there is no ful
 - **Export .ics** — downloads everything currently shown, importable into Outlook/Google/Apple.
   All-day `DTEND` is exclusive (a 3-day event ends on day 4) and lines fold at 75 **octets**.
 - **Search** across titles, notes, suggested attendees, dates, types (`/` focuses it)
-- Keyboard: `←`/`→` step months in Month view and years elsewhere; `M`/`A`/`Y` switch view;
+- Keyboard: `←`/`→` step months in Month view and years elsewhere; `M`/`A`/`Y`/`R` switch view;
   `T` jumps to today; `/` focuses search; `Esc` clears the selected day or closes an overlay.
 
 ## Gotchas
@@ -178,6 +199,11 @@ same `#scroll` container and are shown/hidden by `setView()` — there is no ful
 - **`localStorage` stores only type overrides (by id) and user-added events** — never the base
   `events` array. So deleting an event from the source removes it cleanly; a stale override for a
   deleted id is ignored harmlessly.
+- **Logistics are shared data living in per-browser storage — the editor works around it, don't undo
+  that.** Roster, flights, hotel and prep save to `localStorage` like the attending toggle, so one
+  person's entry reaches nobody. The whole point of the calendar is shared reference, so the editor
+  also emits the exact object fields to paste into `index.html`, and says plainly that saving does not
+  publish. If logistics ever need to genuinely sync, that needs a backend, not a bigger `localStorage`.
 - **Saved state is per-browser and does not sync between people.** The UI now says this explicitly:
   the button reads "✓ Mark attending — for me", and a `.local-note` under it names what teammates
   actually still see. Keep that honesty if you touch `toggleBtn()` — the live link is shared, so a

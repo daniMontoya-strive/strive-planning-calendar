@@ -870,8 +870,10 @@ function renderAgenda(){
         +(clashes.has(e.id)?`<span class="ag-clash">⚠ overlaps another trip</span>`:'')
         +`</div>`
         +`<div class="ag-title">${esc(e.title)}</div>`
+        +whereLine(e)
         +(e.notes?`<div class="ag-notes${long&&!open?' clamp':''}">${esc(e.notes)}</div>`:'')
         +(long?`<button class="ag-more" data-x="${e.id}">${open?'Show less':'Show more'}</button>`:'')
+        +logiRow(e)
         +toggleBtn(e)
         +`</div></div>`;
     });
