@@ -231,6 +231,32 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
 .logi-chip i{font-style:normal;font-weight:600;letter-spacing:0;text-transform:none;font-size:0.72rem;color:var(--text-faint);}
 .logi-chip.set{border-color:var(--border-hi);color:var(--text-muted);}
 .logi-chip.todo::after{content:'';width:5px;height:5px;border-radius:50%;background:var(--red);opacity:.6;flex:none;}
+/* TRAVEL VIEW */
+.travel{max-width:1000px;margin:0 auto;padding-bottom:40px;}
+.trv-note{font-size:0.72rem;color:var(--text-faint);margin-bottom:14px;line-height:1.5;}
+.trv-sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px;}
+.trv-stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:12px 14px;}
+.trv-stat b{display:block;font-family:var(--font-display);font-size:1.7rem;line-height:1;color:var(--text);}
+.trv-stat span{display:block;margin-top:5px;font-size:0.63rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-faint);}
+.trv-stat.warn b{color:var(--red);}
+.trv-people{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px;}
+.trv-person{font-size:0.72rem;font-weight:700;padding:6px 13px;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--text-muted);transition:border-color .15s,color .15s,background .15s;}
+.trv-person:hover{border-color:var(--border-hi);color:var(--text);}
+.trv-person.on{background:var(--btc);border-color:var(--btc);color:#0A0A0A;}
+.trv-sec{font-family:var(--font-display);font-size:1.15rem;margin:24px 0 11px;display:flex;align-items:baseline;gap:9px;}
+.trv-sec em{font-style:normal;font-size:0.63rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-faint);}
+.trv-list{display:flex;flex-direction:column;gap:10px;}
+.trip{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--c);border-radius:var(--radius-md);padding:14px 16px;}
+.trip.gone{opacity:.5;}
+.trip-when{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:6px;}
+.trip-when b{font-size:0.8rem;font-weight:700;color:var(--text);}
+.trip-when .days{font-size:0.6rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-faint);}
+.trip-title{font-weight:700;font-size:1rem;line-height:1.3;margin-bottom:5px;}
+.trip-clash{display:flex;gap:7px;margin-top:9px;font-size:0.73rem;line-height:1.45;color:var(--red);background:var(--red-dim);border-radius:var(--radius-sm);padding:7px 10px;}
+.trv-empty{color:var(--text-faint);font-size:0.86rem;text-align:center;padding:40px 0;background:var(--surface);border:1px dashed var(--border-hi);border-radius:var(--radius-md);}
+.prep-item{display:flex;align-items:baseline;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px;font-size:0.8rem;}
+.prep-item .for{color:var(--text-faint);font-size:0.7rem;margin-left:auto;white-space:nowrap;}
+@media(max-width:760px){.vlab{display:none;}}
 .z-empty{color:var(--text-faint);font-size:0.88rem;text-align:center;padding:34px 12px;line-height:1.6;}
 .type-tag{display:inline-block;padding:2px 8px;border-radius:3px;font-size:0.62rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;background:var(--cd);color:var(--c);}
 .span-tag{display:inline-block;font-size:0.6rem;font-weight:700;color:var(--text-faint);letter-spacing:0.05em;text-transform:uppercase;}
@@ -360,6 +386,10 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
         Year
       </button>
+      <button id="viewTravel" title="Who is travelling where, and what the office still owes each trip (R)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17.8 19.2 16 11l3.5-3.5a2.1 2.1 0 0 0-3-3L13 8 4.8 6.2a.5.5 0 0 0-.5.8l3.5 4.2-2 2H3.5a.5.5 0 0 0-.4.8l2.3 2.6 2.6 2.3a.5.5 0 0 0 .8-.4v-2.3l2-2 4.2 3.5a.5.5 0 0 0 .8-.5Z"/></svg>
+        <span class="vlab">Travel</span>
+      </button>
     </div>
     <button class="btn-today" id="todayBtn" title="Jump to today">Today</button>
     <button class="btn-add" id="addBtn" title="Add an event (saved in your browser only)">
@@ -417,6 +447,7 @@ button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
   </div>
   <div class="agenda" id="agenda" style="display:none"></div>
   <div class="year-grid" id="yearGrid" style="display:none"></div>
+  <div class="travel" id="travelView" style="display:none"></div>
 </div>
 
 <!-- ADD MODAL -->
@@ -798,12 +829,13 @@ document.getElementById('agenda').addEventListener('click',ev=>{
 });
 
 /* ── VIEW SWITCHING ── */
-const VIEW_EL={month:'viewMonth',agenda:'viewAgenda',year:'viewYear'};
+const VIEW_EL={month:'viewMonth',agenda:'viewAgenda',year:'viewYear',travel:'viewTravel'};
 function setView(v){
   view=v;
   document.getElementById('monthView').style.display=v==='month'?'':'none';
   document.getElementById('agenda').style.display=v==='agenda'?'':'none';
   document.getElementById('yearGrid').style.display=v==='year'?'':'none';
+  document.getElementById('travelView').style.display=v==='travel'?'':'none';
   document.getElementById('monthBar').classList.toggle('on',v==='month');
   document.getElementById('scroll').classList.toggle('locked',v==='month');
   Object.keys(VIEW_EL).forEach(k=>document.getElementById(VIEW_EL[k]).classList.toggle('on',k===v));
@@ -833,6 +865,7 @@ function render(){
   renderLegendCountOnly();
   if(view==='agenda'){renderAgenda();return;}
   if(view==='month'){renderMonthView();return;}
+  if(view==='travel'){renderTravel();return;}
   renderYearGrid();
 }
 
@@ -1001,6 +1034,77 @@ function eventCard(e,ds){
     +toggleBtn(e)
     +`</div>`;
 }
+/* ─── TRAVEL VIEW ───
+   Month and agenda answer "what is happening". This answers the two questions
+   the team actually asks: who is going where, and what does the office still
+   owe each trip. Deliberately NOT year-scoped - travel planning does not stop
+   on 31 Dec, so a trip in July 2027 is visible from October 2026. */
+const PEOPLE=['Matt Cole','Ben Werkman','Jeff Walton'];
+let person='';   /* '' = everyone · a name · '_none' = trips with nobody assigned */
+const upcomingTrips=()=>shown().filter(e=>isTravel(e)&&dnum(endOf(e))>=TODAY_N)
+  .sort((a,b)=>a.date.localeCompare(b.date)||TYPE_ORDER.indexOf(a.type)-TYPE_ORDER.indexOf(b.type));
+function forPerson(list){
+  if(!person)return list;
+  if(person==='_none')return list.filter(e=>roster(e).length===0);
+  return list.filter(e=>roster(e).includes(person));
+}
+/* Every unticked prep item across the trips in view, so the office has one
+   worklist instead of hunting through each event. */
+function openPrep(list){
+  const out=[];
+  list.forEach(e=>(Array.isArray(e.prep)?e.prep:[]).forEach(p=>{
+    if(p&&p.t&&!p.d)out.push({e:e,t:p.t,o:p.o||''});
+  }));
+  return out;
+}
+function tripCard(e,clash,all){
+  const others=clash.has(e.id)
+    ? all.filter(x=>x.id!==e.id&&dnum(x.date)<=dnum(endOf(e))&&dnum(e.date)<=dnum(endOf(x)))
+    : [];
+  return `<div class="trip ${e.type}">`
+    +`<div class="trip-when"><b>${esc(fmtSpan(e))}</b>`
+      +(spans(e)>1?`<span class="days">${spans(e)} days</span>`:'')
+      +relTag(e)
+      +`<span class="type-tag ${e.type}">${esc(typeLabel(e.type))}</span></div>`
+    +`<div class="trip-title">${esc(e.title)}</div>`
+    +whereLine(e)
+    +logiRow(e)
+    +(others.length?`<div class="trip-clash"><span>&#9888;</span><span>Overlaps ${others.map(o=>esc(o.title)+(o.city?` (${esc(o.city)})`:'')).join(', ')} &mdash; the same person cannot cover both.</span></div>`:'')
+    +`</div>`;
+}
+function renderTravel(){
+  const host=document.getElementById('travelView');
+  const all=upcomingTrips();
+  const list=forPerson(all);
+  const clash=clashSet(list);
+  const noRoster=all.filter(e=>roster(e).length===0).length;
+  const unbooked=all.filter(e=>!e.hotel).length;
+  const stat=(n,label,warn)=>`<div class="trv-stat${warn&&n?' warn':''}"><b>${n}</b><span>${label}</span></div>`;
+  let html=`<div class="trv-note">Every upcoming trip, across years &mdash; the year selector does not apply here. Logistics live in the shared file, so anything you set in your browser stays with you until it is committed.</div>`
+    +`<div class="trv-sum">`
+      +stat(all.length,'Upcoming trips',false)
+      +stat(all.filter(isIntl).length,'International',false)
+      +stat(noRoster,'No roster yet',true)
+      +stat(unbooked,'No hotel booked',true)
+    +`</div>`;
+  const chip=(v,label,n)=>`<button class="trv-person${person===v?' on':''}" data-p="${esc(v)}">${esc(label)}${n!==null?` · ${n}`:''}</button>`;
+  html+=`<div class="trv-people">`+chip('','Everyone',all.length)
+    +PEOPLE.map(p=>chip(p,p,all.filter(e=>roster(e).includes(p)).length)).join('')
+    +chip('_none','Unassigned',noRoster)+`</div>`;
+  html+=`<div class="trv-sec">Upcoming travel<em>${list.length} trip${list.length===1?'':'s'}</em></div>`;
+  html+=list.length
+    ? `<div class="trv-list">`+list.map(e=>tripCard(e,clash,list)).join('')+`</div>`
+    : `<div class="trv-empty">No upcoming trips${person?' for this person':''}.</div>`;
+  const prep=openPrep(list);
+  html+=`<div class="trv-sec">What the office still owes<em>${prep.length} open item${prep.length===1?'':'s'}</em></div>`;
+  html+=prep.length
+    ? `<div class="trv-list">`+prep.map(p=>`<div class="prep-item"><span>${esc(p.t)}</span>${p.o?`<span class="for">${esc(p.o)}</span>`:''}<span class="for">${esc(p.e.title)}</span></div>`).join('')+`</div>`
+    : `<div class="trv-empty">No prep items yet. Add them to a trip so the wider team knows how to help.</div>`;
+  host.innerHTML=html;
+  host.querySelectorAll('.trv-person').forEach(b=>b.addEventListener('click',()=>{
+    person=b.dataset.p===person?'':b.dataset.p;renderTravel();
+  }));
+}
 function renderMonthPanel(){
   const ds=selectedDay!==null?`${year}-${pad(month+1)}-${pad(selectedDay)}`:null;
   const evts=ds?byDate(ds):byMonth(year,month);
@@ -1142,6 +1246,7 @@ document.addEventListener('keydown',e=>{
   if(k==='m')setView('month');
   else if(k==='a')setView('agenda');
   else if(k==='y')setView('year');
+  else if(k==='r')setView('travel');
   else if(k==='t')document.getElementById('todayBtn').click();
 });
 
